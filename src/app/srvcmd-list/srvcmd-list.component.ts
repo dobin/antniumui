@@ -3,6 +3,9 @@ import {AfterViewInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from "@angular/material/dialog";
+
+import { CommandCreateModalComponent } from '../command-create-modal/command-create-modal.component';
 import { SrvCmdBase } from '../app.model';
 
 @Component({
@@ -21,7 +24,9 @@ export class SrvcmdListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(    
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -40,7 +45,10 @@ export class SrvcmdListComponent implements OnInit {
   }
 
   commandNew(computerId: string) {
-    console.log("A: " + computerId);
+    const dialogRef = this.dialog.open(CommandCreateModalComponent, {
+      width: '80em',
+      data: computerId,
+    });
   }
 
 }

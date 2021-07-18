@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SrvCmdBase, ClientBase } from './app.model';
+import { SrvCmdBase, ClientBase, Command } from './app.model';
 
 @Injectable({  
 	providedIn: 'root'  
@@ -22,6 +22,10 @@ export class ApiService {
 
 	public refreshClients(): Observable<ClientBase[]> {
 		return this.httpClient.get<ClientBase[]>(this.SERVER_URL + "/admin/clients");
+	}
+
+	public sendCommand(command: Command) {
+		return this.httpClient.post(this.SERVER_URL + "/admin/addCommand", JSON.stringify(command));
 	}
 }
 

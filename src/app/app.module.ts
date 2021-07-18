@@ -28,13 +28,15 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { SrvcmdListComponent } from './srvcmd-list/srvcmd-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ClientListComponent } from './client-list/client-list.component';
+import { CommandCreateModalComponent } from './command-create-modal/command-create-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SrvcmdListComponent,
-    ClientListComponent
+    ClientListComponent,
+    CommandCreateModalComponent
   ],
   imports: [
     BrowserModule,

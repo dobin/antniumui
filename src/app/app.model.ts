@@ -12,11 +12,12 @@ export interface Command {
   packetid: string
   command: string
   response: string
-  arguments: string[]
+  arguments: any  // Code knows argument layout
 }
-
 
 export interface ClientBase {
   ComputerId: string
   LastSeen: string
 }
+
+
