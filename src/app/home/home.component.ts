@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { SrvCmdBase } from '../app.model';
+import { SrvCmdBase, ClientBase } from '../app.model';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +11,7 @@ import { SrvCmdBase } from '../app.model';
 })
 export class HomeComponent implements OnInit {
   srvCmds: SrvCmdBase[] //
+  clients: ClientBase[]
 
   constructor(
     private apiService: ApiService,
@@ -19,11 +20,21 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  refresh() {
-    this.apiService.refresh().subscribe(
-      // (data: SrvCmd) => { 
-      (data: any) => { 
+  refreshCommands() {
+    this.apiService.refreshCommands().subscribe(
+      (data: SrvCmdBase[]) => { 
         this.srvCmds = data;
+      },
+      (err: HttpErrorResponse) => {
+        console.log("HTTP Error");
+      },
+    );
+  }
+
+  refreshClients() {
+    this.apiService.refreshClients().subscribe(
+      (data: ClientBase[]) => { 
+        this.clients = data;
       },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error");

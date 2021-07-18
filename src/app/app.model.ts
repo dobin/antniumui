@@ -14,3 +14,8 @@ export interface Command {
   response: string
   arguments: string[]
 }
+
+
+export interface ClientBase {
+  computerId: string
+}

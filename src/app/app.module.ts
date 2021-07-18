@@ -26,12 +26,15 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { SrvcmdListComponent } from './srvcmd-list/srvcmd-list.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ClientListComponent } from './client-list/client-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SrvcmdListComponent
+    SrvcmdListComponent,
+    ClientListComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,9 @@ import { SrvcmdListComponent } from './srvcmd-list/srvcmd-list.component';
     // TreetableModule,
     MatMenuModule,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

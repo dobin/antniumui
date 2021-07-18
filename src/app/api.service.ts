@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';  
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
-import { SrvCmdBase } from './app.model';
 import { Observable } from 'rxjs';
+import { SrvCmdBase, ClientBase } from './app.model';
 
 @Injectable({  
 	providedIn: 'root'  
@@ -16,8 +16,12 @@ export class ApiService {
 		}
 	}
 
-	public refresh(): Observable<SrvCmdBase[]> {
-		return this.httpClient.get<SrvCmdBase[]>(this.SERVER_URL + "/admin/listCommands");
+	public refreshCommands(): Observable<SrvCmdBase[]> {
+		return this.httpClient.get<SrvCmdBase[]>(this.SERVER_URL + "/admin/commands");
+	}
+
+	public refreshClients(): Observable<ClientBase[]> {
+		return this.httpClient.get<ClientBase[]>(this.SERVER_URL + "/admin/clients");
 	}
 }
 

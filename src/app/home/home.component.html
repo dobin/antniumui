@@ -1,7 +1,17 @@
-<p>home works!</p>
-<button mat-raised-button (click)="refresh()">Refresh</button>
+<button mat-raised-button (click)="refreshCommands()">Refresh Commands</button>
+<button mat-raised-button (click)="refreshClients()">Refresh Clients</button>
 
-
-<app-srvcmd-list 
-    [srvCmds]="srvCmds">
-</app-srvcmd-list>
+<div class="bounds">
+	<div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+		<div fxFlex="80" class="sec1">
+            <app-srvcmd-list 
+                [srvCmds]="srvCmds">
+            </app-srvcmd-list>
+		</div>
+		<div fxFlex="20" class="sec2">
+            <app-client-list 
+                [clients]="clients">
+            </app-client-list>
+		</div>
+	</div>
+</div>

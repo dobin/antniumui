@@ -13,7 +13,6 @@ import { SrvCmdBase } from '../app.model';
 export class SrvcmdListComponent implements OnInit {
   @Input() srvCmds: SrvCmdBase[]; // Data this component receives
 
-
   displayedColumns: string[] = [
     'actions', 'computer_id', 'packet_id', 'arguments', 'response', 'state', 'source'];
 
