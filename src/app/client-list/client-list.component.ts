@@ -14,7 +14,7 @@ export class ClientListComponent implements OnInit {
   @Input() clients: ClientBase[]; // Data this component receives
 
   displayedColumns: string[] = [
-    'actions', ];
+    'actions', 'computer_id', 'last_seen'];
 
   // Table shit
   dataSource: MatTableDataSource<ClientBase> = new MatTableDataSource<ClientBase>();
