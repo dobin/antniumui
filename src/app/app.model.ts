@@ -14,8 +14,8 @@ export interface Command {
   computerid: string
   packetid: string
   command: string
-  response: string
-  arguments: any  // Code knows argument layout
+  arguments: { [id: string]: string }
+  response: { [id: string]: string }
 }
 
 export interface ClientBase {

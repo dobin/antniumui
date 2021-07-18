@@ -10,10 +10,18 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./command-create-modal.component.css']
 })
 export class CommandCreateModalComponent implements OnInit {
+  executable: string = ""
+  param1: string = ""
+  param2: string = ""
+  param3: string = ""
+  uploadUrl: string = ""
+  uploadSource: string = ""
+  downloadUrl: string = ""
+  downloadDestination: string = ""
 
   constructor(
     private apiService: ApiService,
-    @Inject(MAT_DIALOG_DATA) public data: string
+    @Inject(MAT_DIALOG_DATA) public computerId: string
   ) { }
 
   ngOnInit(): void {
@@ -24,8 +32,82 @@ export class CommandCreateModalComponent implements OnInit {
       computerid: '0', 
       packetid: '1',
       command: 'test',
-      response:'',
-      arguments: ["test"]
+      arguments: { "test": "test" },
+      response: {},
+    }
+
+    this.apiService.sendCommand(command).subscribe(
+      (data: any) => { 
+        console.log("SendCommand successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendCommand failed")
+      },
+    );
+  }
+
+  addCommandExec() {
+    var command: Command = {
+      computerid: '0', 
+      packetid: '1',
+      command: 'exec',
+      arguments: { 
+        "executable": this.executable,
+      },
+      response: {},
+    }
+
+    if (this.param1 != "") {
+      command.arguments["param1"] = this.param1;
+    }
+    if (this.param2 != "") {
+      command.arguments["param2"] = this.param2;
+    }
+    if (this.param3 != "") {
+      command.arguments["param3"] = this.param3;
+    }
+
+    this.apiService.sendCommand(command).subscribe(
+      (data: any) => { 
+        console.log("SendCommand successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendCommand failed")
+      },
+    );
+  }
+
+  addCommandUpload() {
+    var command: Command = {
+      computerid: '0', 
+      packetid: '1',
+      command: 'fileupload',
+      arguments: { 
+        "remoteurl": this.uploadUrl,
+        "source": this.uploadSource
+      },
+      response: {},
+    }
+    this.apiService.sendCommand(command).subscribe(
+      (data: any) => { 
+        console.log("SendCommand successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendCommand failed")
+      },
+    );
+  }
+
+  addCommandDownload() {
+    var command: Command = {
+      computerid: '0', 
+      packetid: '1',
+      command: 'download',
+      arguments: { 
+        "remoteurl": this.downloadUrl,
+        "destination": this.downloadDestination
+      },
+      response: {},
     }
 
     this.apiService.sendCommand(command).subscribe(

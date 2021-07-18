@@ -1,1 +1,63 @@
-<button mat-raised-button (click)="addCommandTest()">Add Test Command</button>
+<mat-form-field class="example-form-field" appearance="fill">
+  <mat-label>ComputerId</mat-label>
+  <input matInput type="text" [(ngModel)]="computerId">
+</mat-form-field>
+
+<mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Execute">
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>Executable</mat-label>
+            <input matInput type="text" [(ngModel)]="executable">
+        </mat-form-field>
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>Parameter 1</mat-label>
+            <input matInput type="text" [(ngModel)]="param1">
+        </mat-form-field>
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>Parameter 2</mat-label>
+            <input matInput type="text" [(ngModel)]="param2">
+        </mat-form-field>
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>Parameter 3</mat-label>
+            <input matInput type="text" [(ngModel)]="param3">
+        </mat-form-field>
+
+        <button mat-raised-button (click)="addCommandExec()">Send</button>
+    </mat-tab>
+
+    <mat-tab label="Test">
+        <button mat-raised-button (click)="addCommandTest()">Add Test Command</button>
+        <br>
+    </mat-tab>
+
+    <mat-tab label="FileUpload">
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>uploadUrl</mat-label>
+            <input matInput type="text" [(ngModel)]="uploadUrl">
+        </mat-form-field>
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>uploadSource</mat-label>
+            <input matInput type="text" [(ngModel)]="uploadSource">
+        </mat-form-field>
+
+        <button mat-raised-button (click)="addCommandUpload()">Send</button>
+    </mat-tab>
+
+    <mat-tab label="FileDownload">
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>downloadUrl</mat-label>
+            <input matInput type="text" [(ngModel)]="downloadUrl">
+        </mat-form-field>
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>downloadDestination</mat-label>
+            <input matInput type="text" [(ngModel)]="downloadDestination">
+        </mat-form-field>
+
+        <button mat-raised-button (click)="addCommandDownload()">Send</button>
+    </mat-tab>
+
+    <mat-tab label="Generic">
+    </mat-tab>
+</mat-tab-group>
+  
+  
