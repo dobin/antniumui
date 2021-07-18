@@ -17,7 +17,7 @@ export class SrvcmdListComponent implements OnInit {
   @Input() srvCmds: SrvCmdBase[]; // Data this component receives
 
   displayedColumns: string[] = [
-    'actions', 'computer_id', 'command', 'arguments', 'response', 'state'];
+    'actions', 'time_recorded', 'computer_id', 'command', 'arguments', 'response', 'state'];
 
   // Table shit
   dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
