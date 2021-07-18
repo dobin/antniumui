@@ -25,7 +25,6 @@ export class ClientListComponent implements OnInit {
   }
 
   ngOnChanges(): void { // called when we have data via @Input
-    console.log(this.clients);
     if (this.clients == null) {
       return;
     }

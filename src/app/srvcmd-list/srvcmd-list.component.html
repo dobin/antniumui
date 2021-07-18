@@ -1,7 +1,12 @@
 <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
-        <td mat-cell *matCellDef="let element"></td>
+        <td mat-cell *matCellDef="let element">
+
+            <button mat-icon-button (click)="commandNew(element.Command.computerid)">
+                <mat-icon>computer</mat-icon>
+            </button>
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="computer_id">
@@ -9,11 +14,10 @@
         <td mat-cell *matCellDef="let element"> {{element.Command.computerid}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="packet_id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> PacketID </th>
-        <td mat-cell *matCellDef="let element"> {{element.Command.packetid}} </td>
+    <ng-container matColumnDef="command">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Command </th>
+        <td mat-cell *matCellDef="let element"> {{element.Command.command}} </td>
     </ng-container>
-
 
     <ng-container matColumnDef="arguments">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Arguments </th>
@@ -23,11 +27,6 @@
     <ng-container matColumnDef="response">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Response </th>
         <td mat-cell *matCellDef="let element"> {{element.Command.response}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="source">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Source </th>
-        <td mat-cell *matCellDef="let element"> {{element.Source}} </td>
     </ng-container>
 
     <ng-container matColumnDef="state">

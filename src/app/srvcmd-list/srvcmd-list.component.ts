@@ -14,7 +14,7 @@ export class SrvcmdListComponent implements OnInit {
   @Input() srvCmds: SrvCmdBase[]; // Data this component receives
 
   displayedColumns: string[] = [
-    'actions', 'computer_id', 'packet_id', 'arguments', 'response', 'state', 'source'];
+    'actions', 'computer_id', 'command', 'arguments', 'response', 'state'];
 
   // Table shit
   dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
@@ -27,16 +27,9 @@ export class SrvcmdListComponent implements OnInit {
   }
 
   ngOnChanges(): void { // called when we have data via @Input
-    console.log("CHANGES!");
-    console.log(this.srvCmds);
     if (this.srvCmds == null) {
       return;
     }
-    /*
-    this.srvCmds = [
-    ]
-    */
-
     this.dataSource.data = this.srvCmds;
   }
 
@@ -44,6 +37,10 @@ export class SrvcmdListComponent implements OnInit {
     // Connect the table components
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  commandNew(computerId: string) {
+    console.log("A: " + computerId);
   }
 
 }
