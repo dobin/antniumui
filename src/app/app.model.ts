@@ -5,6 +5,9 @@ export interface SrvCmdBase {
   Command: Command
   State: number
   Source: number
+  TimeRecorded: string
+  TimeSent: string
+  TimeAnswered: string
 }
 
 export interface Command {
