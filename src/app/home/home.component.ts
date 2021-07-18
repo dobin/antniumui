@@ -17,7 +17,19 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService,
   ) { }
 
-  ngOnInit(): void {
+  data: any;
+  interval: any;
+
+  ngOnInit() {
+    this.refreshCommands();
+    this.refreshClients();
+    if(this.interval){
+        clearInterval(this.interval);
+    }
+    this.interval = setInterval(() => {
+        this.refreshCommands();
+        this.refreshClients();
+    }, 1000);
   }
 
   refreshCommands() {
