@@ -44,7 +44,7 @@ export class SrvcmdListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  commandNew(computerId: string) {
+  showModalCommandCreate(computerId: string) {
     const dialogRef = this.dialog.open(CommandCreateModalComponent, {
       width: '80em',
       data: computerId,

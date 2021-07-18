@@ -3,7 +3,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
         <td mat-cell *matCellDef="let element">
 
-            <button mat-icon-button (click)="commandNew(element.Command.computerid)">
+            <button mat-icon-button (click)="showModalCommandCreate(element.Command.computerid)">
                 <mat-icon>computer</mat-icon>
             </button>
         </td>

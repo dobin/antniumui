@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ClientBase } from '../app.model';
+import { MatDialog } from "@angular/material/dialog";
+import { CommandCreateModalComponent } from '../command-create-modal/command-create-modal.component';
 
 @Component({
   selector: 'app-client-list',
@@ -19,7 +21,9 @@ export class ClientListComponent implements OnInit {
   // Table shit
   dataSource: MatTableDataSource<ClientBase> = new MatTableDataSource<ClientBase>();
 
-  constructor() { }
+  constructor(    
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -31,4 +35,10 @@ export class ClientListComponent implements OnInit {
     this.dataSource.data = this.clients;
   }
 
+  showModalCommandCreate(computerId: string) {
+    const dialogRef = this.dialog.open(CommandCreateModalComponent, {
+      width: '80em',
+      data: computerId,
+    });
+  }
 }
