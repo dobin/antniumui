@@ -16,7 +16,10 @@
 
     <ng-container matColumnDef="computer_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
-        <td mat-cell *matCellDef="let element"> {{element.Command.computerid}} </td>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.Command.computerid}} <br>
+            {{element.ClientIp}}
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="command">

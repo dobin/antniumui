@@ -4,7 +4,7 @@ export type SrvCmdList2 = SrvCmdBase[]
 export interface SrvCmdBase {
   Command: Command
   State: number
-  Source: number
+  ClientIp: string
   TimeRecorded: string
   TimeSent: string
   TimeAnswered: string

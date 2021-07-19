@@ -102,7 +102,7 @@ export class CommandCreateModalComponent implements OnInit {
     var command: Command = {
       computerid: '0', 
       packetid: '1',
-      command: 'download',
+      command: 'filedownload',
       arguments: { 
         "remoteurl": this.downloadUrl,
         "destination": this.downloadDestination
