@@ -16,7 +16,7 @@
 
     <ng-container matColumnDef="last_seen">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Seen </th>
-        <td mat-cell *matCellDef="let element"> {{element.LastSeen}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.LastSeen | date:'short'}} </td>
     </ng-container>
 
 

@@ -11,7 +11,7 @@
 
     <ng-container matColumnDef="time_recorded">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Time Recorded </th>
-        <td mat-cell *matCellDef="let element"> {{element.TimeRecorded}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.TimeRecorded | date:'short' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="computer_id">
