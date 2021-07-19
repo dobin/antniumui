@@ -14,10 +14,10 @@ import { SrvCmdBase } from '../app.model';
   styleUrls: ['./srvcmd-list.component.css']
 })
 export class SrvcmdListComponent implements OnInit {
-  @Input() srvCmds: SrvCmdBase[]; // Data this component receives
+  @Input() srvCmds!: SrvCmdBase[]; // Data this component receives
 
   displayedColumns: string[] = [
-    'actions', 'time_recorded', 'computer_id', 'command', 'arguments', 'response', 'state'];
+    'actions', 'TimeRecorded', 'ClientIp', 'command', 'arguments', 'response', 'State'];
 
   // Table shit
   dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();

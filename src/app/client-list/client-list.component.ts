@@ -13,10 +13,10 @@ import { CommandCreateModalComponent } from '../command-create-modal/command-cre
   styleUrls: ['./client-list.component.css']
 })
 export class ClientListComponent implements OnInit {
-  @Input() clients: ClientBase[]; // Data this component receives
+  @Input() clients!: ClientBase[]; // Data this component receives
 
   displayedColumns: string[] = [
-    'actions', 'computer_id', 'last_seen'];
+    'actions', 'ComputerID', 'LastSeen'];
 
   // Table shit
   dataSource: MatTableDataSource<ClientBase> = new MatTableDataSource<ClientBase>();

@@ -30,7 +30,7 @@ export class CommandCreateModalComponent implements OnInit {
     'command', 'arguments', 'response'];
 
   interval: any
-  srvCmds: SrvCmdBase[] //
+  srvCmds: SrvCmdBase[]
 
   constructor(
     private apiService: ApiService,

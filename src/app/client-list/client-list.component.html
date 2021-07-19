@@ -1,6 +1,6 @@
 <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Clients </th>
+        <th mat-header-cell *matHeaderCellDef> Clients </th>
         <td mat-cell *matCellDef="let element">
 
             <button mat-icon-button (click)="showModalCommandCreate(element.ComputerId)">
@@ -9,12 +9,12 @@
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="computer_id">
+    <ng-container matColumnDef="ComputerID">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
         <td mat-cell *matCellDef="let element"> {{element.ComputerId}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="last_seen">
+    <ng-container matColumnDef="LastSeen">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Seen </th>
         <td mat-cell *matCellDef="let element"> {{element.LastSeen | date:'short'}} </td>
     </ng-container>
