@@ -30,7 +30,7 @@ export class CommandCreateModalComponent implements OnInit {
   addCommandTest() {
     var command: Command = {
       computerid: '0', 
-      packetid: '1',
+      packetid: Math.random().toString(),
       command: 'test',
       arguments: { "test": "test" },
       response: {},
@@ -49,7 +49,7 @@ export class CommandCreateModalComponent implements OnInit {
   addCommandExec() {
     var command: Command = {
       computerid: '0', 
-      packetid: '1',
+      packetid: Math.random().toString(),
       command: 'exec',
       arguments: { 
         "executable": this.executable,
@@ -78,12 +78,13 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   addCommandUpload() {
+    var packetId = Math.random().toString();
     var command: Command = {
       computerid: '0', 
-      packetid: '1',
+      packetid: packetId,
       command: 'fileupload',
       arguments: { 
-        "remoteurl": this.uploadUrl,
+        "remoteurl": this.uploadUrl + packetId,
         "source": this.uploadSource
       },
       response: {},
@@ -101,7 +102,7 @@ export class CommandCreateModalComponent implements OnInit {
   addCommandDownload() {
     var command: Command = {
       computerid: '0', 
-      packetid: '1',
+      packetid: Math.random().toString(),
       command: 'filedownload',
       arguments: { 
         "remoteurl": this.downloadUrl,

@@ -18,7 +18,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
         <td mat-cell *matCellDef="let element"> 
             {{element.Command.computerid}} <br>
-            {{element.ClientIp}}
+            {{element.ClientIp}}<br>
+            {{element.Command.packetid}}<br>
         </td>
     </ng-container>
 
