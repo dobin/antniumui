@@ -1,8 +1,13 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Command } from '../app.model';
+import { Command, SrvCmdBase } from '../app.model';
 import { ApiService } from '../api.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatTableDataSource } from '@angular/material/table';
+
+export interface CommandCreateArgs {
+  computerId: string,
+}
 
 @Component({
   selector: 'app-command-create-modal',
@@ -20,16 +25,44 @@ export class CommandCreateModalComponent implements OnInit {
   downloadUrl: string = ""
   downloadDestination: string = ""
 
+  dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
+  displayedColumns: string[] = [
+    'command', 'arguments', 'response'];
+
+  interval: any
+  srvCmds: SrvCmdBase[] //
+
   constructor(
     private apiService: ApiService,
-    @Inject(MAT_DIALOG_DATA) public computerId: string
+    @Inject(MAT_DIALOG_DATA) public data: CommandCreateArgs
   ) { }
 
   getRandomInt(): string {
     return Math.floor(Math.random() * 1000000).toString();
   }
 
+  refreshCommands() {
+    this.apiService.refreshCommands().subscribe(
+      (data: SrvCmdBase[]) => { 
+        this.srvCmds = data;
+        this.dataSource.data = this.srvCmds;
+      },
+      (err: HttpErrorResponse) => {
+        console.log("HTTP Error");
+      },
+    );
+  }
+
   ngOnInit(): void {
+    this.refreshCommands();
+    if(this.interval){
+      clearInterval(this.interval);
+    }
+    this.interval = setInterval(() => {
+        this.refreshCommands();
+    }, 1000);
+
+
     if (true) {
       this.executable = "cmd";
       this.param1 = "/C"
