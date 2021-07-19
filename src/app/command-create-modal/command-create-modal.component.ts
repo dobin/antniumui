@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./command-create-modal.component.css']
 })
 export class CommandCreateModalComponent implements OnInit {
+  serverurl: string = "http://127.0.0.1:4444"
   executable: string = ""
   param1: string = ""
   param2: string = ""
@@ -24,13 +25,28 @@ export class CommandCreateModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public computerId: string
   ) { }
 
+  getRandomInt(): string {
+    return Math.floor(Math.random() * 1000000).toString();
+  }
+
   ngOnInit(): void {
+    if (true) {
+      this.executable = "cmd";
+      this.param1 = "/C"
+      this.param2 = "whoami"
+
+      this.uploadUrl = this.serverurl + "/upload/"
+      this.uploadSource = "README.md";
+
+      this.downloadUrl = this.serverurl + "/static/test.txt";
+      this.downloadDestination = "test.txt";
+    }
   }
 
   addCommandTest() {
     var command: Command = {
       computerid: '0', 
-      packetid: Math.random().toString(),
+      packetid: this.getRandomInt(),
       command: 'test',
       arguments: { "test": "test" },
       response: {},
@@ -49,7 +65,7 @@ export class CommandCreateModalComponent implements OnInit {
   addCommandExec() {
     var command: Command = {
       computerid: '0', 
-      packetid: Math.random().toString(),
+      packetid: this.getRandomInt(),
       command: 'exec',
       arguments: { 
         "executable": this.executable,
@@ -78,7 +94,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   addCommandUpload() {
-    var packetId = Math.random().toString();
+    var packetId = this.getRandomInt();
     var command: Command = {
       computerid: '0', 
       packetid: packetId,
@@ -102,7 +118,7 @@ export class CommandCreateModalComponent implements OnInit {
   addCommandDownload() {
     var command: Command = {
       computerid: '0', 
-      packetid: Math.random().toString(),
+      packetid: this.getRandomInt(),
       command: 'filedownload',
       arguments: { 
         "remoteurl": this.downloadUrl,
