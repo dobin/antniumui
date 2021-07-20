@@ -72,12 +72,15 @@
 <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="command">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> command </th>
-        <td mat-cell *matCellDef="let element"> {{element.Command.command | json}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.Command.command }} </td>
     </ng-container>
 
     <ng-container matColumnDef="arguments">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> arguments </th>
-        <td mat-cell *matCellDef="let element"> {{element.Command.arguments | json}} </td>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.Command.arguments["executable"]}}
+            {{element.Command.arguments | json}} 
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="response">

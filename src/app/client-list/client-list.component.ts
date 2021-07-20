@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ClientBase } from '../app.model';
 import { MatDialog } from "@angular/material/dialog";
-import { CommandCreateModalComponent } from '../command-create-modal/command-create-modal.component';
+import { CommandCreateModalComponent, CommandCreateArgs } from '../command-create-modal/command-create-modal.component';
 
 @Component({
   selector: 'app-client-list',
@@ -36,9 +36,13 @@ export class ClientListComponent implements OnInit {
   }
 
   showModalCommandCreate(computerId: string) {
+    var data: CommandCreateArgs = {
+      computerId: computerId,
+    }
+
     const dialogRef = this.dialog.open(CommandCreateModalComponent, {
       width: '80em',
-      data: computerId,
+      data: data,
     });
   }
 }
