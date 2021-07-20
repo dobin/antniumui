@@ -21,8 +21,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
         <td mat-cell *matCellDef="let element"> 
             {{element.Command.computerid}} <br>
-            {{element.ClientIp}}<br>
-            {{element.Command.packetid}}<br>
+            {{element.ClientIp}}
         </td>
     </ng-container>
 
@@ -46,12 +45,12 @@
 
             <div *ngSwitchCase="'fileupload'">
                 {{element.Command.arguments["source"]}} <br>
-                {{element.Command.arguments["remoteurl"]}}
+                <a [routerLink]="" (click)="openFileTab(element.Command.arguments['remoteurl'])">Download as {{element.Command.arguments["remoteurl"] | strip}}</a>
             </div>
 
             <div *ngSwitchCase="'filedownload'">
-                {{element.Command.arguments["destination"]}} <br>
-                {{element.Command.arguments["remoteurl"]}}
+                Source: {{element.Command.arguments["remoteurl"] | strip}} <br>
+                Destination: {{element.Command.arguments["destination"]}}
             </div>
 
             <div *ngSwitchDefault>

@@ -23,13 +23,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { SrvcmdListComponent } from './srvcmd-list/srvcmd-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ClientListComponent } from './client-list/client-list.component';
 import { CommandCreateModalComponent } from './command-create-modal/command-create-modal.component';
+
+import { AuthInterceptor } from './auth-interceptor';
+import { StripPipe } from './strip-pipe'
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import { CommandCreateModalComponent } from './command-create-modal/command-crea
     HomeComponent,
     SrvcmdListComponent,
     ClientListComponent,
-    CommandCreateModalComponent
+    CommandCreateModalComponent,
+    StripPipe,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +74,9 @@ import { CommandCreateModalComponent } from './command-create-modal/command-crea
 
     FlexLayoutModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

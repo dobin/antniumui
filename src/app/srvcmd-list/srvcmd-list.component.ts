@@ -55,4 +55,11 @@ export class SrvcmdListComponent implements OnInit {
     });
   }
 
+  openFileTab(url: string){
+    let basename = url.substring(url.lastIndexOf('/')+1);
+    let url2 = "http://127.0.0.1:4444/admin/upload/" + basename;
+    console.log(url2);
+    window.open(url2, "_blank");
+}
+
 }
