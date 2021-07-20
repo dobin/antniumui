@@ -37,6 +37,12 @@ export class CommandCreateModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: CommandCreateArgs
   ) { }
 
+  openFileTab(url: string){
+    let basename = url.substring(url.lastIndexOf('/')+1);
+    let url2 = this.apiService.getAdminUpload(basename);
+    window.open(url2, "_blank");
+  }
+  
   getRandomInt(): string {
     return Math.floor(Math.random() * 1000000).toString();
   }
