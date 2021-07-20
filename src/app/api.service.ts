@@ -10,7 +10,9 @@ import { SrvCmdBase, ClientBase, Command } from './app.model';
 export class ApiService {
 	private SERVER_URL = location.origin;
 
-    constructor(private httpClient: HttpClient) { 
+    constructor(
+		private httpClient: HttpClient,
+	) { 
 		if (isDevMode()) {
 			this.SERVER_URL = "http://localhost:4444";
 		}
@@ -26,6 +28,10 @@ export class ApiService {
 
 	public sendCommand(command: Command) {
 		return this.httpClient.post(this.SERVER_URL + "/admin/addCommand", JSON.stringify(command));
+	}
+
+	public getAdminUpload(filename: string): string {
+		return this.SERVER_URL + "/admin/upload/" + filename;
 	}
 }
 

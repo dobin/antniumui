@@ -7,6 +7,7 @@ import { MatDialog } from "@angular/material/dialog";
 
 import { CommandCreateModalComponent, CommandCreateArgs} from '../command-create-modal/command-create-modal.component';
 import { SrvCmdBase } from '../app.model';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-srvcmd-list',
@@ -26,6 +27,7 @@ export class SrvcmdListComponent implements OnInit {
 
   constructor(    
     private dialog: MatDialog,
+		private apiService: ApiService,
   ) { }
 
   ngOnInit(): void {
@@ -57,9 +59,8 @@ export class SrvcmdListComponent implements OnInit {
 
   openFileTab(url: string){
     let basename = url.substring(url.lastIndexOf('/')+1);
-    let url2 = "http://127.0.0.1:4444/admin/upload/" + basename;
-    console.log(url2);
+    let url2 = this.apiService.getAdminUpload(basename);
     window.open(url2, "_blank");
-}
+  }
 
 }
