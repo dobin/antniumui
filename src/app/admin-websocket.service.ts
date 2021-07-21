@@ -76,10 +76,8 @@ export class AdminWebsocketService {
       this.socket$ = webSocket("ws://localhost:4444/admin/ws");
     }
 
-    // Function to listen for updates
+    // Function to listen for updates from WS
     this.socket$.subscribe((data: GuiData) => {
-      console.log(data);
-
       // Also check for new clients, for now
       this.apiService.refreshCommands().subscribe(
         (data: SrvCmdBase[]) => { 

@@ -49,6 +49,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+
   }
 
   ngOnInit(): void {
@@ -64,10 +65,19 @@ export class CommandCreateModalComponent implements OnInit {
       this.downloadDestination = "test.txt";
     }
 
+    this.apiService.refreshCommandsClient(this.data.computerId).subscribe(
+      (data2: SrvCmdBase[]) => {
+        this.dataSource.data = data2;
+      },
+      (err: HttpErrorResponse) => {
+        console.log("HTTP Error: " + err);
+      },
+    );
+
     // Get and update data
-    this.dataSource.data = this.adminWebsocketService.getSrvCmds();
-    this.adminWebsocketService.srvCmdsEvent.subscribe(data => {
-      this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    this.adminWebsocketService.srvCmdsEvent.subscribe((data2: SrvCmdBase[]) => {
+      var newData = data2.filter(d => d.Command.computerid == this.data.computerId ||d.Command.computerid == "0");
+      this.dataSource.data = newData;
     })
   }
 
