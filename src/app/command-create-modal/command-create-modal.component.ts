@@ -1,10 +1,15 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Command, SrvCmdBase } from '../app.model';
 import { ApiService } from '../api.service';
+import {AfterViewInit, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdminWebsocketService } from '../admin-websocket.service';
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 export interface CommandCreateArgs {
   computerId: string,
@@ -27,6 +32,8 @@ export class CommandCreateModalComponent implements OnInit {
   downloadDestination: string = ""
 
   dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
     'command', 'arguments', 'response'];
 
@@ -49,7 +56,9 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-
+    // Connect the table components
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit(): void {
@@ -64,6 +73,13 @@ export class CommandCreateModalComponent implements OnInit {
       this.downloadUrl = this.serverurl + "/static/test.txt";
       this.downloadDestination = "test.txt";
     }
+
+    // FIX: JS Warning Race Condition
+    timer(0)
+    .pipe(take(1))
+    .subscribe(() => {
+      this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
+    });
 
     this.apiService.refreshCommandsClient(this.data.computerId).subscribe(
       (data2: SrvCmdBase[]) => {
