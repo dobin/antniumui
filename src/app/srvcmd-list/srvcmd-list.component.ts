@@ -8,6 +8,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { CommandCreateModalComponent, CommandCreateArgs} from '../command-create-modal/command-create-modal.component';
 import { SrvCmdBase } from '../app.model';
 import { ApiService } from '../api.service';
+import { AdminWebsocketService } from '../admin-websocket.service';
+
 
 @Component({
   selector: 'app-srvcmd-list',
@@ -24,26 +26,33 @@ export class SrvcmdListComponent implements OnInit {
   dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+    
   constructor(    
     private dialog: MatDialog,
 		private apiService: ApiService,
+    private adminWebsocketService: AdminWebsocketService,
   ) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(): void { // called when we have data via @Input
-    if (this.srvCmds == null) {
-      return;
-    }
-    this.dataSource.data = this.srvCmds;
+    //if (this.srvCmds == null) {
+    //  return;
+    //}
+    //this.dataSource.data = this.srvCmds;
   }
 
   ngAfterViewInit() {
     // Connect the table components
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    this.adminWebsocketService.apiEvent.subscribe(data => {
+      console.log("Srvcmd data");
+      this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    })
   }
 
   showModalCommandCreate(computerId: string) {

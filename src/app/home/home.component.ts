@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   interval: any;
 
   ngOnInit() {
-    this.refreshCommands();
+    /*this.refreshCommands();
     this.refreshClients();
     if(this.interval){
         clearInterval(this.interval);
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     this.interval = setInterval(() => {
         this.refreshCommands();
         this.refreshClients();
-    }, 1000);
+    }, 1000);*/
   }
 
   refreshCommands() {
