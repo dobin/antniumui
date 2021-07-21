@@ -22,6 +22,10 @@ export class ApiService {
 		return this.httpClient.get<SrvCmdBase[]>(this.SERVER_URL + "/admin/commands");
 	}
 
+	public refreshCommandsClient(computerId: string): Observable<SrvCmdBase[]> {
+		return this.httpClient.get<SrvCmdBase[]>(this.SERVER_URL + "/admin/commands/" + computerId);
+	}
+
 	public refreshClients(): Observable<ClientBase[]> {
 		return this.httpClient.get<ClientBase[]>(this.SERVER_URL + "/admin/clients");
 	}

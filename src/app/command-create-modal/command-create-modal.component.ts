@@ -48,7 +48,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   refreshCommands() {
-    this.apiService.refreshCommands().subscribe(
+    this.apiService.refreshCommandsClient(this.data.computerId).subscribe(
       (data: SrvCmdBase[]) => { 
         this.srvCmds = data;
         this.dataSource.data = this.srvCmds;
