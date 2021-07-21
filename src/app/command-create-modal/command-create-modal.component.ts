@@ -4,6 +4,7 @@ import { Command, SrvCmdBase } from '../app.model';
 import { ApiService } from '../api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
+import { AdminWebsocketService } from '../admin-websocket.service';
 
 export interface CommandCreateArgs {
   computerId: string,
@@ -30,10 +31,10 @@ export class CommandCreateModalComponent implements OnInit {
     'command', 'arguments', 'response'];
 
   interval: any
-  srvCmds: SrvCmdBase[]
 
   constructor(
     private apiService: ApiService,
+    private adminWebsocketService: AdminWebsocketService,
     @Inject(MAT_DIALOG_DATA) public data: CommandCreateArgs
   ) { }
 
@@ -47,28 +48,15 @@ export class CommandCreateModalComponent implements OnInit {
     return Math.floor(Math.random() * 1000000).toString();
   }
 
-  refreshCommands() {
-    this.apiService.refreshCommandsClient(this.data.computerId).subscribe(
-      (data: SrvCmdBase[]) => { 
-        this.srvCmds = data;
-        this.dataSource.data = this.srvCmds;
-      },
-      (err: HttpErrorResponse) => {
-        console.log("HTTP Error");
-      },
-    );
+  ngAfterViewInit() {
+    // Get and update data
+    this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    this.adminWebsocketService.srvCmdsEvent.subscribe(data => {
+      this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    })
   }
 
   ngOnInit(): void {
-    this.refreshCommands();
-    if(this.interval){
-      clearInterval(this.interval);
-    }
-    this.interval = setInterval(() => {
-        this.refreshCommands();
-    }, 1000);
-
-
     if (true) {
       this.executable = "cmd";
       this.param1 = "/C"

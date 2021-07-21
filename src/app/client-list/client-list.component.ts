@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { ClientBase } from '../app.model';
 import { MatDialog } from "@angular/material/dialog";
 import { CommandCreateModalComponent, CommandCreateArgs } from '../command-create-modal/command-create-modal.component';
+import { AdminWebsocketService } from '../admin-websocket.service';
 
 @Component({
   selector: 'app-client-list',
@@ -13,26 +14,27 @@ import { CommandCreateModalComponent, CommandCreateArgs } from '../command-creat
   styleUrls: ['./client-list.component.css']
 })
 export class ClientListComponent implements OnInit {
-  @Input() clients!: ClientBase[]; // Data this component receives
-
   displayedColumns: string[] = [
     'actions', 'ComputerID', 'LastSeen'];
 
   // Table shit
   dataSource: MatTableDataSource<ClientBase> = new MatTableDataSource<ClientBase>();
 
-  constructor(    
+  constructor(
     private dialog: MatDialog,
+    private adminWebsocketService: AdminWebsocketService,
   ) { }
 
   ngOnInit(): void {
+
   }
 
-  ngOnChanges(): void { // called when we have data via @Input
-    if (this.clients == null) {
-      return;
-    }
-    this.dataSource.data = this.clients;
+  ngAfterViewInit() {
+      // Get and update data
+      this.dataSource.data = this.adminWebsocketService.getClients();
+      this.adminWebsocketService.clientsEvent.subscribe(data => {
+        this.dataSource.data = this.adminWebsocketService.getClients();
+      })
   }
 
   showModalCommandCreate(computerId: string) {

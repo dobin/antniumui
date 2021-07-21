@@ -17,8 +17,6 @@ import { AdminWebsocketService } from '../admin-websocket.service';
   styleUrls: ['./srvcmd-list.component.css']
 })
 export class SrvcmdListComponent implements OnInit {
-  @Input() srvCmds!: SrvCmdBase[]; // Data this component receives
-
   displayedColumns: string[] = [
     'actions', 'TimeRecorded', 'ClientIp', 'command', 'arguments', 'response', 'State'];
 
@@ -36,21 +34,14 @@ export class SrvcmdListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ngOnChanges(): void { // called when we have data via @Input
-    //if (this.srvCmds == null) {
-    //  return;
-    //}
-    //this.dataSource.data = this.srvCmds;
-  }
-
   ngAfterViewInit() {
     // Connect the table components
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
+    // Get and update data
     this.dataSource.data = this.adminWebsocketService.getSrvCmds();
-    this.adminWebsocketService.apiEvent.subscribe(data => {
-      console.log("Srvcmd data");
+    this.adminWebsocketService.srvCmdsEvent.subscribe(data => {
       this.dataSource.data = this.adminWebsocketService.getSrvCmds();
     })
   }

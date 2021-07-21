@@ -2,8 +2,14 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { SrvCmdBase } from './app.model';
+import { SrvCmdBase, ClientBase } from './app.model';
 import { ApiService } from './api.service';
+
+
+interface GuiData {
+  Reason: string
+  ComputerId: string
+}
 
 
 @Injectable({
@@ -11,8 +17,12 @@ import { ApiService } from './api.service';
 })
 export class AdminWebsocketService {
   private socket$!: WebSocketSubject<any>;
+
   private srvCmds: SrvCmdBase[] = [];
-  public apiEvent: EventEmitter<any> = new EventEmitter();
+  private clients: ClientBase[] = [];
+
+  public srvCmdsEvent: EventEmitter<any> = new EventEmitter();
+  public clientsEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(		
     private apiService: ApiService,
@@ -24,13 +34,17 @@ export class AdminWebsocketService {
     return this.srvCmds;
   }
 
+  public getClients(): ClientBase[] {
+    return this.clients;
+  }
+
 
   private connect() {
     // Get initial data
     this.apiService.refreshCommands().subscribe(
       (data: SrvCmdBase[]) => { 
         this.srvCmds = data;
-        this.apiEvent.emit(data);  
+        this.srvCmdsEvent.emit(data);  
       },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error: " + err);
@@ -43,21 +57,33 @@ export class AdminWebsocketService {
     }
 
     // Function to listen for updates
-    this.socket$.subscribe((data: SrvCmdBase) => {
-      // Add to our local DB
-      this.srvCmds.push(data);
+    this.socket$.subscribe((data: GuiData) => {
+      console.log(data);
 
-      // Notify
-      this.apiEvent.emit(data);  
+      // Also check for new clients, for now
+      this.apiService.refreshCommands().subscribe(
+        (data: SrvCmdBase[]) => { 
+            this.srvCmds = data;
+            this.srvCmdsEvent.emit(data);  
+          },
+          (err: HttpErrorResponse) => {
+            console.log("HTTP Error: " + err);
+          },
+      );
+
+      // Also check for new clients, for now
+      this.apiService.refreshClients().subscribe(
+        (data: ClientBase[]) => { 
+            this.clients = data;
+            this.clientsEvent.emit(data);  
+          },
+          (err: HttpErrorResponse) => {
+            console.log("HTTP Error: " + err);
+          },
+      );
+
      });
   }
-
-
-/*
-  public dataUpdates$() {
-    return this.connect().asObservable();
-  }
-  */
 
   disconnect() {
     this.socket$.complete();
