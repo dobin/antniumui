@@ -7,6 +7,8 @@ import { ClientBase } from '../app.model';
 import { MatDialog } from "@angular/material/dialog";
 import { CommandCreateModalComponent, CommandCreateArgs } from '../command-create-modal/command-create-modal.component';
 import { AdminWebsocketService } from '../admin-websocket.service';
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-list',
@@ -19,6 +21,7 @@ export class ClientListComponent implements OnInit {
 
   // Table shit
   dataSource: MatTableDataSource<ClientBase> = new MatTableDataSource<ClientBase>();
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private dialog: MatDialog,
@@ -26,11 +29,23 @@ export class ClientListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      // Get and update data
+    // FIX: JS Warning Race Condition
+    timer(0)
+    .pipe(take(1))
+    .subscribe(() => {
+      this.sort.sort({ id: 'LastSeen', start: 'desc', disableClear: true });
+    });
+
+    // Get and update data
+    this.dataSource.data = this.adminWebsocketService.getClients();
+    this.adminWebsocketService.clientsEvent.subscribe(data => {
       this.dataSource.data = this.adminWebsocketService.getClients();
-      this.adminWebsocketService.clientsEvent.subscribe(data => {
-        this.dataSource.data = this.adminWebsocketService.getClients();
-      })
+    })
+  }
+
+  ngAfterViewInit() {
+    // Connect the table components
+    this.dataSource.sort = this.sort;
   }
 
   showModalCommandCreate(computerId: string) {

@@ -4,7 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from "@angular/material/dialog";
-
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { CommandCreateModalComponent, CommandCreateArgs} from '../command-create-modal/command-create-modal.component';
 import { SrvCmdBase } from '../app.model';
 import { ApiService } from '../api.service';
@@ -32,6 +33,12 @@ export class SrvcmdListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // FIX: JS Warning Race Condition
+    timer(0)
+    .pipe(take(1))
+    .subscribe(() => {
+      this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
+    });
   }
 
   ngAfterViewInit() {
