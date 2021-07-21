@@ -17,6 +17,7 @@ interface GuiData {
 })
 export class AdminWebsocketService {
   private socket$!: WebSocketSubject<any>;
+  private interval: any
 
   private srvCmds: SrvCmdBase[] = [];
   private clients: ClientBase[] = [];
@@ -38,6 +39,17 @@ export class AdminWebsocketService {
     return this.clients;
   }
 
+  private refreshClients() {
+    this.apiService.refreshClients().subscribe(
+      (data: ClientBase[]) => { 
+          this.clients = data;
+          this.clientsEvent.emit(data);  
+        },
+        (err: HttpErrorResponse) => {
+          console.log("HTTP Error: " + err);
+        },
+    );
+  }
 
   private connect() {
     // Get initial data
@@ -50,6 +62,14 @@ export class AdminWebsocketService {
         console.log("HTTP Error: " + err);
       },
     );
+
+    this.refreshClients();
+    if(this.interval){
+      clearInterval(this.interval);
+    }
+    this.interval = setInterval(() => {
+        this.refreshClients();
+    }, 3000);
 
     // Make WS, connect
     if (!this.socket$ || this.socket$.closed) {
@@ -70,18 +90,6 @@ export class AdminWebsocketService {
             console.log("HTTP Error: " + err);
           },
       );
-
-      // Also check for new clients, for now
-      this.apiService.refreshClients().subscribe(
-        (data: ClientBase[]) => { 
-            this.clients = data;
-            this.clientsEvent.emit(data);  
-          },
-          (err: HttpErrorResponse) => {
-            console.log("HTTP Error: " + err);
-          },
-      );
-
      });
   }
 
