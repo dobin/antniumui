@@ -49,11 +49,6 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // Get and update data
-    this.dataSource.data = this.adminWebsocketService.getSrvCmds();
-    this.adminWebsocketService.srvCmdsEvent.subscribe(data => {
-      this.dataSource.data = this.adminWebsocketService.getSrvCmds();
-    })
   }
 
   ngOnInit(): void {
@@ -68,6 +63,12 @@ export class CommandCreateModalComponent implements OnInit {
       this.downloadUrl = this.serverurl + "/static/test.txt";
       this.downloadDestination = "test.txt";
     }
+
+    // Get and update data
+    this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    this.adminWebsocketService.srvCmdsEvent.subscribe(data => {
+      this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    })
   }
 
   addCommandTest() {

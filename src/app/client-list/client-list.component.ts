@@ -26,10 +26,6 @@ export class ClientListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-  }
-
-  ngAfterViewInit() {
       // Get and update data
       this.dataSource.data = this.adminWebsocketService.getClients();
       this.adminWebsocketService.clientsEvent.subscribe(data => {
