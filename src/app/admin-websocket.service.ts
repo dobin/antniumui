@@ -18,16 +18,13 @@ interface GuiData {
 })
 export class AdminWebsocketService {
   private socket$!: WebSocketSubject<any>;
-  private subscription: Subscription;
-
+  private subscription!: Subscription;
 
   private srvCmds: SrvCmdBase[] = [];
   private clients: ClientBase[] = [];
 
   public srvCmdsEvent: EventEmitter<any> = new EventEmitter();
   public clientsEvent: EventEmitter<any> = new EventEmitter();
-
-
 
   constructor(		
     private apiService: ApiService,
@@ -71,14 +68,21 @@ export class AdminWebsocketService {
       },
     );
 
-
     this.refreshClients();
     const source = interval(10000);
     this.subscription = source.subscribe(val => this.refreshClients());
 
     // Make WS, connect
     if (!this.socket$ || this.socket$.closed) {
-      this.socket$ = webSocket("ws://localhost:4444/admin/ws");
+      this.socket$ = webSocket({
+        url: "ws://localhost:4444/admin/ws",
+        closeObserver: {
+          next: () => {
+            console.log('[WebSocket]: connection closed, retrying');
+            this.connect();
+          }
+        },
+      });
     }
 
     // Function to listen for updates from WS
