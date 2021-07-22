@@ -9,16 +9,15 @@
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="ComputerID">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
-        <td mat-cell *matCellDef="let element"> {{element.ComputerId}} </td>
-    </ng-container>
-
     <ng-container matColumnDef="LastSeen">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Seen </th>
         <td mat-cell *matCellDef="let element"> {{element.LastSeen | date:'short'}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="ComputerID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
+        <td mat-cell *matCellDef="let element"> {{element.ComputerId}} </td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

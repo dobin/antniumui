@@ -17,7 +17,7 @@ import { take } from 'rxjs/operators';
 })
 export class ClientListComponent implements OnInit {
   displayedColumns: string[] = [
-    'actions', 'ComputerID', 'LastSeen'];
+    'actions', 'LastSeen', 'ComputerID' ];
 
   // Table shit
   dataSource: MatTableDataSource<ClientBase> = new MatTableDataSource<ClientBase>();
