@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Command, SrvCmdBase } from '../app.model';
+import { Command, SrvCmdBase, ClientBase } from '../app.model';
 import { ApiService } from '../api.service';
 import {AfterViewInit, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -30,6 +30,7 @@ export class CommandCreateModalComponent implements OnInit {
   uploadSource: string = ""
   downloadUrl: string = ""
   downloadDestination: string = ""
+  client: ClientBase
 
   dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,7 +43,7 @@ export class CommandCreateModalComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
-    @Inject(MAT_DIALOG_DATA) public data: CommandCreateArgs
+    @Inject(MAT_DIALOG_DATA) public commandCreateArgs: CommandCreateArgs
   ) { }
 
   openFileTab(url: string){
@@ -62,6 +63,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Default values (for testing)
     if (true) {
       this.executable = "cmd";
       this.param1 = "/C"
@@ -74,6 +76,8 @@ export class CommandCreateModalComponent implements OnInit {
       this.downloadDestination = "test.txt";
     }
 
+    this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
+
     // FIX: JS Warning Race Condition
     timer(0)
     .pipe(take(1))
@@ -81,7 +85,7 @@ export class CommandCreateModalComponent implements OnInit {
       this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
     });
 
-    this.apiService.refreshCommandsClient(this.data.computerId).subscribe(
+    this.apiService.refreshCommandsClient(this.commandCreateArgs.computerId).subscribe(
       (data2: SrvCmdBase[]) => {
         this.dataSource.data = data2;
       },
@@ -92,7 +96,7 @@ export class CommandCreateModalComponent implements OnInit {
 
     // Get and update data
     this.adminWebsocketService.srvCmdsEvent.subscribe((data2: SrvCmdBase[]) => {
-      var newData = data2.filter(d => d.Command.computerid == this.data.computerId ||d.Command.computerid == "0");
+      var newData = data2.filter(d => d.Command.computerid == this.commandCreateArgs.computerId ||d.Command.computerid == "0");
       this.dataSource.data = newData;
     })
   }

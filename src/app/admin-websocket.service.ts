@@ -39,6 +39,10 @@ export class AdminWebsocketService {
     return this.clients;
   }
 
+  public getClientBy(computerId: string): ClientBase {
+    return this.getClients().find(c => c.ComputerId == computerId)!;
+  }
+
   private refreshClients() {
     this.apiService.refreshClients().subscribe(
       (data: ClientBase[]) => { 

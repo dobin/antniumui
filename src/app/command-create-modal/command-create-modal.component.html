@@ -1,8 +1,9 @@
-<mat-form-field class="example-form-field" appearance="fill">
-  <mat-label>ComputerId</mat-label>
-  <input matInput type="text" [(ngModel)]="data.computerId">
-</mat-form-field>
-
+<mat-card>
+Host: {{client.ComputerId}} | 
+IP:  {{client.LastIp}} |
+LastSeen: {{client.LastSeen | date:'short'}}
+</mat-card>
+<br>
 
 <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Execute">

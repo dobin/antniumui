@@ -21,6 +21,7 @@ export interface Command {
 export interface ClientBase {
   ComputerId: string
   LastSeen: string
+  LastIp: string
 }
 
 
