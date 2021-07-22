@@ -31,6 +31,9 @@ export class CommandCreateModalComponent implements OnInit {
   downloadUrl: string = ""
   downloadDestination: string = ""
   client: ClientBase
+  
+  commandselect: number = 0
+  commandline: string = "cmd /C hostname"
 
   dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
   @ViewChild(MatSort) sort!: MatSort;
@@ -120,7 +123,37 @@ export class CommandCreateModalComponent implements OnInit {
     );
   }
 
-  addCommandExec() {
+  addCommandExecLine() {
+    var split = this.commandline.split(" ")
+    var executable: string = split[0];
+    var paramsArr = split.slice(1);
+
+    var params:{ [id: string]: string } = {};
+    params["executable"] = executable
+    for(var n=0; n<paramsArr.length; n++) {
+      params["param" + n] = paramsArr[n];
+    }
+    console.log(params);
+
+    var command: Command = {
+      computerid: '0', 
+      packetid: this.getRandomInt(),
+      command: 'exec',
+      arguments: params,
+      response: {},
+    }
+
+    this.apiService.sendCommand(command).subscribe(
+      (data: any) => { 
+        console.log("SendCommand successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendCommand failed")
+      },
+    );
+  }
+
+  addCommandExecArgs() {
     var command: Command = {
       computerid: '0', 
       packetid: this.getRandomInt(),
@@ -132,13 +165,13 @@ export class CommandCreateModalComponent implements OnInit {
     }
 
     if (this.param1 != "") {
-      command.arguments["param1"] = this.param1;
+      command.arguments["param0"] = this.param1;
     }
     if (this.param2 != "") {
-      command.arguments["param2"] = this.param2;
+      command.arguments["param1"] = this.param2;
     }
     if (this.param3 != "") {
-      command.arguments["param3"] = this.param3;
+      command.arguments["param2"] = this.param3;
     }
 
     this.apiService.sendCommand(command).subscribe(

@@ -8,27 +8,35 @@ LastSeen: {{client.LastSeen | date:'short'}}
 <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Execute">
         <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="addCommandExec()">Send</button>
+            <button mat-raised-button (click)="addCommandExecArgs()">Send</button>
+            <mat-form-field fxFlex="70">
+                <mat-label>commandline</mat-label>
+                <input matInput type="text" [(ngModel)]="commandline">
+            </mat-form-field>
+        </mat-card>
+    </mat-tab>
 
-            <mat-form-field class="example-form-field" appearance="fill">
+    <mat-tab label="Execute 2">
+        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="addCommandExecArgs()">Send</button>
+
+            <mat-form-field fxFlex>
                 <mat-label>Executable</mat-label>
                 <input matInput type="text" [(ngModel)]="executable">
             </mat-form-field>
-            <mat-form-field class="example-form-field" appearance="fill">
+            <mat-form-field fxFlex>
                 <mat-label>Parameter 1</mat-label>
                 <input matInput type="text" [(ngModel)]="param1">
             </mat-form-field>
-            <mat-form-field class="example-form-field" appearance="fill">
+            <mat-form-field fxFlex>
                 <mat-label>Parameter 2</mat-label>
                 <input matInput type="text" [(ngModel)]="param2">
             </mat-form-field>
-            <mat-form-field class="example-form-field" appearance="fill">
+            <mat-form-field fxFlex>
                 <mat-label>Parameter 3</mat-label>
                 <input matInput type="text" [(ngModel)]="param3">
             </mat-form-field>
-
         </mat-card>
-
     </mat-tab>
 
     <mat-tab label="FileUpload">
