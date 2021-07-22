@@ -101,6 +101,9 @@ export class CommandCreateModalComponent implements OnInit {
     this.adminWebsocketService.srvCmdsEvent.subscribe((data2: SrvCmdBase[]) => {
       var newData = data2.filter(d => d.Command.computerid == this.commandCreateArgs.computerId ||d.Command.computerid == "0");
       this.dataSource.data = newData;
+
+      // Also update client info (e.g. last seen)
+      this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
     })
   }
 
