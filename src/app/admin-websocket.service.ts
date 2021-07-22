@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { HttpErrorResponse } from '@angular/common/http';
+import { interval, Subscription } from 'rxjs';
 
 import { SrvCmdBase, ClientBase } from './app.model';
 import { ApiService } from './api.service';
@@ -17,13 +18,16 @@ interface GuiData {
 })
 export class AdminWebsocketService {
   private socket$!: WebSocketSubject<any>;
-  private interval: any
+  private subscription: Subscription;
+
 
   private srvCmds: SrvCmdBase[] = [];
   private clients: ClientBase[] = [];
 
   public srvCmdsEvent: EventEmitter<any> = new EventEmitter();
   public clientsEvent: EventEmitter<any> = new EventEmitter();
+
+
 
   constructor(		
     private apiService: ApiService,
@@ -67,13 +71,10 @@ export class AdminWebsocketService {
       },
     );
 
+
     this.refreshClients();
-    if(this.interval){
-      clearInterval(this.interval);
-    }
-    this.interval = setInterval(() => {
-        this.refreshClients();
-    }, 3000);
+    const source = interval(10000);
+    this.subscription = source.subscribe(val => this.refreshClients());
 
     // Make WS, connect
     if (!this.socket$ || this.socket$.closed) {
