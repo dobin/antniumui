@@ -34,14 +34,6 @@ export class SrvcmdListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.apiService.getCampaign().subscribe(
-      (data: Campaign) => { 
-          console.log(data);
-        },
-        (err: HttpErrorResponse) => {
-          console.log("HTTP Error: " + err);
-        },
-    );
     // FIX: JS Warning Race Condition
     timer(0)
     .pipe(take(1))

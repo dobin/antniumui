@@ -34,6 +34,7 @@ import { CommandCreateModalComponent } from './command-create-modal/command-crea
 import { AuthInterceptor } from './auth-interceptor';
 import { StripPipe } from './strip-pipe'
 import { CampaignViewComponent } from './campaign-view/campaign-view.component';
+import { ConfigModalComponent } from './config-modal/config-modal.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { CampaignViewComponent } from './campaign-view/campaign-view.component';
     CommandCreateModalComponent,
     CampaignViewComponent,
     StripPipe,
+    ConfigModalComponent,
   ],
   imports: [
     BrowserModule,

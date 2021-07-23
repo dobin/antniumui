@@ -5,9 +5,23 @@ import { Injectable } from '@angular/core';
 })
 export class ConfigService {
 
-  constructor() { }
+  private adminApiKey = "";
+
+  constructor() { 
+    var adminApiKey = localStorage.getItem("adminApiKey");
+    if (adminApiKey == null) {
+      this.adminApiKey = "Secret-AdminApi-Key";
+    } else {
+      this.adminApiKey = adminApiKey;
+    }
+  }
 
   getAdminApiKey(): string {
-    return "Secret-AdminApi-Key";
+    return this.adminApiKey;
+  }
+
+  setAdminApiKey(adminApiKey: string) {
+    localStorage.setItem("adminApiKey", adminApiKey);
+    this.adminApiKey = adminApiKey;
   }
 }
