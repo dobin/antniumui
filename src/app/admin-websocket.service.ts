@@ -6,12 +6,10 @@ import { interval, Subscription } from 'rxjs';
 import { SrvCmdBase, ClientBase } from './app.model';
 import { ApiService } from './api.service';
 
-
 interface GuiData {
   Reason: string
   ComputerId: string
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +73,7 @@ export class AdminWebsocketService {
     // Make WS, connect
     if (!this.socket$ || this.socket$.closed) {
       this.socket$ = webSocket({
-        url: "ws://localhost:4444/admin/ws",
+        url: "ws://localhost:4444/ws",
         closeObserver: {
           next: () => {
             console.log('[WebSocket]: connection closed, retrying');
@@ -83,6 +81,9 @@ export class AdminWebsocketService {
           }
         },
       });
+
+      // Send our authentication token
+      this.socket$.next(this.apiService.getAdminApiKey());
     }
 
     // Function to listen for updates from WS

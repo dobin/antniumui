@@ -18,6 +18,10 @@ export class ApiService {
 		}
 	}
 
+	public getAdminApiKey(): string {
+		return "Secret-AdminApi-Key";
+	}
+
 	public refreshCommands(): Observable<SrvCmdBase[]> {
 		return this.httpClient.get<SrvCmdBase[]>(this.SERVER_URL + "/admin/commands");
 	}
