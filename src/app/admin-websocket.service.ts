@@ -20,6 +20,9 @@ export class AdminWebsocketService {
   private socket$!: WebSocketSubject<any>;
   private subscription!: Subscription;
 
+  public websocketStatus = "";
+  public restStatus = "";
+
   private srvCmds: SrvCmdBase[] = [];
   private clients: ClientBase[] = [];
 
@@ -49,11 +52,12 @@ export class AdminWebsocketService {
     this.apiService.refreshClients().subscribe(
       (data: ClientBase[]) => { 
           this.clients = data;
-          this.clientsEvent.emit(data);  
+          this.clientsEvent.emit(data);
+          this.restStatus = "ok";
         },
-        (err: HttpErrorResponse) => {
-          console.log("HTTP Error: " + err);
-        },
+      (err: HttpErrorResponse) => {
+        console.log("HTTP Error: " + err);
+      },
     );
   }
 
@@ -66,6 +70,7 @@ export class AdminWebsocketService {
       },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error: " + err);
+        this.restStatus = "error";
       },
     );
 
@@ -78,8 +83,14 @@ export class AdminWebsocketService {
       var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/ws";
       this.socket$ = webSocket({
         url: newUrl,
+        openObserver: {
+          next: () => {
+            this.websocketStatus = "Open";
+          },
+        },
         closeObserver: {
           next: () => {
+            this.websocketStatus = "Closed";
             console.log('[WebSocket]: connection closed, retrying');
             timer(0)
             .pipe(take(1))

@@ -16,4 +16,6 @@
         <input matInput type="text"[(ngModel)]="serverIp">
     </mat-form-field>
     <button mat-raised-button (click)="setServerIp()">Apply</button>
+    WebSocket: {{ websocketStatus }}
+    REST: {{ restStatus }}
 </mat-card>
