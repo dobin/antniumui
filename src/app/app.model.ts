@@ -27,7 +27,7 @@ export interface ClientBase {
 export interface Campaign {
   ApiKey:      string
   AdminApiKey: string
-  EncKey:      Int32Array
+  EncKey:      string
   WithZip:     boolean
   WithEnc:     boolean
 

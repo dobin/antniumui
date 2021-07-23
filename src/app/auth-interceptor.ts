@@ -3,19 +3,19 @@ import { Injectable } from '@angular/core';
 import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest
 } from '@angular/common/http';
-import { ApiService } from './api.service';
+import { ConfigService } from './config.service';
 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    private apiService: ApiService,
+    private configService: ConfigService,
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
-    const authToken = this.apiService.getAdminApiKey();
+    const authToken = this.configService.getAdminApiKey();
 
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.

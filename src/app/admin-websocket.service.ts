@@ -5,6 +5,7 @@ import { interval, Subscription } from 'rxjs';
 
 import { SrvCmdBase, ClientBase } from './app.model';
 import { ApiService } from './api.service';
+import { ConfigService } from './config.service';
 
 interface GuiData {
   Reason: string
@@ -26,6 +27,7 @@ export class AdminWebsocketService {
 
   constructor(		
     private apiService: ApiService,
+    private configService: ConfigService,
   ) { 
     this.connect();
   }
@@ -83,7 +85,7 @@ export class AdminWebsocketService {
       });
 
       // Send our authentication token
-      this.socket$.next(this.apiService.getAdminApiKey());
+      this.socket$.next(this.configService.getAdminApiKey());
     }
 
     // Function to listen for updates from WS

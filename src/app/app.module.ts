@@ -33,6 +33,7 @@ import { CommandCreateModalComponent } from './command-create-modal/command-crea
 
 import { AuthInterceptor } from './auth-interceptor';
 import { StripPipe } from './strip-pipe'
+import { CampaignViewComponent } from './campaign-view/campaign-view.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { StripPipe } from './strip-pipe'
     SrvcmdListComponent,
     ClientListComponent,
     CommandCreateModalComponent,
+    CampaignViewComponent,
     StripPipe,
   ],
   imports: [

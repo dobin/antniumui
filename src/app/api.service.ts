@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SrvCmdBase, ClientBase, Command, Campaign } from './app.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({  
 	providedIn: 'root'  
@@ -16,11 +17,6 @@ export class ApiService {
 		if (isDevMode()) {
 			this.SERVER_URL = "http://localhost:4444";
 		}
-	}
-
-	// FIXME
-	public getAdminApiKey(): string {
-		return "Secret-AdminApi-Key";
 	}
 
 	public getCampaign(): Observable<Campaign> {
