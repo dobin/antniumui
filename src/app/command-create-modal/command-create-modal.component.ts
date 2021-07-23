@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Command, SrvCmdBase, ClientBase } from '../app.model';
+import { Command, SrvCmdBase, ClientBase, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
 import {AfterViewInit, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -26,9 +26,12 @@ export class CommandCreateModalComponent implements OnInit {
   param1: string = ""
   param2: string = ""
   param3: string = ""
-  uploadUrl: string = ""
+
+  uploadUrlBase: string = ""
   uploadSource: string = ""
-  downloadUrl: string = ""
+
+  downloadUrlBase: string = ""
+  downloadUrlFile: string = ""
   downloadDestination: string = ""
   client: ClientBase
   
@@ -68,15 +71,23 @@ export class CommandCreateModalComponent implements OnInit {
   ngOnInit(): void {
     // Default values (for testing)
     if (true) {
-      this.executable = "cmd";
-      this.param1 = "/C"
-      this.param2 = "whoami"
-
-      this.uploadUrl = this.serverurl + "/upload/"
-      this.uploadSource = "README.md";
-
-      this.downloadUrl = this.serverurl + "/static/test.txt";
-      this.downloadDestination = "test.txt";
+      this.apiService.getCampaign().subscribe(
+        (data: Campaign) => { 
+          this.executable = "cmd";
+          this.param1 = "/C"
+          this.param2 = "whoami"
+    
+          this.uploadUrlBase = data.ServerUrl + data.CommandFileUploadPath;
+          this.uploadSource = "README.md";
+    
+          this.downloadUrlBase = this.serverurl + data.CommandFileDownloadPath;
+          this.downloadUrlFile = "test.txt";
+          this.downloadDestination = "test.txt";
+        },
+        (err: HttpErrorResponse) => {
+          console.log("HTTP Error: " + err);
+        },
+      );
     }
 
     this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
@@ -194,7 +205,7 @@ export class CommandCreateModalComponent implements OnInit {
       packetid: packetId,
       command: 'fileupload',
       arguments: { 
-        "remoteurl": this.uploadUrl + packetId,
+        "remoteurl": this.uploadUrlBase + packetId,
         "source": this.uploadSource
       },
       response: {},
@@ -215,7 +226,7 @@ export class CommandCreateModalComponent implements OnInit {
       packetid: this.getRandomInt(),
       command: 'filedownload',
       arguments: { 
-        "remoteurl": this.downloadUrl,
+        "remoteurl": this.downloadUrlBase + this.downloadUrlFile,
         "destination": this.downloadDestination
       },
       response: {},

@@ -50,7 +50,7 @@ LastSeen: {{client.LastSeen | date:'short'}}
 
             <mat-form-field>
                 <mat-label>Upload URL</mat-label>
-                <input matInput type="text" [(ngModel)]="uploadUrl">
+                <input matInput type="text" [(ngModel)]="uploadUrlBase">
             </mat-form-field>
         </mat-card>
     </mat-tab>
@@ -59,13 +59,14 @@ LastSeen: {{client.LastSeen | date:'short'}}
         <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <button mat-raised-button (click)="addCommandDownload()">Send</button>
 
-            <mat-form-field fxFlex="70">
+            <mat-form-field fxFlex="60">
                 <mat-label>downloadDestination</mat-label>
                 <input matInput type="text" [(ngModel)]="downloadDestination">
             </mat-form-field>
+            {{downloadUrlBase}}
             <mat-form-field>
                 <mat-label>downloadUrl</mat-label>
-                <input matInput type="text" [(ngModel)]="downloadUrl">
+                <input matInput type="text" [(ngModel)]="downloadUrlFile">
             </mat-form-field>
         </mat-card>
 
