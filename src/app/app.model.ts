@@ -24,4 +24,17 @@ export interface ClientBase {
   LastIp: string
 }
 
+export interface Campaign {
+  ApiKey:      string
+  AdminApiKey: string
+  EncKey:      Int32Array
+  WithZip:     boolean
+  WithEnc:     boolean
 
+  ServerUrl: string
+
+  CommandSendPath:         string
+  CommandGetPath:          string
+  CommandFileUploadPath:   string
+  CommandFileDownloadPath: string
+}

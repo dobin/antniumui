@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SrvCmdBase, ClientBase, Command } from './app.model';
+import { SrvCmdBase, ClientBase, Command, Campaign } from './app.model';
 
 @Injectable({  
 	providedIn: 'root'  
@@ -18,8 +18,13 @@ export class ApiService {
 		}
 	}
 
+	// FIXME
 	public getAdminApiKey(): string {
 		return "Secret-AdminApi-Key";
+	}
+
+	public getCampaign(): Observable<Campaign> {
+		return this.httpClient.get<Campaign>(this.SERVER_URL + "/admin/campaign");
 	}
 
 	public refreshCommands(): Observable<SrvCmdBase[]> {

@@ -7,9 +7,10 @@ import { MatDialog } from "@angular/material/dialog";
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { CommandCreateModalComponent, CommandCreateArgs} from '../command-create-modal/command-create-modal.component';
-import { SrvCmdBase } from '../app.model';
+import { SrvCmdBase, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
 import { AdminWebsocketService } from '../admin-websocket.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -33,6 +34,14 @@ export class SrvcmdListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.apiService.getCampaign().subscribe(
+      (data: Campaign) => { 
+          console.log(data);
+        },
+        (err: HttpErrorResponse) => {
+          console.log("HTTP Error: " + err);
+        },
+    );
     // FIX: JS Warning Race Condition
     timer(0)
     .pipe(take(1))
