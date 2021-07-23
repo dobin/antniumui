@@ -6,7 +6,8 @@ import { interval, Subscription } from 'rxjs';
 import { SrvCmdBase, ClientBase } from './app.model';
 import { ApiService } from './api.service';
 import { ConfigService } from './config.service';
-
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 interface GuiData {
   Reason: string
   ComputerId: string
@@ -74,12 +75,18 @@ export class AdminWebsocketService {
 
     // Make WS, connect
     if (!this.socket$ || this.socket$.closed) {
+      var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/ws";
       this.socket$ = webSocket({
-        url: "ws://localhost:4444/ws",
+        url: newUrl,
         closeObserver: {
           next: () => {
             console.log('[WebSocket]: connection closed, retrying');
-            this.connect();
+            timer(0)
+            .pipe(take(1))
+            .subscribe(() => {
+              this.connect();
+            });
+            
           }
         },
       });

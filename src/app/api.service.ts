@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';  
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
-import { Observable } from 'rxjs';
+import { config, Observable } from 'rxjs';
 import { SrvCmdBase, ClientBase, Command, Campaign } from './app.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ConfigService } from './config.service';
 
 @Injectable({  
 	providedIn: 'root'  
 })  
 export class ApiService {
-	private SERVER_URL = location.origin;
+	private SERVER_URL = "";
 
     constructor(
 		private httpClient: HttpClient,
+		private configService: ConfigService,
 	) { 
 		if (isDevMode()) {
-			this.SERVER_URL = "http://localhost:4444";
+			//this.SERVER_URL = "http://localhost:4444";
 		}
+		this.SERVER_URL = configService.getServerIp();
 	}
 
 	public getCampaign(): Observable<Campaign> {

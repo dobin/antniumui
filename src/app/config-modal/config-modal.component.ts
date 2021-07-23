@@ -9,6 +9,7 @@ import { ConfigService } from '../config.service';
 export class ConfigModalComponent implements OnInit {
 
   adminApiKey = "";
+  serverIp = "";
 
   constructor(
     private configService: ConfigService,
@@ -16,11 +17,16 @@ export class ConfigModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminApiKey = this.configService.getAdminApiKey();
+    this.serverIp = this.configService.getServerIp();
   }
 
   setAdminApiKey() {
     this.configService.setAdminApiKey(this.adminApiKey)
     //this.reconnect();
+  }
+
+  setServerIp() {
+    this.configService.setServerIp(this.serverIp);
   }
 
   reconnect() {
