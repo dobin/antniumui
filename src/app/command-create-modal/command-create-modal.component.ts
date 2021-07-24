@@ -11,6 +11,7 @@ import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
+import { CommandTableComponent } from '../command-table/command-table.component';
 
 export interface CommandCreateArgs {
   computerId: string,
@@ -28,6 +29,8 @@ export class CommandCreateModalComponent implements OnInit {
   param2: string = ""
   param3: string = ""
 
+  selectedTabIndex: number = 0
+
   uploadUrlBase: string = ""
   uploadSource: string = ""
 
@@ -35,17 +38,18 @@ export class CommandCreateModalComponent implements OnInit {
   downloadUrlFile: string = ""
   downloadDestination: string = ""
   client: ClientBase
+  interactiveStdout: string = ""
   
   commandlineInteractive: string = "hostname"
 
   commandselect: number = 0
   commandline: string = "cmd /C hostname"
 
-  dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  displayedColumns: string[] = [
-    'command', 'arguments', 'response'];
+  //dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
+  //@ViewChild(MatSort) sort!: MatSort;
+  //@ViewChild(MatPaginator) paginator!: MatPaginator;
+  //displayedColumns: string[] = [
+  //  'command', 'arguments', 'response'];
 
   interval: any
 
@@ -66,11 +70,13 @@ export class CommandCreateModalComponent implements OnInit {
     return Math.floor(Math.random() * 1000000).toString();
   }
 
-  ngAfterViewInit() {
-    // Connect the table components
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  //ngAfterViewInit() {
+  //  // Connect the table components
+  //  this.dataSource.paginator = this.paginator;
+  //  this.dataSource.sort = this.sort;
+  //}
+
+
 
   ngOnInit(): void {
     // Default values (for testing)
@@ -96,16 +102,10 @@ export class CommandCreateModalComponent implements OnInit {
 
     this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
 
-    // FIX: JS Warning Race Condition
-    timer(0)
-    .pipe(take(1))
-    .subscribe(() => {
-      this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
-    });
 
     this.apiService.refreshCommandsClient(this.commandCreateArgs.computerId).subscribe(
-      (data2: SrvCmdBase[]) => {
-        this.dataSource.data = data2;
+      (data: SrvCmdBase[]) => { 
+        this.updateInteractive(data);
       },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error: " + err);
@@ -114,12 +114,28 @@ export class CommandCreateModalComponent implements OnInit {
 
     // Get and update data
     this.adminWebsocketService.srvCmdsEvent.subscribe((data2: SrvCmdBase[]) => {
-      var newData = data2.filter(d => d.Command.computerid == this.commandCreateArgs.computerId ||d.Command.computerid == "0");
-      this.dataSource.data = newData;
+      this.updateInteractive(data2);
 
       // Also update client info (e.g. last seen)
       this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
     })
+  }
+
+  updateInteractive(data2: SrvCmdBase[]) {
+    var newData = data2.filter(d => 
+      (d.Command.computerid == this.commandCreateArgs.computerId || d.Command.computerid == "0") 
+      && (d.Command.command == "iIssue" || d.Command.command == "iOpen"));
+    
+    this.interactiveStdout = "";
+    newData.forEach(element => {
+      //console.log("A: " + element.Command.response['stdout']);
+      if (element.Command.response.hasOwnProperty("stdout")) {
+        this.interactiveStdout += element.Command.response['stdout'];
+      }
+      if (element.Command.response.hasOwnProperty("stderr")) {
+        this.interactiveStdout += element.Command.response['stderr'];
+      }
+    });
   }
 
   addCommandTest() {

@@ -1,0 +1,82 @@
+
+<table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="command">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> command </th>
+        <td mat-cell *matCellDef="let element"> {{element.Command.command }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="arguments">
+        <th mat-header-cell *matHeaderCellDef> Arguments </th>
+        <td mat-cell *matCellDef="let element"> 
+            <container-element [ngSwitch]="element.Command.command">
+                
+            <div *ngSwitchCase="'exec'">
+                {{element.Command.arguments["executable"]}} 
+                {{element.Command.arguments["param0"]}} 
+                {{element.Command.arguments["param1"]}}
+                {{element.Command.arguments["param2"]}}
+                {{element.Command.arguments["param3"]}}
+            </div>
+
+            <div *ngSwitchCase="'fileupload'">
+                {{element.Command.arguments["source"]}} <br>
+                <a [routerLink]="" (click)="openFileTab(element.Command.arguments['remoteurl'])">Download as {{element.Command.arguments["remoteurl"] | strip}}</a>
+            </div>
+
+            <div *ngSwitchCase="'filedownload'">
+                Source: {{element.Command.arguments["remoteurl"] | strip}} <br>
+                Destination: {{element.Command.arguments["destination"]}}
+            </div>
+
+            <div *ngSwitchCase="'iIssue'">
+                Commandline: {{element.Command.arguments["commandline"] }}
+            </div>
+
+            <div *ngSwitchDefault>
+                {{element.Command.arguments | json }}
+            </div>
+         </container-element>
+
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="response">
+        <th mat-header-cell *matHeaderCellDef> Response </th>
+        <td mat-cell *matCellDef="let element"> 
+            <container-element [ngSwitch]="element.Command.command">
+                <div *ngSwitchCase="'exec'">
+                    <pre>{{element.Command.response["error"]}}{{element.Command.response["stdout"]}}</pre>
+                </div>
+            
+                <div *ngSwitchCase="'fileupload'">
+                    {{element.Command.response["response"]}}
+                </div>
+
+                <div *ngSwitchCase="'filedownload'">
+                    {{element.Command.response["response"]}}
+                </div>
+
+                <div *ngSwitchCase="'iOpen'">
+                    <pre>{{element.Command.response["stdout"]}}</pre>
+
+                    <pre>{{element.Command.response["stderr"]}}</pre>
+                </div>
+
+                <div *ngSwitchCase="'iIssue'">
+                    <pre>{{element.Command.response["stdout"]}}</pre>
+
+                    <pre>{{element.Command.response["stderr"]}}</pre>
+                </div>
+
+                <div *ngSwitchDefault>
+                    {{element.Command.response | json }}
+                </div>
+            </container-element>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>

@@ -61,7 +61,7 @@ export class SrvcmdListComponent implements OnInit {
 
     const dialogRef = this.dialog.open(CommandCreateModalComponent, {
       width: '80em',
-      height: '42em',
+      height: '50em',
       data: data,
     });
   }

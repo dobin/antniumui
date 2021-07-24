@@ -5,23 +5,28 @@ LastSeen: {{client.LastSeen | date:'short'}}
 </mat-card>
 <br>
 
-<mat-tab-group mat-align-tabs="start">
+<mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start">
     <mat-tab label="Interactive">
-        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+
+        <mat-card fxLayout="column"  fxLayoutGap="15px">
             <button mat-raised-button (click)="interactiveCmdOpen()">Open</button>
 
-            <mat-form-field fxFlex="70">
+            <mat-form-field fxFlex="50" fxFill>
                 <mat-label>commandline</mat-label>
                 <input matInput type="text" (keyup.enter)="interactiveCmdIssue()" [(ngModel)]="commandlineInteractive">
             </mat-form-field>
-            <button mat-raised-button (click)="interactiveCmdIssue()">Issue</button>
+
+            <md-input-container fxFlex="50" fxFill>
+                <textarea #textarea [scrollTop]="textarea.scrollHeight" style="width: 80em;" name="Output"  [(ngModel)]="interactiveStdout" mdInput rows="30"></textarea>
+            </md-input-container>
+
         </mat-card>
     </mat-tab>
 
     <mat-tab label="Execute">
         <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <button mat-raised-button (click)="addCommandExecArgs()">Send</button>
-            <mat-form-field fxFlex="70">
+            <mat-form-field fxFlex="70" fxFill>
                 <mat-label>commandline</mat-label>
                 <input matInput type="text" (keyup.enter)="addCommandExecArgs()" [(ngModel)]="commandline">
             </mat-form-field>
@@ -89,86 +94,5 @@ LastSeen: {{client.LastSeen | date:'short'}}
         <br><br>
     </mat-tab>
 </mat-tab-group>
-  
-  
-<table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="command">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> command </th>
-        <td mat-cell *matCellDef="let element"> {{element.Command.command }} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="arguments">
-        <th mat-header-cell *matHeaderCellDef> Arguments </th>
-        <td mat-cell *matCellDef="let element"> 
-            <container-element [ngSwitch]="element.Command.command">
-                
-            <div *ngSwitchCase="'exec'">
-                {{element.Command.arguments["executable"]}} 
-                {{element.Command.arguments["param0"]}} 
-                {{element.Command.arguments["param1"]}}
-                {{element.Command.arguments["param2"]}}
-                {{element.Command.arguments["param3"]}}
-            </div>
-
-            <div *ngSwitchCase="'fileupload'">
-                {{element.Command.arguments["source"]}} <br>
-                <a [routerLink]="" (click)="openFileTab(element.Command.arguments['remoteurl'])">Download as {{element.Command.arguments["remoteurl"] | strip}}</a>
-            </div>
-
-            <div *ngSwitchCase="'filedownload'">
-                Source: {{element.Command.arguments["remoteurl"] | strip}} <br>
-                Destination: {{element.Command.arguments["destination"]}}
-            </div>
-
-            <div *ngSwitchCase="'iIssue'">
-                Commandline: {{element.Command.arguments["commandline"] }}
-            </div>
-
-            <div *ngSwitchDefault>
-                {{element.Command.arguments | json }}
-            </div>
-         </container-element>
-
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="response">
-        <th mat-header-cell *matHeaderCellDef> Response </th>
-        <td mat-cell *matCellDef="let element"> 
-            <container-element [ngSwitch]="element.Command.command">
-                <div *ngSwitchCase="'exec'">
-                    <pre>{{element.Command.response["error"]}}{{element.Command.response["stdout"]}}</pre>
-                </div>
-            
-                <div *ngSwitchCase="'fileupload'">
-                    {{element.Command.response["response"]}}
-                </div>
-
-                <div *ngSwitchCase="'filedownload'">
-                    {{element.Command.response["response"]}}
-                </div>
-
-                <div *ngSwitchCase="'iOpen'">
-                    <pre>{{element.Command.response["stdout"]}}</pre>
-
-                    <pre>{{element.Command.response["stderr"]}}</pre>
-                </div>
-
-                <div *ngSwitchCase="'iIssue'">
-                    <pre>{{element.Command.response["stdout"]}}</pre>
-
-                    <pre>{{element.Command.response["stderr"]}}</pre>
-                </div>
-
-                <div *ngSwitchDefault>
-                    {{element.Command.response | json }}
-                </div>
-            </container-element>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+ 
+<app-command-table *ngIf="selectedTabIndex != 0" [computerId]="commandCreateArgs.computerId"></app-command-table>
