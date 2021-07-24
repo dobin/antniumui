@@ -147,7 +147,7 @@ export class CommandCreateModalComponent implements OnInit {
     var command: Command = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'interactiveCmd_open',
+      command: 'iOpen',
       arguments: { },
       response: {},
     }
@@ -166,7 +166,7 @@ export class CommandCreateModalComponent implements OnInit {
     var command: Command = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'interactiveCmd_issue',
+      command: 'iIssue',
       arguments: { 'commandline': this.commandlineInteractive },
       response: {},
     }

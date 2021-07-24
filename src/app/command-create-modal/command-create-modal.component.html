@@ -12,7 +12,7 @@ LastSeen: {{client.LastSeen | date:'short'}}
 
             <mat-form-field fxFlex="70">
                 <mat-label>commandline</mat-label>
-                <input matInput type="text" [(ngModel)]="commandlineInteractive">
+                <input matInput type="text" (keyup.enter)="interactiveCmdIssue()" [(ngModel)]="commandlineInteractive">
             </mat-form-field>
             <button mat-raised-button (click)="interactiveCmdIssue()">Issue</button>
         </mat-card>
@@ -23,7 +23,7 @@ LastSeen: {{client.LastSeen | date:'short'}}
             <button mat-raised-button (click)="addCommandExecArgs()">Send</button>
             <mat-form-field fxFlex="70">
                 <mat-label>commandline</mat-label>
-                <input matInput type="text" [(ngModel)]="commandline">
+                <input matInput type="text" (keyup.enter)="addCommandExecArgs()" [(ngModel)]="commandline">
             </mat-form-field>
         </mat-card>
     </mat-tab>
@@ -121,7 +121,7 @@ LastSeen: {{client.LastSeen | date:'short'}}
                 Destination: {{element.Command.arguments["destination"]}}
             </div>
 
-            <div *ngSwitchCase="'interactiveCmd_issue'">
+            <div *ngSwitchCase="'iIssue'">
                 Commandline: {{element.Command.arguments["commandline"] }}
             </div>
 
@@ -149,13 +149,13 @@ LastSeen: {{client.LastSeen | date:'short'}}
                     {{element.Command.response["response"]}}
                 </div>
 
-                <div *ngSwitchCase="'interactiveCmd_open'">
+                <div *ngSwitchCase="'iOpen'">
                     <pre>{{element.Command.response["stdout"]}}</pre>
 
                     <pre>{{element.Command.response["stderr"]}}</pre>
                 </div>
 
-                <div *ngSwitchCase="'interactiveCmd_issue'">
+                <div *ngSwitchCase="'iIssue'">
                     <pre>{{element.Command.response["stdout"]}}</pre>
 
                     <pre>{{element.Command.response["stderr"]}}</pre>
