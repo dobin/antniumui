@@ -6,6 +6,18 @@ LastSeen: {{client.LastSeen | date:'short'}}
 <br>
 
 <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Interactive">
+        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="interactiveCmdOpen()">Open</button>
+
+            <mat-form-field fxFlex="70">
+                <mat-label>commandline</mat-label>
+                <input matInput type="text" [(ngModel)]="commandlineInteractive">
+            </mat-form-field>
+            <button mat-raised-button (click)="interactiveCmdIssue()">Issue</button>
+        </mat-card>
+    </mat-tab>
+
     <mat-tab label="Execute">
         <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <button mat-raised-button (click)="addCommandExecArgs()">Send</button>
@@ -109,6 +121,10 @@ LastSeen: {{client.LastSeen | date:'short'}}
                 Destination: {{element.Command.arguments["destination"]}}
             </div>
 
+            <div *ngSwitchCase="'interactiveCmd_issue'">
+                Commandline: {{element.Command.arguments["commandline"] }}
+            </div>
+
             <div *ngSwitchDefault>
                 {{element.Command.arguments | json }}
             </div>
@@ -126,11 +142,23 @@ LastSeen: {{client.LastSeen | date:'short'}}
                 </div>
             
                 <div *ngSwitchCase="'fileupload'">
-                    {{element.Command.response["response"]}}                 
+                    {{element.Command.response["response"]}}
                 </div>
 
                 <div *ngSwitchCase="'filedownload'">
-                    {{element.Command.response["response"]}}                 
+                    {{element.Command.response["response"]}}
+                </div>
+
+                <div *ngSwitchCase="'interactiveCmd_open'">
+                    <pre>{{element.Command.response["stdout"]}}</pre>
+
+                    <pre>{{element.Command.response["stderr"]}}</pre>
+                </div>
+
+                <div *ngSwitchCase="'interactiveCmd_issue'">
+                    <pre>{{element.Command.response["stdout"]}}</pre>
+
+                    <pre>{{element.Command.response["stderr"]}}</pre>
                 </div>
 
                 <div *ngSwitchDefault>

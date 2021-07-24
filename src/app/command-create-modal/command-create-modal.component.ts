@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { ConfigService } from '../config.service';
 
 export interface CommandCreateArgs {
   computerId: string,
@@ -21,7 +22,7 @@ export interface CommandCreateArgs {
   styleUrls: ['./command-create-modal.component.css']
 })
 export class CommandCreateModalComponent implements OnInit {
-  serverurl: string = "http://127.0.0.1:4444"
+  serverurl: string = ""
   executable: string = ""
   param1: string = ""
   param2: string = ""
@@ -35,6 +36,8 @@ export class CommandCreateModalComponent implements OnInit {
   downloadDestination: string = ""
   client: ClientBase
   
+  commandlineInteractive: string = "hostname"
+
   commandselect: number = 0
   commandline: string = "cmd /C hostname"
 
@@ -49,6 +52,7 @@ export class CommandCreateModalComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
+    private configService: ConfigService,
     @Inject(MAT_DIALOG_DATA) public commandCreateArgs: CommandCreateArgs
   ) { }
 
@@ -124,6 +128,46 @@ export class CommandCreateModalComponent implements OnInit {
       packetid: this.getRandomInt(),
       command: 'test',
       arguments: { "test": "test" },
+      response: {},
+    }
+
+    this.apiService.sendCommand(command).subscribe(
+      (data: any) => { 
+        console.log("SendCommand successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendCommand failed")
+      },
+    );
+  }
+
+
+
+  interactiveCmdOpen() {
+    var command: Command = {
+      computerid: '0', 
+      packetid: this.getRandomInt(),
+      command: 'interactiveCmd_open',
+      arguments: { },
+      response: {},
+    }
+
+    this.apiService.sendCommand(command).subscribe(
+      (data: any) => { 
+        console.log("SendCommand successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendCommand failed")
+      },
+    );
+  }
+
+  interactiveCmdIssue() {
+    var command: Command = {
+      computerid: '0', 
+      packetid: this.getRandomInt(),
+      command: 'interactiveCmd_issue',
+      arguments: { 'commandline': this.commandlineInteractive },
       response: {},
     }
 
