@@ -36,6 +36,7 @@ import { StripPipe } from './strip-pipe'
 import { CampaignViewComponent } from './campaign-view/campaign-view.component';
 import { ConfigModalComponent } from './config-modal/config-modal.component';
 import { DocsComponent } from './docs/docs.component';
+import { CommandTableComponent } from './command-table/command-table.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { DocsComponent } from './docs/docs.component';
     StripPipe,
     ConfigModalComponent,
     DocsComponent,
+    CommandTableComponent,
   ],
   imports: [
     BrowserModule,
