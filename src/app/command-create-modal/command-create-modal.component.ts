@@ -124,7 +124,7 @@ export class CommandCreateModalComponent implements OnInit {
 
   addCommandTest() {
     var command: Command = {
-      computerid: '0', 
+      computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'test',
       arguments: { "test": "test" },
@@ -145,7 +145,7 @@ export class CommandCreateModalComponent implements OnInit {
 
   interactiveCmdOpen() {
     var command: Command = {
-      computerid: '0', 
+      computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'interactiveCmd_open',
       arguments: { },
@@ -164,7 +164,7 @@ export class CommandCreateModalComponent implements OnInit {
 
   interactiveCmdIssue() {
     var command: Command = {
-      computerid: '0', 
+      computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'interactiveCmd_issue',
       arguments: { 'commandline': this.commandlineInteractive },
@@ -194,7 +194,7 @@ export class CommandCreateModalComponent implements OnInit {
     console.log(params);
 
     var command: Command = {
-      computerid: '0', 
+      computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'exec',
       arguments: params,
@@ -213,7 +213,7 @@ export class CommandCreateModalComponent implements OnInit {
 
   addCommandExecArgs() {
     var command: Command = {
-      computerid: '0', 
+      computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'exec',
       arguments: { 
@@ -245,7 +245,7 @@ export class CommandCreateModalComponent implements OnInit {
   addCommandUpload() {
     var packetId = this.getRandomInt();
     var command: Command = {
-      computerid: '0', 
+      computerid: this.client.ComputerId, 
       packetid: packetId,
       command: 'fileupload',
       arguments: { 
@@ -266,7 +266,7 @@ export class CommandCreateModalComponent implements OnInit {
 
   addCommandDownload() {
     var command: Command = {
-      computerid: '0', 
+      computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'filedownload',
       arguments: { 
