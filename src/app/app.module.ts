@@ -35,6 +35,7 @@ import { AuthInterceptor } from './auth-interceptor';
 import { StripPipe } from './strip-pipe'
 import { CampaignViewComponent } from './campaign-view/campaign-view.component';
 import { ConfigModalComponent } from './config-modal/config-modal.component';
+import { DocsComponent } from './docs/docs.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ConfigModalComponent } from './config-modal/config-modal.component';
     CampaignViewComponent,
     StripPipe,
     ConfigModalComponent,
+    DocsComponent,
   ],
   imports: [
     BrowserModule,

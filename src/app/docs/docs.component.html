@@ -1,0 +1,52 @@
+<h1> Antanium </h1>
+
+<h2> Architecture </h2>
+
+Data flow of componenets overview:
+<pre>
+                               ┌─────┐ ┌─────────┐
+                               │     │ │         │
+                               │CmdDb│ │ClientDb │
+                               │     │ │         │
+                               └──┬──┘ └─┬───────┘
+                                  │      │
+                                  │      │
+                                  │      │
+┌──────────────┐               ┌──┴──────┴──┐               ┌─────────┐
+│              │               │            │               │         │
+│    Client    │               │   Server   │ Clients       │   UI    │
+│              │               │            ├──────────────►│         │
+│              │       Command │            │ Commands      │         │
+│ [ComputerId] │◄──────────────┤ /get       ├──────────────►│         │
+│  [ClientIp]  │               │            │ WS Notify     │         │
+│              │ Answer        │            ├──────────────►│         │
+│              ├──────────────►│ /send      │   New Command │         │
+│              │               │            │◄──────────────┤         │
+│              │               └────────────┘               └─────────┘
+│              │                                             UIIP:4200
+│              │               ┌────────────┐
+│              │  FileDownload │            │
+│              │◄──────────────┤ /static  P │
+│              │               │            │
+│              │               ├────────────┤
+│              │ FileUpload    │            │
+│              ├──────────────►│ /upload  P │
+│              │               │            │
+└──────────────┘               └────────────┘
+                                ServerIP:4444
+
+
+       │          Auth:              │          Auth:            │
+       │          ApiKey             │          AdminApiKey      │
+       │                             │                           │
+       │                             │                           │
+       │          Encryption:        │                           │
+       │          EncKey             │                           │
+       │                             │                           │
+       │                             │                           │
+       │                             │                           │
+       │                             │                           │
+       │                             │                           │
+       │                             │                           │
+
+</pre>
