@@ -24,10 +24,10 @@ LastSeen: {{client.LastSeen | date:'short'}}
 
     <mat-tab label="Execute">
         <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="addCommandExecArgs()">Send</button>
+            <button mat-raised-button (click)="addCommandExecLine()">Send</button>
             <mat-form-field fxFlex="70" fxFill>
                 <mat-label>commandline</mat-label>
-                <input matInput type="text" (keyup.enter)="addCommandExecArgs()" [(ngModel)]="commandline">
+                <input matInput type="text" (keyup.enter)="addCommandExecLine()" [(ngModel)]="commandline">
             </mat-form-field>
         </mat-card>
     </mat-tab>
