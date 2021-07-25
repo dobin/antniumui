@@ -47,8 +47,8 @@ export class SrvcmdListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    // Get and update data
-    this.dataSource.data = this.adminWebsocketService.getSrvCmds();
+    // Useless, its ususally empty as we load this component before the REST api call succeeds
+    // this.dataSource.data = this.adminWebsocketService.getSrvCmds(); 
     this.adminWebsocketService.srvCmdsEvent.subscribe(data => {
       this.dataSource.data = this.adminWebsocketService.getSrvCmds();
     })

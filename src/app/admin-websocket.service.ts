@@ -3,14 +3,14 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { HttpErrorResponse } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 
-import { SrvCmdBase, ClientBase } from './app.model';
+import { SrvCmdBase, ClientBase, Command } from './app.model';
 import { ApiService } from './api.service';
 import { ConfigService } from './config.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
-interface GuiData {
-  Reason: string
-  ComputerId: string
+
+interface WebsocketData {
+  SrvCmd: SrvCmdBase,
 }
 
 @Injectable({
@@ -66,7 +66,7 @@ export class AdminWebsocketService {
     this.apiService.refreshCommands().subscribe(
       (data: SrvCmdBase[]) => { 
         this.srvCmds = data;
-        this.srvCmdsEvent.emit(data);  
+        this.srvCmdsEvent.emit(undefined); // undefined is broadcast all
       },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error: " + err);
@@ -107,17 +107,19 @@ export class AdminWebsocketService {
     }
 
     // Function to listen for updates from WS
-    this.socket$.subscribe((data: GuiData) => {
-      // Also check for new clients, for now
-      this.apiService.refreshCommands().subscribe(
-        (data: SrvCmdBase[]) => { 
-            this.srvCmds = data;
-            this.srvCmdsEvent.emit(data);  
-          },
-          (err: HttpErrorResponse) => {
-            console.log("HTTP Error: " + err);
-          },
-      );
+    this.socket$.subscribe((data: WebsocketData) => {
+      var x: SrvCmdBase = this.srvCmds.find(srvCmd => srvCmd.Command.packetid == data.SrvCmd.Command.packetid ) as SrvCmdBase
+      if (x == undefined) {
+        // Add command
+        this.srvCmds.push(data.SrvCmd);
+      } else {
+        // Update command (by removing the previous one)
+        var index = this.srvCmds.indexOf(x);
+        Object.assign(this.srvCmds[index], data.SrvCmd);
+      }
+
+      // Notify
+      this.srvCmdsEvent.emit(data.SrvCmd);
      });
   }
 

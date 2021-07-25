@@ -44,13 +44,6 @@ export class CommandCreateModalComponent implements OnInit {
 
   commandselect: number = 0
   commandline: string = "cmd /C hostname"
-
-  //dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
-  //@ViewChild(MatSort) sort!: MatSort;
-  //@ViewChild(MatPaginator) paginator!: MatPaginator;
-  //displayedColumns: string[] = [
-  //  'command', 'arguments', 'response'];
-
   interval: any
 
   constructor(
@@ -69,14 +62,6 @@ export class CommandCreateModalComponent implements OnInit {
   getRandomInt(): string {
     return Math.floor(Math.random() * 1000000).toString();
   }
-
-  //ngAfterViewInit() {
-  //  // Connect the table components
-  //  this.dataSource.paginator = this.paginator;
-  //  this.dataSource.sort = this.sort;
-  //}
-
-
 
   ngOnInit(): void {
     // Default values (for testing)
@@ -102,26 +87,23 @@ export class CommandCreateModalComponent implements OnInit {
 
     this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
 
-
-    this.apiService.refreshCommandsClient(this.commandCreateArgs.computerId).subscribe(
-      (data: SrvCmdBase[]) => { 
-        this.updateInteractive(data);
-      },
-      (err: HttpErrorResponse) => {
-        console.log("HTTP Error: " + err);
-      },
-    );
+    // Get initial
+    this.updateInteractive();
 
     // Get and update data
-    this.adminWebsocketService.srvCmdsEvent.subscribe((data2: SrvCmdBase[]) => {
-      this.updateInteractive(data2);
+    this.adminWebsocketService.srvCmdsEvent.subscribe((srvCmd: SrvCmdBase) => {
+      // Check if it concerns us
+      if (srvCmd != undefined && srvCmd.Command.computerid == this.commandCreateArgs.computerId) {
+        this.updateInteractive();
+      }
 
       // Also update client info (e.g. last seen)
       this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
     })
   }
 
-  updateInteractive(data2: SrvCmdBase[]) {
+  updateInteractive() {
+    var data2 = this.adminWebsocketService.getSrvCmds();
     var newData = data2.filter(d => 
       (d.Command.computerid == this.commandCreateArgs.computerId || d.Command.computerid == "0") 
       && (d.Command.command == "iIssue" || d.Command.command == "iOpen"));
@@ -156,8 +138,6 @@ export class CommandCreateModalComponent implements OnInit {
       },
     );
   }
-
-
 
   interactiveCmdOpen() {
     var command: Command = {

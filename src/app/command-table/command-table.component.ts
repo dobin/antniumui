@@ -32,7 +32,7 @@ export class CommandTableComponent implements OnInit {
 
   client: ClientBase
   displayedColumns: string[] = [
-    'command', 'arguments', 'response'];
+    'TimeRecorded', 'command', 'arguments', 'response'];
 
   constructor(
     private apiService: ApiService,
@@ -70,14 +70,23 @@ export class CommandTableComponent implements OnInit {
       },
     );
 
+    this.updateSrvCmds();
     // Get and update data
-    this.adminWebsocketService.srvCmdsEvent.subscribe((data2: SrvCmdBase[]) => {
-      var newData = data2.filter(d => d.Command.computerid == this.commandCreateArgs.computerId ||d.Command.computerid == "0");
-      this.dataSource.data = newData;
+    this.adminWebsocketService.srvCmdsEvent.subscribe((srvCmd: SrvCmdBase) => {
+      // Check if it concerns us
+      if (srvCmd == undefined || srvCmd.Command.computerid == this.commandCreateArgs.computerId) {
+        this.updateSrvCmds();
+      }
 
       // Also update client info (e.g. last seen)
       this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
     })
+  }
+
+  updateSrvCmds() {
+    var data2 = this.adminWebsocketService.getSrvCmds();
+    var newData = data2.filter(d => d.Command.computerid == this.commandCreateArgs.computerId ||d.Command.computerid == "0");
+    this.dataSource.data = newData;
   }
 
 }
