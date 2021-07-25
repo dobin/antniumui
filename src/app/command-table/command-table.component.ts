@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from "@angular/material/dialog";
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Command, SrvCmdBase, ClientBase, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
@@ -31,10 +32,12 @@ export class CommandTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   client: ClientBase
-  displayedColumns: string[] = [
-    'TimeRecorded', 'command', 'arguments', 'response'];
+  displayedColumns: string[] = [];
+  pageSizeOptions: number[] = [5];
+
 
   constructor(
+    private dialog: MatDialog,
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
     private configService: ConfigService,
@@ -49,9 +52,20 @@ export class CommandTableComponent implements OnInit {
     // Connect the table components
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
+  } 
   ngOnInit(): void {
+    if (this.computerId != "") {
+      this.displayedColumns = [
+        'TimeRecorded', 'command', 'arguments', 'response'];
+        this.pageSizeOptions = [3, 5, 10];
+    } else {
+      this.displayedColumns = [
+        //'actions', 'TimeRecorded', 'ClientIp', 'command', 'arguments', 'response', 'State'];
+        'TimeRecorded', 'command', 'arguments', 'response'];
+      this.pageSizeOptions = [6, 12, 24, 48];
+    }
     
+
     this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
 
     // FIX: JS Warning Race Condition
