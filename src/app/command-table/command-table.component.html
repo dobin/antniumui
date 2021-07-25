@@ -1,8 +1,26 @@
 
 <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Commands </th>
+        <td mat-cell *matCellDef="let element">
+
+            <button mat-icon-button (click)="showModalCommandCreate(element.Command.computerid)">
+                <mat-icon>slideshow</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
     <ng-container matColumnDef="TimeRecorded">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Time Recorded </th>
         <td mat-cell *matCellDef="let element"> {{element.TimeRecorded | date:'short' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ClientIp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.Command.computerid}} <br>
+            {{element.ClientIp}}
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="command">
@@ -76,6 +94,23 @@
 
                 <div *ngSwitchDefault>
                     {{element.Command.response | json }}
+                </div>
+            </container-element>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="State">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+        <td mat-cell *matCellDef="let element"> 
+            <container-element [ngSwitch]="element.State">
+                <div *ngSwitchCase="'0'">
+                    received
+                </div>
+                <div *ngSwitchCase="'1'">
+                    sent
+                </div>
+                <div *ngSwitchCase="'2'">
+                    answered
                 </div>
             </container-element>
         </td>

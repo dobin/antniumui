@@ -12,11 +12,7 @@ import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
-
-
-export interface CommandCreateArgs {
-  computerId: string,
-}
+import { CommandCreateModalComponent, CommandCreateArgs} from '../command-create-modal/command-create-modal.component';
 
 
 @Component({
@@ -31,7 +27,6 @@ export class CommandTableComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  client: ClientBase
   displayedColumns: string[] = [];
   pageSizeOptions: number[] = [5];
 
@@ -41,13 +36,8 @@ export class CommandTableComponent implements OnInit {
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
     private configService: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public commandCreateArgs: CommandCreateArgs
   ) { }
-  openFileTab(url: string){
-    let basename = url.substring(url.lastIndexOf('/')+1);
-    let url2 = this.apiService.getAdminUpload(basename);
-    window.open(url2, "_blank");
-  }
+
   ngAfterViewInit() {
     // Connect the table components
     this.dataSource.paginator = this.paginator;
@@ -60,13 +50,9 @@ export class CommandTableComponent implements OnInit {
         this.pageSizeOptions = [3, 5, 10];
     } else {
       this.displayedColumns = [
-        //'actions', 'TimeRecorded', 'ClientIp', 'command', 'arguments', 'response', 'State'];
-        'TimeRecorded', 'command', 'arguments', 'response'];
+        'actions', 'TimeRecorded', 'ClientIp', 'command', 'arguments', 'response', 'State'];
       this.pageSizeOptions = [6, 12, 24, 48];
     }
-    
-
-    this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
 
     // FIX: JS Warning Race Condition
     timer(0)
@@ -75,7 +61,7 @@ export class CommandTableComponent implements OnInit {
       this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
     });
 
-    this.apiService.refreshCommandsClient(this.commandCreateArgs.computerId).subscribe(
+    this.apiService.refreshCommandsClient(this.computerId).subscribe(
       (data2: SrvCmdBase[]) => {
         this.dataSource.data = data2;
       },
@@ -88,19 +74,40 @@ export class CommandTableComponent implements OnInit {
     // Get and update data
     this.adminWebsocketService.srvCmdsEvent.subscribe((srvCmd: SrvCmdBase) => {
       // Check if it concerns us
-      if (srvCmd == undefined || srvCmd.Command.computerid == this.commandCreateArgs.computerId) {
+      if (this.computerId == '' || srvCmd == undefined || srvCmd.Command.computerid == this.computerId) {
         this.updateSrvCmds();
       }
-
-      // Also update client info (e.g. last seen)
-      this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
     })
   }
 
   updateSrvCmds() {
     var data2 = this.adminWebsocketService.getSrvCmds();
-    var newData = data2.filter(d => d.Command.computerid == this.commandCreateArgs.computerId ||d.Command.computerid == "0");
-    this.dataSource.data = newData;
+
+    if (this.computerId == '') {
+      this.dataSource.data = data2;
+    } else {
+      var newData = data2.filter(d => d.Command.computerid == this.computerId ||d.Command.computerid == "0");
+      this.dataSource.data = newData;
+    }
+  }
+
+
+  showModalCommandCreate(computerId: string) {
+    var data: CommandCreateArgs = {
+      computerId: computerId,
+    }
+
+    const dialogRef = this.dialog.open(CommandCreateModalComponent, {
+      width: '80em',
+      height: '50em',
+      data: data,
+    });
+  }
+
+  openFileTab(url: string){
+    let basename = url.substring(url.lastIndexOf('/')+1);
+    let url2 = this.apiService.getAdminUpload(basename);
+    window.open(url2, "_blank");
   }
 
 }
