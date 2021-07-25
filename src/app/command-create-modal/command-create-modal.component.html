@@ -9,7 +9,8 @@ LastSeen: {{client.LastSeen | date:'short'}}
     <mat-tab label="Interactive">
 
         <mat-card fxLayout="column"  fxLayoutGap="15px">
-            <button mat-raised-button (click)="interactiveCmdOpen()">Open</button>
+            <button mat-raised-button (click)="interactiveCmdOpen(false)">Open</button>
+            <button mat-raised-button (click)="interactiveCmdOpen(true)">ForceOpen</button>
 
             <md-input-container fxFlex="50" fxFill>
                 <textarea #textarea [scrollTop]="textarea.scrollHeight" style="width: 80em;" name="Output"  [(ngModel)]="interactiveStdout" mdInput rows="30"></textarea>

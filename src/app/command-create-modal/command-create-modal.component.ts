@@ -139,13 +139,16 @@ export class CommandCreateModalComponent implements OnInit {
     );
   }
 
-  interactiveCmdOpen() {
+  interactiveCmdOpen(force: boolean) {
     var command: Command = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'iOpen',
       arguments: { },
       response: {},
+    }
+    if (force) {
+      command.arguments['force'] = "force";
     }
 
     this.apiService.sendCommand(command).subscribe(
