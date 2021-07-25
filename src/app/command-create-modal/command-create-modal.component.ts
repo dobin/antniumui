@@ -126,9 +126,9 @@ export class CommandCreateModalComponent implements OnInit {
       (d.Command.computerid == this.commandCreateArgs.computerId || d.Command.computerid == "0") 
       && (d.Command.command == "iIssue" || d.Command.command == "iOpen"));
     
+    this.commandlineInteractive = "";
     this.interactiveStdout = "";
     newData.forEach(element => {
-      //console.log("A: " + element.Command.response['stdout']);
       if (element.Command.response.hasOwnProperty("stdout")) {
         this.interactiveStdout += element.Command.response['stdout'];
       }

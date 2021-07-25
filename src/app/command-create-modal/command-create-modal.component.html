@@ -11,15 +11,14 @@ LastSeen: {{client.LastSeen | date:'short'}}
         <mat-card fxLayout="column"  fxLayoutGap="15px">
             <button mat-raised-button (click)="interactiveCmdOpen()">Open</button>
 
-            <mat-form-field fxFlex="50" fxFill>
-                <mat-label>commandline</mat-label>
-                <input matInput type="text" (keyup.enter)="interactiveCmdIssue()" [(ngModel)]="commandlineInteractive">
-            </mat-form-field>
-
             <md-input-container fxFlex="50" fxFill>
                 <textarea #textarea [scrollTop]="textarea.scrollHeight" style="width: 80em;" name="Output"  [(ngModel)]="interactiveStdout" mdInput rows="30"></textarea>
             </md-input-container>
 
+            <mat-form-field fxFlex="50" fxFill>
+                <mat-label>commandline</mat-label>
+                <input matInput type="text" (keyup.enter)="interactiveCmdIssue()" [(ngModel)]="commandlineInteractive">
+            </mat-form-field>
         </mat-card>
     </mat-tab>
 
