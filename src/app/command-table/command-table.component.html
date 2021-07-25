@@ -52,6 +52,10 @@
                 Destination: {{element.Command.arguments["destination"]}}
             </div>
 
+            <div *ngSwitchCase="'iOpen'">
+                {{element.Command.arguments | json}}
+            </div>
+
             <div *ngSwitchCase="'iIssue'">
                 {{element.Command.arguments["commandline"]}}
             </div>
@@ -84,6 +88,8 @@
                     <pre>{{element.Command.response["stdout"]}}</pre>
 
                     <pre>{{element.Command.response["stderr"]}}</pre>
+
+                    {{element.Command.response["error"]}}
                 </div>
 
                 <div *ngSwitchCase="'iIssue'">
