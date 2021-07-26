@@ -1,6 +1,6 @@
 
 export interface PacketInfo {
-  Command: Packet
+  Packet: Packet
   State: number
   ClientIp: string
   TimeRecorded: string
@@ -31,8 +31,8 @@ export interface Campaign {
 
   ServerUrl: string
 
-  CommandSendPath:         string
-  CommandGetPath:          string
-  CommandFileUploadPath:   string
-  CommandFileDownloadPath: string
+  PacketSendPath:         string
+  PacketGetPath:          string
+  FileUploadPath:   string
+  FileDownloadPath: string
 }

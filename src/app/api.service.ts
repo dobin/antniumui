@@ -26,20 +26,20 @@ export class ApiService {
 		return this.httpClient.get<Campaign>(this.SERVER_URL + "/admin/campaign");
 	}
 
-	public refreshCommands(): Observable<PacketInfo[]> {
-		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/commands");
+	public refreshPackets(): Observable<PacketInfo[]> {
+		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/packets");
 	}
 
-	public refreshCommandsClient(computerId: string): Observable<PacketInfo[]> {
-		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/commands/" + computerId);
+	public refreshPacketsClient(computerId: string): Observable<PacketInfo[]> {
+		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/packets/" + computerId);
 	}
 
 	public refreshClients(): Observable<ClientInfo[]> {
 		return this.httpClient.get<ClientInfo[]>(this.SERVER_URL + "/admin/clients");
 	}
 
-	public sendCommand(command: Packet) {
-		return this.httpClient.post(this.SERVER_URL + "/admin/addCommand", JSON.stringify(command));
+	public sendPacket(packet: Packet) {
+		return this.httpClient.post(this.SERVER_URL + "/admin/addPacket", JSON.stringify(packet));
 	}
 
 	public getAdminUpload(filename: string): string {

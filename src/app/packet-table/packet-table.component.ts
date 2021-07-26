@@ -12,15 +12,15 @@ import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
-import { CommandCreateModalComponent, CommandCreateArgs} from '../command-create-modal/command-create-modal.component';
+import { PacketCreateModalComponent, PacketCreateArgs} from '../packet-create-modal/packet-create-modal.component';
 
 
 @Component({
-  selector: 'app-command-table',
-  templateUrl: './command-table.component.html',
-  styleUrls: ['./command-table.component.css']
+  selector: 'app-packet-table',
+  templateUrl: './packet-table.component.html',
+  styleUrls: ['./packet-table.component.css']
 })
-export class CommandTableComponent implements OnInit {
+export class PacketTableComponent implements OnInit {
   @Input() computerId = '';
 
   dataSource: MatTableDataSource<PacketInfo> = new MatTableDataSource<PacketInfo>();
@@ -61,7 +61,7 @@ export class CommandTableComponent implements OnInit {
       this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
     });
 
-    this.apiService.refreshCommandsClient(this.computerId).subscribe(
+    this.apiService.refreshPacketsClient(this.computerId).subscribe(
       (data2: PacketInfo[]) => {
         this.dataSource.data = data2;
       },
@@ -74,7 +74,7 @@ export class CommandTableComponent implements OnInit {
     // Get and update data
     this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (this.computerId == '' || packetInfo == undefined || packetInfo.Command.computerid == this.computerId) {
+      if (this.computerId == '' || packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
         this.updatePacketInfos();
       }
     })
@@ -86,18 +86,18 @@ export class CommandTableComponent implements OnInit {
     if (this.computerId == '') {
       this.dataSource.data = data2;
     } else {
-      var newData = data2.filter(d => d.Command.computerid == this.computerId ||d.Command.computerid == "0");
+      var newData = data2.filter(d => d.Packet.computerid == this.computerId ||d.Packet.computerid == "0");
       this.dataSource.data = newData;
     }
   }
 
 
-  showModalCommandCreate(computerId: string) {
-    var data: CommandCreateArgs = {
+  showModalPacketCreate(computerId: string) {
+    var data: PacketCreateArgs = {
       computerId: computerId,
     }
 
-    const dialogRef = this.dialog.open(CommandCreateModalComponent, {
+    const dialogRef = this.dialog.open(PacketCreateModalComponent, {
       width: '80em',
       height: '50em',
       data: data,

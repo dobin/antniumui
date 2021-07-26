@@ -29,14 +29,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PacketInfoListComponent } from './packetinfo-list/packetinfo-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ClientListComponent } from './client-list/client-list.component';
-import { CommandCreateModalComponent } from './command-create-modal/command-create-modal.component';
+import { PacketCreateModalComponent } from './packet-create-modal/packet-create-modal.component';
 
 import { AuthInterceptor } from './auth-interceptor';
 import { StripPipe } from './strip-pipe'
 import { CampaignViewComponent } from './campaign-view/campaign-view.component';
 import { ConfigModalComponent } from './config-modal/config-modal.component';
 import { DocsComponent } from './docs/docs.component';
-import { CommandTableComponent } from './command-table/command-table.component';
+import { PacketTableComponent } from './packet-table/packet-table.component';
 
 @NgModule({
   declarations: [
@@ -44,12 +44,12 @@ import { CommandTableComponent } from './command-table/command-table.component';
     HomeComponent,
     PacketInfoListComponent,
     ClientListComponent,
-    CommandCreateModalComponent,
+    PacketCreateModalComponent,
     CampaignViewComponent,
     StripPipe,
     ConfigModalComponent,
     DocsComponent,
-    CommandTableComponent,
+    PacketTableComponent,
   ],
   imports: [
     BrowserModule,

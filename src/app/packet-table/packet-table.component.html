@@ -1,10 +1,10 @@
 
 <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Commands </th>
+        <th mat-header-cell *matHeaderCellDef> Packets </th>
         <td mat-cell *matCellDef="let element">
 
-            <button mat-icon-button (click)="showModalCommandCreate(element.Command.computerid)">
+            <button mat-icon-button (click)="showModalPacketCreate(element.Packet.computerid)">
                 <mat-icon>slideshow</mat-icon>
             </button>
         </td>
@@ -18,50 +18,50 @@
     <ng-container matColumnDef="ClientIp">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
         <td mat-cell *matCellDef="let element"> 
-            {{element.Command.computerid}} <br>
+            {{element.Packet.computerid}} <br>
             {{element.ClientIp}}
         </td>
     </ng-container>
 
     <ng-container matColumnDef="command">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> command </th>
-        <td mat-cell *matCellDef="let element"> {{element.Command.command }} </td>
+        <td mat-cell *matCellDef="let element"> {{element.Packet.command }} </td>
     </ng-container>
 
 
     <ng-container matColumnDef="arguments">
         <th mat-header-cell *matHeaderCellDef> Arguments </th>
         <td mat-cell *matCellDef="let element"> 
-            <container-element [ngSwitch]="element.Command.command">
+            <container-element [ngSwitch]="element.Packet.command">
                 
             <div *ngSwitchCase="'exec'">
-                {{element.Command.arguments["executable"]}} 
-                {{element.Command.arguments["param0"]}} 
-                {{element.Command.arguments["param1"]}}
-                {{element.Command.arguments["param2"]}}
-                {{element.Command.arguments["param3"]}}
+                {{element.Packet.arguments["executable"]}} 
+                {{element.Packet.arguments["param0"]}} 
+                {{element.Packet.arguments["param1"]}}
+                {{element.Packet.arguments["param2"]}}
+                {{element.Packet.arguments["param3"]}}
             </div>
 
             <div *ngSwitchCase="'fileupload'">
-                {{element.Command.arguments["source"]}} <br>
-                <a [routerLink]="" (click)="openFileTab(element.Command.arguments['remoteurl'])">Download as {{element.Command.arguments["remoteurl"] | strip}}</a>
+                {{element.Packet.arguments["source"]}} <br>
+                <a [routerLink]="" (click)="openFileTab(element.Packet.arguments['remoteurl'])">Download as {{element.Packet.arguments["remoteurl"] | strip}}</a>
             </div>
 
             <div *ngSwitchCase="'filedownload'">
-                Source: {{element.Command.arguments["remoteurl"] | strip}} <br>
-                Destination: {{element.Command.arguments["destination"]}}
+                Source: {{element.Packet.arguments["remoteurl"] | strip}} <br>
+                Destination: {{element.Packet.arguments["destination"]}}
             </div>
 
             <div *ngSwitchCase="'iOpen'">
-                {{element.Command.arguments | json}}
+                {{element.Packet.arguments | json}}
             </div>
 
             <div *ngSwitchCase="'iIssue'">
-                {{element.Command.arguments["commandline"]}}
+                {{element.Packet.arguments["commandline"]}}
             </div>
 
             <div *ngSwitchDefault>
-                {{element.Command.arguments | json }}
+                {{element.Packet.arguments | json }}
             </div>
          </container-element>
 
@@ -71,37 +71,37 @@
     <ng-container matColumnDef="response">
         <th mat-header-cell *matHeaderCellDef> Response </th>
         <td mat-cell *matCellDef="let element"> 
-            <container-element [ngSwitch]="element.Command.command">
+            <container-element [ngSwitch]="element.Packet.command">
                 <div *ngSwitchCase="'exec'">
-                    <pre>{{element.Command.response["error"]}}{{element.Command.response["stdout"]}}</pre>
+                    <pre>{{element.Packet.response["error"]}}{{element.Packet.response["stdout"]}}</pre>
                 </div>
             
                 <div *ngSwitchCase="'fileupload'">
-                    {{element.Command.response["response"]}}
-                    {{element.Command.response["error"]}}
+                    {{element.Packet.response["response"]}}
+                    {{element.Packet.response["error"]}}
                 </div>
 
                 <div *ngSwitchCase="'filedownload'">
-                    {{element.Command.response["response"]}}
-                    {{element.Command.response["error"]}}
+                    {{element.Packet.response["response"]}}
+                    {{element.Packet.response["error"]}}
                 </div>
 
                 <div *ngSwitchCase="'iOpen'">
-                    <pre>{{element.Command.response["stdout"]}}</pre>
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
 
-                    <pre>{{element.Command.response["stderr"]}}</pre>
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
 
-                    {{element.Command.response["error"]}}
+                    {{element.Packet.response["error"]}}
                 </div>
 
                 <div *ngSwitchCase="'iIssue'">
-                    <pre>{{element.Command.response["stdout"]}}</pre>
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
 
-                    <pre>{{element.Command.response["stderr"]}}</pre>
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
                 </div>
 
                 <div *ngSwitchDefault>
-                    {{element.Command.response | json }}
+                    {{element.Packet.response | json }}
                 </div>
             </container-element>
         </td>

@@ -63,7 +63,7 @@ export class AdminWebsocketService {
 
   private connect() {
     // Get initial data
-    this.apiService.refreshCommands().subscribe(
+    this.apiService.refreshPackets().subscribe(
       (data: PacketInfo[]) => { 
         this.packetInfos = data;
         this.packetInfosEvent.emit(undefined); // undefined is broadcast all
@@ -108,13 +108,13 @@ export class AdminWebsocketService {
 
     // Function to listen for updates from WS
     this.socket$.subscribe((data: WebsocketData) => {
-      var x: PacketInfo = this.packetInfos.find(packetInfo => packetInfo.Command.packetid == data.PacketInfo.Command.packetid ) as PacketInfo
+      var x: PacketInfo = this.packetInfos.find(packetInfo => packetInfo.Packet.packetid == data.PacketInfo.Packet.packetid ) as PacketInfo
       if (x == undefined) {
-        // Add command
+        // Add Packet
 
         this.packetInfos.push(data.PacketInfo);
       } else {
-        // Update command (by removing the previous one)
+        // Update Packet (by removing the previous one)
         var index = this.packetInfos.indexOf(x);
         Object.assign(this.packetInfos[index], data.PacketInfo);
       }

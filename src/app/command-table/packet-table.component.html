@@ -1,0 +1,130 @@
+
+<table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Packets </th>
+        <td mat-cell *matCellDef="let element">
+
+            <button mat-icon-button (click)="showModalPacketCreate(element.Packet.computerid)">
+                <mat-icon>slideshow</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TimeRecorded">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time Recorded </th>
+        <td mat-cell *matCellDef="let element"> {{element.TimeRecorded | date:'short' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ClientIp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.Packet.computerid}} <br>
+            {{element.ClientIp}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Command">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Command </th>
+        <td mat-cell *matCellDef="let element"> {{element.Packet.command }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="arguments">
+        <th mat-header-cell *matHeaderCellDef> Arguments </th>
+        <td mat-cell *matCellDef="let element"> 
+            <container-element [ngSwitch]="element.Packet.Packet">
+                
+            <div *ngSwitchCase="'exec'">
+                {{element.Packet.arguments["executable"]}} 
+                {{element.Packet.arguments["param0"]}} 
+                {{element.Packet.arguments["param1"]}}
+                {{element.Packet.arguments["param2"]}}
+                {{element.Packet.arguments["param3"]}}
+            </div>
+
+            <div *ngSwitchCase="'fileupload'">
+                {{element.Packet.arguments["source"]}} <br>
+                <a [routerLink]="" (click)="openFileTab(element.Packet.arguments['remoteurl'])">Download as {{element.Packet.arguments["remoteurl"] | strip}}</a>
+            </div>
+
+            <div *ngSwitchCase="'filedownload'">
+                Source: {{element.Packet.arguments["remoteurl"] | strip}} <br>
+                Destination: {{element.Packet.arguments["destination"]}}
+            </div>
+
+            <div *ngSwitchCase="'iOpen'">
+                {{element.Packet.arguments | json}}
+            </div>
+
+            <div *ngSwitchCase="'iIssue'">
+                {{element.Packet.arguments["Packetline"]}}
+            </div>
+
+            <div *ngSwitchDefault>
+                {{element.Packet.arguments | json }}
+            </div>
+         </container-element>
+
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="response">
+        <th mat-header-cell *matHeaderCellDef> Response </th>
+        <td mat-cell *matCellDef="let element"> 
+            <container-element [ngSwitch]="element.Packet.Packet">
+                <div *ngSwitchCase="'exec'">
+                    <pre>{{element.Packet.response["error"]}}{{element.Packet.response["stdout"]}}</pre>
+                </div>
+            
+                <div *ngSwitchCase="'fileupload'">
+                    {{element.Packet.response["response"]}}
+                    {{element.Packet.response["error"]}}
+                </div>
+
+                <div *ngSwitchCase="'filedownload'">
+                    {{element.Packet.response["response"]}}
+                    {{element.Packet.response["error"]}}
+                </div>
+
+                <div *ngSwitchCase="'iOpen'">
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
+
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
+
+                    {{element.Packet.response["error"]}}
+                </div>
+
+                <div *ngSwitchCase="'iIssue'">
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
+
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
+                </div>
+
+                <div *ngSwitchDefault>
+                    {{element.Packet.response | json }}
+                </div>
+            </container-element>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="State">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+        <td mat-cell *matCellDef="let element"> 
+            <container-element [ngSwitch]="element.State">
+                <div *ngSwitchCase="'0'">
+                    received
+                </div>
+                <div *ngSwitchCase="'1'">
+                    sent
+                </div>
+                <div *ngSwitchCase="'2'">
+                    answered
+                </div>
+            </container-element>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>

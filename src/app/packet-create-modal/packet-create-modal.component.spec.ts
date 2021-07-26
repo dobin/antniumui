@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommandTableComponent } from './command-table.component';
+import { PacketCreateModalComponent } from './packet-create-modal.component';
 
-describe('CommandTableComponent', () => {
-  let component: CommandTableComponent;
-  let fixture: ComponentFixture<CommandTableComponent>;
+describe('PacketCreateModalComponent', () => {
+  let component: PacketCreateModalComponent;
+  let fixture: ComponentFixture<PacketCreateModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommandTableComponent ]
+      declarations: [ PacketCreateModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommandTableComponent);
+    fixture = TestBed.createComponent(PacketCreateModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

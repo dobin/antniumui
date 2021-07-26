@@ -11,18 +11,18 @@ import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
-import { CommandTableComponent } from '../command-table/command-table.component';
+import { PacketTableComponent } from '../packet-table/packet-table.component';
 
-export interface CommandCreateArgs {
+export interface PacketCreateArgs {
   computerId: string,
 }
 
 @Component({
-  selector: 'app-command-create-modal',
-  templateUrl: './command-create-modal.component.html',
-  styleUrls: ['./command-create-modal.component.css']
+  selector: 'app-packet-create-modal',
+  templateUrl: './packet-create-modal.component.html',
+  styleUrls: ['./packet-create-modal.component.css']
 })
-export class CommandCreateModalComponent implements OnInit {
+export class PacketCreateModalComponent implements OnInit {
   serverurl: string = ""
   executable: string = ""
   param1: string = ""
@@ -50,7 +50,7 @@ export class CommandCreateModalComponent implements OnInit {
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
     private configService: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public commandCreateArgs: CommandCreateArgs
+    @Inject(MAT_DIALOG_DATA) public packetCreateArgs: PacketCreateArgs
   ) { }
 
   openFileTab(url: string){
@@ -74,10 +74,10 @@ export class CommandCreateModalComponent implements OnInit {
 
           this.serverurl = campaign.ServerUrl;
     
-          this.uploadUrlBase = campaign.ServerUrl + campaign.CommandFileUploadPath;
+          this.uploadUrlBase = campaign.ServerUrl + campaign.FileUploadPath;
           this.uploadSource = "README.md";
     
-          this.downloadUrlBase = campaign.ServerUrl + campaign.CommandFileDownloadPath;
+          this.downloadUrlBase = campaign.ServerUrl + campaign.FileDownloadPath;
           console.log("0: ", this.serverurl);
           this.downloadUrlFile = "test.txt";
           this.downloadDestination = "test.txt";
@@ -88,7 +88,7 @@ export class CommandCreateModalComponent implements OnInit {
       );
     }
 
-    this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
+    this.client = this.adminWebsocketService.getClientBy(this.packetCreateArgs.computerId);
 
     // Get initial
     this.updateInteractive();
@@ -96,35 +96,35 @@ export class CommandCreateModalComponent implements OnInit {
     // Get and update data
     this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (packetInfo != undefined && packetInfo.Command.computerid == this.commandCreateArgs.computerId) {
+      if (packetInfo != undefined && packetInfo.Packet.computerid == this.packetCreateArgs.computerId) {
         this.updateInteractive();
       }
 
       // Also update client info (e.g. last seen)
-      this.client = this.adminWebsocketService.getClientBy(this.commandCreateArgs.computerId);
+      this.client = this.adminWebsocketService.getClientBy(this.packetCreateArgs.computerId);
     })
   }
 
   updateInteractive() {
     var data2 = this.adminWebsocketService.getPacketInfos();
     var newData = data2.filter(d => 
-      (d.Command.computerid == this.commandCreateArgs.computerId || d.Command.computerid == "0") 
-      && (d.Command.command == "iIssue" || d.Command.command == "iOpen"));
+      (d.Packet.computerid == this.packetCreateArgs.computerId || d.Packet.computerid == "0") 
+      && (d.Packet.command == "iIssue" || d.Packet.command == "iOpen"));
     
     this.commandlineInteractive = "";
     this.interactiveStdout = "";
     newData.forEach(element => {
-      if (element.Command.response.hasOwnProperty("stdout")) {
-        this.interactiveStdout += element.Command.response['stdout'];
+      if (element.Packet.response.hasOwnProperty("stdout")) {
+        this.interactiveStdout += element.Packet.response['stdout'];
       }
-      if (element.Command.response.hasOwnProperty("stderr")) {
-        this.interactiveStdout += element.Command.response['stderr'];
+      if (element.Packet.response.hasOwnProperty("stderr")) {
+        this.interactiveStdout += element.Packet.response['stderr'];
       }
     });
   }
 
-  addCommandTest() {
-    var command: Packet = {
+  addPacketTest() {
+    var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'test',
@@ -132,18 +132,18 @@ export class CommandCreateModalComponent implements OnInit {
       response: {},
     }
 
-    this.apiService.sendCommand(command).subscribe(
+    this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
-        console.log("SendCommand successful")
+        console.log("SendPacket successful")
       },
       (err: HttpErrorResponse) => {
-        console.log("SendCommand failed")
+        console.log("SendPacket failed")
       },
     );
   }
 
   interactiveCmdOpen(force: boolean) {
-    var command: Packet = {
+    var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'iOpen',
@@ -151,21 +151,21 @@ export class CommandCreateModalComponent implements OnInit {
       response: {},
     }
     if (force) {
-      command.arguments['force'] = "force";
+      packet.arguments['force'] = "force";
     }
 
-    this.apiService.sendCommand(command).subscribe(
+    this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
-        console.log("SendCommand successful")
+        console.log("SendPacket successful")
       },
       (err: HttpErrorResponse) => {
-        console.log("SendCommand failed")
+        console.log("SendPacket failed")
       },
     );
   }
 
   interactiveCmdIssue() {
-    var command: Packet = {
+    var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'iIssue',
@@ -173,17 +173,17 @@ export class CommandCreateModalComponent implements OnInit {
       response: {},
     }
 
-    this.apiService.sendCommand(command).subscribe(
+    this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
-        console.log("SendCommand successful")
+        console.log("SendPacket successful")
       },
       (err: HttpErrorResponse) => {
-        console.log("SendCommand failed")
+        console.log("SendPacket failed")
       },
     );
   }
 
-  addCommandExecLine() {
+  addPacketExecLine() {
     var split = this.commandline.split(" ")
     var executable: string = split[0];
     var paramsArr = split.slice(1);
@@ -195,7 +195,7 @@ export class CommandCreateModalComponent implements OnInit {
     }
     console.log(params);
 
-    var command: Packet = {
+    var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'exec',
@@ -203,18 +203,18 @@ export class CommandCreateModalComponent implements OnInit {
       response: {},
     }
 
-    this.apiService.sendCommand(command).subscribe(
+    this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
-        console.log("SendCommand successful")
+        console.log("SendPacket successful")
       },
       (err: HttpErrorResponse) => {
-        console.log("SendCommand failed")
+        console.log("SendPacket failed")
       },
     );
   }
 
-  addCommandExecArgs() {
-    var command: Packet = {
+  addPacketExecArgs() {
+    var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'exec',
@@ -225,28 +225,28 @@ export class CommandCreateModalComponent implements OnInit {
     }
 
     if (this.param1 != "") {
-      command.arguments["param0"] = this.param1;
+      packet.arguments["param0"] = this.param1;
     }
     if (this.param2 != "") {
-      command.arguments["param1"] = this.param2;
+      packet.arguments["param1"] = this.param2;
     }
     if (this.param3 != "") {
-      command.arguments["param2"] = this.param3;
+      packet.arguments["param2"] = this.param3;
     }
 
-    this.apiService.sendCommand(command).subscribe(
+    this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
-        console.log("SendCommand successful")
+        console.log("SendPacket successful")
       },
       (err: HttpErrorResponse) => {
-        console.log("SendCommand failed")
+        console.log("SendPacket failed")
       },
     );
   }
 
-  addCommandUpload() {
+  addPacketUpload() {
     var packetId = this.getRandomInt();
-    var command: Packet = {
+    var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: packetId,
       command: 'fileupload',
@@ -256,18 +256,18 @@ export class CommandCreateModalComponent implements OnInit {
       },
       response: {},
     }
-    this.apiService.sendCommand(command).subscribe(
+    this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
-        console.log("SendCommand successful")
+        console.log("SendPacket successful")
       },
       (err: HttpErrorResponse) => {
-        console.log("SendCommand failed")
+        console.log("SendPacket failed")
       },
     );
   }
 
-  addCommandDownload() {
-    var command: Packet = {
+  addPacketDownload() {
+    var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'filedownload',
@@ -278,12 +278,12 @@ export class CommandCreateModalComponent implements OnInit {
       response: {},
     }
 
-    this.apiService.sendCommand(command).subscribe(
+    this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
-        console.log("SendCommand successful")
+        console.log("SendPacket successful")
       },
       (err: HttpErrorResponse) => {
-        console.log("SendCommand failed")
+        console.log("SendPacket failed")
       },
     );
   }

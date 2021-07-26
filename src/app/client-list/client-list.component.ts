@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ClientInfo } from '../app.model';
 import { MatDialog } from "@angular/material/dialog";
-import { CommandCreateModalComponent, CommandCreateArgs } from '../command-create-modal/command-create-modal.component';
+import { PacketCreateModalComponent, PacketCreateArgs } from '../packet-create-modal/packet-create-modal.component';
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -48,12 +48,12 @@ export class ClientListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  showModalCommandCreate(computerId: string) {
-    var data: CommandCreateArgs = {
+  showModalPacketCreate(computerId: string) {
+    var data: PacketCreateArgs = {
       computerId: computerId,
     }
 
-    const dialogRef = this.dialog.open(CommandCreateModalComponent, {
+    const dialogRef = this.dialog.open(PacketCreateModalComponent, {
       width: '80em',
       data: data,
     });
