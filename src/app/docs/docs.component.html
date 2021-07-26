@@ -16,11 +16,11 @@ Data flow of componenets overview:
 │              │               │            │               │         │
 │    Client    │               │   Server   │ Clients       │   UI    │
 │              │               │            ├──────────────►│         │
-│              │       Command │            │ Commands      │         │
+│              │       Packet  │            │ Packets       │         │
 │ [ComputerId] │◄──────────────┤ /get       ├──────────────►│         │
 │  [ClientIp]  │               │            │ WS Notify     │         │
 │              │ Answer        │            ├──────────────►│         │
-│              ├──────────────►│ /send      │   New Command │         │
+│              ├──────────────►│ /send      │   New Packet  │         │
 │              │               │            │◄──────────────┤         │
 │              │               └────────────┘               └─────────┘
 │              │                                             UIIP:4200

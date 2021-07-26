@@ -6,6 +6,9 @@ export interface PacketInfo {
   TimeRecorded: string
   TimeSent: string
   TimeAnswered: string
+
+  Hostname: string
+  LocalIps: string[]
 }
 
 export interface Packet {
@@ -31,8 +34,8 @@ export interface Campaign {
 
   ServerUrl: string
 
-  PacketSendPath:         string
-  PacketGetPath:          string
+  PacketSendPath:   string
+  PacketGetPath:    string
   FileUploadPath:   string
   FileDownloadPath: string
 }
