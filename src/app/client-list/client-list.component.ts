@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { ClientInfo } from '../app.model';
 import { MatDialog } from "@angular/material/dialog";
 import { PacketCreateModalComponent, PacketCreateArgs } from '../packet-create-modal/packet-create-modal.component';
+import { ClientViewModalComponent } from '../client-view-modal/client-view-modal.component';
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -58,4 +59,12 @@ export class ClientListComponent implements OnInit {
       data: data,
     });
   }
+
+  showModalClientInfo(client: ClientInfo) {
+    const dialogRef = this.dialog.open(ClientViewModalComponent, {
+      width: '80em',
+      data: client,
+    });
+  }
+
 }

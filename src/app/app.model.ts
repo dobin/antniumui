@@ -6,9 +6,6 @@ export interface PacketInfo {
   TimeRecorded: string
   TimeSent: string
   TimeAnswered: string
-
-  Hostname: string
-  LocalIps: string[]
 }
 
 export interface Packet {
@@ -23,6 +20,9 @@ export interface ClientInfo {
   ComputerId: string
   LastSeen: string
   LastIp: string
+
+  Hostname: string
+  LocalIps: string[]
 }
 
 export interface Campaign {

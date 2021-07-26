@@ -37,6 +37,7 @@ import { CampaignViewComponent } from './campaign-view/campaign-view.component';
 import { ConfigModalComponent } from './config-modal/config-modal.component';
 import { DocsComponent } from './docs/docs.component';
 import { PacketTableComponent } from './packet-table/packet-table.component';
+import { ClientViewModalComponent } from './client-view-modal/client-view-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { PacketTableComponent } from './packet-table/packet-table.component';
     ConfigModalComponent,
     DocsComponent,
     PacketTableComponent,
+    ClientViewModalComponent,
   ],
   imports: [
     BrowserModule,
