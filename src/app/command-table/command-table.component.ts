@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from "@angular/material/dialog";
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Command, SrvCmdBase, ClientBase, Campaign } from '../app.model';
+import { Packet, PacketInfo, ClientInfo, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
 import {AfterViewInit, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -23,7 +23,7 @@ import { CommandCreateModalComponent, CommandCreateArgs} from '../command-create
 export class CommandTableComponent implements OnInit {
   @Input() computerId = '';
 
-  dataSource: MatTableDataSource<SrvCmdBase> = new MatTableDataSource<SrvCmdBase>();
+  dataSource: MatTableDataSource<PacketInfo> = new MatTableDataSource<PacketInfo>();
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -62,7 +62,7 @@ export class CommandTableComponent implements OnInit {
     });
 
     this.apiService.refreshCommandsClient(this.computerId).subscribe(
-      (data2: SrvCmdBase[]) => {
+      (data2: PacketInfo[]) => {
         this.dataSource.data = data2;
       },
       (err: HttpErrorResponse) => {
@@ -70,18 +70,18 @@ export class CommandTableComponent implements OnInit {
       },
     );
 
-    this.updateSrvCmds();
+    this.updatePacketInfos();
     // Get and update data
-    this.adminWebsocketService.srvCmdsEvent.subscribe((srvCmd: SrvCmdBase) => {
+    this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (this.computerId == '' || srvCmd == undefined || srvCmd.Command.computerid == this.computerId) {
-        this.updateSrvCmds();
+      if (this.computerId == '' || packetInfo == undefined || packetInfo.Command.computerid == this.computerId) {
+        this.updatePacketInfos();
       }
     })
   }
 
-  updateSrvCmds() {
-    var data2 = this.adminWebsocketService.getSrvCmds();
+  updatePacketInfos() {
+    var data2 = this.adminWebsocketService.getPacketInfos();
 
     if (this.computerId == '') {
       this.dataSource.data = data2;

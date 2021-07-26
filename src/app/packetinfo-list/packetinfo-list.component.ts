@@ -6,18 +6,17 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from "@angular/material/dialog";
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { SrvCmdBase, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-srvcmd-list',
-  templateUrl: './srvcmd-list.component.html',
-  styleUrls: ['./srvcmd-list.component.css']
+  selector: 'app-packetinfo-list',
+  templateUrl: './packetinfo-list.component.html',
+  styleUrls: ['./packetinfo-list.component.css']
 })
-export class SrvcmdListComponent implements OnInit {
+export class PacketInfoListComponent implements OnInit {
   constructor(    
     private dialog: MatDialog,
 		private apiService: ApiService,

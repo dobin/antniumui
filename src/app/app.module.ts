@@ -26,7 +26,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SrvcmdListComponent } from './srvcmd-list/srvcmd-list.component';
+import { PacketInfoListComponent } from './packetinfo-list/packetinfo-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ClientListComponent } from './client-list/client-list.component';
 import { CommandCreateModalComponent } from './command-create-modal/command-create-modal.component';
@@ -42,7 +42,7 @@ import { CommandTableComponent } from './command-table/command-table.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    SrvcmdListComponent,
+    PacketInfoListComponent,
     ClientListComponent,
     CommandCreateModalComponent,
     CampaignViewComponent,

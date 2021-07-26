@@ -1,8 +1,6 @@
 
-export type SrvCmdList2 = SrvCmdBase[]
-
-export interface SrvCmdBase {
-  Command: Command
+export interface PacketInfo {
+  Command: Packet
   State: number
   ClientIp: string
   TimeRecorded: string
@@ -10,7 +8,7 @@ export interface SrvCmdBase {
   TimeAnswered: string
 }
 
-export interface Command {
+export interface Packet {
   computerid: string
   packetid: string
   command: string
@@ -18,7 +16,7 @@ export interface Command {
   response: { [id: string]: string }
 }
 
-export interface ClientBase {
+export interface ClientInfo {
   ComputerId: string
   LastSeen: string
   LastIp: string

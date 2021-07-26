@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Command, SrvCmdBase, ClientBase, Campaign } from '../app.model';
+import { PacketInfo, Packet, ClientInfo, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
 import {AfterViewInit, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -37,7 +37,7 @@ export class CommandCreateModalComponent implements OnInit {
   downloadUrlBase: string = ""
   downloadUrlFile: string = ""
   downloadDestination: string = ""
-  client: ClientBase
+  client: ClientInfo
   interactiveStdout: string = ""
   
   commandlineInteractive: string = "hostname"
@@ -67,15 +67,18 @@ export class CommandCreateModalComponent implements OnInit {
     // Default values (for testing)
     if (true) {
       this.apiService.getCampaign().subscribe(
-        (data: Campaign) => { 
+        (campaign: Campaign) => { 
           this.executable = "cmd";
           this.param1 = "/C"
           this.param2 = "whoami"
+
+          this.serverurl = campaign.ServerUrl;
     
-          this.uploadUrlBase = data.ServerUrl + data.CommandFileUploadPath;
+          this.uploadUrlBase = campaign.ServerUrl + campaign.CommandFileUploadPath;
           this.uploadSource = "README.md";
     
-          this.downloadUrlBase = this.serverurl + data.CommandFileDownloadPath;
+          this.downloadUrlBase = campaign.ServerUrl + campaign.CommandFileDownloadPath;
+          console.log("0: ", this.serverurl);
           this.downloadUrlFile = "test.txt";
           this.downloadDestination = "test.txt";
         },
@@ -91,9 +94,9 @@ export class CommandCreateModalComponent implements OnInit {
     this.updateInteractive();
 
     // Get and update data
-    this.adminWebsocketService.srvCmdsEvent.subscribe((srvCmd: SrvCmdBase) => {
+    this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (srvCmd != undefined && srvCmd.Command.computerid == this.commandCreateArgs.computerId) {
+      if (packetInfo != undefined && packetInfo.Command.computerid == this.commandCreateArgs.computerId) {
         this.updateInteractive();
       }
 
@@ -103,7 +106,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   updateInteractive() {
-    var data2 = this.adminWebsocketService.getSrvCmds();
+    var data2 = this.adminWebsocketService.getPacketInfos();
     var newData = data2.filter(d => 
       (d.Command.computerid == this.commandCreateArgs.computerId || d.Command.computerid == "0") 
       && (d.Command.command == "iIssue" || d.Command.command == "iOpen"));
@@ -121,7 +124,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   addCommandTest() {
-    var command: Command = {
+    var command: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'test',
@@ -140,7 +143,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   interactiveCmdOpen(force: boolean) {
-    var command: Command = {
+    var command: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'iOpen',
@@ -162,7 +165,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   interactiveCmdIssue() {
-    var command: Command = {
+    var command: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'iIssue',
@@ -192,7 +195,7 @@ export class CommandCreateModalComponent implements OnInit {
     }
     console.log(params);
 
-    var command: Command = {
+    var command: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'exec',
@@ -211,7 +214,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   addCommandExecArgs() {
-    var command: Command = {
+    var command: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'exec',
@@ -243,7 +246,7 @@ export class CommandCreateModalComponent implements OnInit {
 
   addCommandUpload() {
     var packetId = this.getRandomInt();
-    var command: Command = {
+    var command: Packet = {
       computerid: this.client.ComputerId, 
       packetid: packetId,
       command: 'fileupload',
@@ -264,7 +267,7 @@ export class CommandCreateModalComponent implements OnInit {
   }
 
   addCommandDownload() {
-    var command: Command = {
+    var command: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
       command: 'filedownload',

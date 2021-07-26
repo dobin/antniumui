@@ -78,10 +78,12 @@
             
                 <div *ngSwitchCase="'fileupload'">
                     {{element.Command.response["response"]}}
+                    {{element.Command.response["error"]}}
                 </div>
 
                 <div *ngSwitchCase="'filedownload'">
                     {{element.Command.response["response"]}}
+                    {{element.Command.response["error"]}}
                 </div>
 
                 <div *ngSwitchCase="'iOpen'">

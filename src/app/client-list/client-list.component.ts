@@ -3,7 +3,7 @@ import {AfterViewInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { ClientBase } from '../app.model';
+import { ClientInfo } from '../app.model';
 import { MatDialog } from "@angular/material/dialog";
 import { CommandCreateModalComponent, CommandCreateArgs } from '../command-create-modal/command-create-modal.component';
 import { AdminWebsocketService } from '../admin-websocket.service';
@@ -20,7 +20,7 @@ export class ClientListComponent implements OnInit {
     'actions', 'LastSeen', 'ComputerID' ];
 
   // Table shit
-  dataSource: MatTableDataSource<ClientBase> = new MatTableDataSource<ClientBase>();
+  dataSource: MatTableDataSource<ClientInfo> = new MatTableDataSource<ClientInfo>();
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(

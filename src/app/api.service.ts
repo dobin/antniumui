@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 import { config, Observable } from 'rxjs';
-import { SrvCmdBase, ClientBase, Command, Campaign } from './app.model';
+import { PacketInfo, ClientInfo, Packet, Campaign } from './app.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 
@@ -26,19 +26,19 @@ export class ApiService {
 		return this.httpClient.get<Campaign>(this.SERVER_URL + "/admin/campaign");
 	}
 
-	public refreshCommands(): Observable<SrvCmdBase[]> {
-		return this.httpClient.get<SrvCmdBase[]>(this.SERVER_URL + "/admin/commands");
+	public refreshCommands(): Observable<PacketInfo[]> {
+		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/commands");
 	}
 
-	public refreshCommandsClient(computerId: string): Observable<SrvCmdBase[]> {
-		return this.httpClient.get<SrvCmdBase[]>(this.SERVER_URL + "/admin/commands/" + computerId);
+	public refreshCommandsClient(computerId: string): Observable<PacketInfo[]> {
+		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/commands/" + computerId);
 	}
 
-	public refreshClients(): Observable<ClientBase[]> {
-		return this.httpClient.get<ClientBase[]>(this.SERVER_URL + "/admin/clients");
+	public refreshClients(): Observable<ClientInfo[]> {
+		return this.httpClient.get<ClientInfo[]>(this.SERVER_URL + "/admin/clients");
 	}
 
-	public sendCommand(command: Command) {
+	public sendCommand(command: Packet) {
 		return this.httpClient.post(this.SERVER_URL + "/admin/addCommand", JSON.stringify(command));
 	}
 

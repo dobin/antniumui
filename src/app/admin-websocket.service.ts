@@ -3,14 +3,14 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { HttpErrorResponse } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 
-import { SrvCmdBase, ClientBase, Command } from './app.model';
+import { PacketInfo, Packet, ClientInfo, Campaign } from './app.model';
 import { ApiService } from './api.service';
 import { ConfigService } from './config.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 interface WebsocketData {
-  SrvCmd: SrvCmdBase,
+  PacketInfo: PacketInfo,
 }
 
 @Injectable({
@@ -23,10 +23,10 @@ export class AdminWebsocketService {
   public websocketStatus = "";
   public restStatus = "";
 
-  private srvCmds: SrvCmdBase[] = [];
-  private clients: ClientBase[] = [];
+  private packetInfos: PacketInfo[] = [];
+  private clients: ClientInfo[] = [];
 
-  public srvCmdsEvent: EventEmitter<any> = new EventEmitter();
+  public packetInfosEvent: EventEmitter<any> = new EventEmitter();
   public clientsEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(		
@@ -36,21 +36,21 @@ export class AdminWebsocketService {
     this.connect();
   }
 
-  public getSrvCmds(): SrvCmdBase[] {
-    return this.srvCmds;
+  public getPacketInfos(): PacketInfo[] {
+    return this.packetInfos;
   }
 
-  public getClients(): ClientBase[] {
+  public getClients(): ClientInfo[] {
     return this.clients;
   }
 
-  public getClientBy(computerId: string): ClientBase {
+  public getClientBy(computerId: string): ClientInfo {
     return this.getClients().find(c => c.ComputerId == computerId)!;
   }
 
   private refreshClients() {
     this.apiService.refreshClients().subscribe(
-      (data: ClientBase[]) => { 
+      (data: ClientInfo[]) => { 
           this.clients = data;
           this.clientsEvent.emit(data);
           this.restStatus = "ok";
@@ -64,9 +64,9 @@ export class AdminWebsocketService {
   private connect() {
     // Get initial data
     this.apiService.refreshCommands().subscribe(
-      (data: SrvCmdBase[]) => { 
-        this.srvCmds = data;
-        this.srvCmdsEvent.emit(undefined); // undefined is broadcast all
+      (data: PacketInfo[]) => { 
+        this.packetInfos = data;
+        this.packetInfosEvent.emit(undefined); // undefined is broadcast all
       },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error: " + err);
@@ -108,18 +108,19 @@ export class AdminWebsocketService {
 
     // Function to listen for updates from WS
     this.socket$.subscribe((data: WebsocketData) => {
-      var x: SrvCmdBase = this.srvCmds.find(srvCmd => srvCmd.Command.packetid == data.SrvCmd.Command.packetid ) as SrvCmdBase
+      var x: PacketInfo = this.packetInfos.find(packetInfo => packetInfo.Command.packetid == data.PacketInfo.Command.packetid ) as PacketInfo
       if (x == undefined) {
         // Add command
-        this.srvCmds.push(data.SrvCmd);
+
+        this.packetInfos.push(data.PacketInfo);
       } else {
         // Update command (by removing the previous one)
-        var index = this.srvCmds.indexOf(x);
-        Object.assign(this.srvCmds[index], data.SrvCmd);
+        var index = this.packetInfos.indexOf(x);
+        Object.assign(this.packetInfos[index], data.PacketInfo);
       }
 
       // Notify
-      this.srvCmdsEvent.emit(data.SrvCmd);
+      this.packetInfosEvent.emit(data.PacketInfo);
      });
   }
 

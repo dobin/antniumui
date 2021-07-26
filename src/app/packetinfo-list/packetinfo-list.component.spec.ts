@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SrvcmdListComponent } from './srvcmd-list.component';
+import { PacketInfoListComponent } from './packetinfo-list.component';
 
-describe('SrvcmdListComponent', () => {
-  let component: SrvcmdListComponent;
-  let fixture: ComponentFixture<SrvcmdListComponent>;
+describe('PacketInfoListComponent', () => {
+  let component: PacketInfoListComponent;
+  let fixture: ComponentFixture<PacketInfoListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SrvcmdListComponent ]
+      declarations: [ PacketInfoListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SrvcmdListComponent);
+    fixture = TestBed.createComponent(PacketInfoListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
