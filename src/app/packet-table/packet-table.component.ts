@@ -46,11 +46,11 @@ export class PacketTableComponent implements OnInit {
   ngOnInit(): void {
     if (this.computerId != "") {
       this.displayedColumns = [
-        'TimeRecorded', 'command', 'arguments', 'response'];
+        'TimeRecorded', 'packetType', 'arguments', 'response'];
         this.pageSizeOptions = [3, 5, 10];
     } else {
       this.displayedColumns = [
-        'actions', 'TimeRecorded', 'ClientIp', 'command', 'arguments', 'response', 'State'];
+        'actions', 'TimeRecorded', 'ClientIp', 'packetType', 'arguments', 'response', 'State'];
       this.pageSizeOptions = [6, 12, 24, 48];
     }
 

@@ -109,7 +109,7 @@ export class PacketCreateModalComponent implements OnInit {
     var data2 = this.adminWebsocketService.getPacketInfos();
     var newData = data2.filter(d => 
       (d.Packet.computerid == this.packetCreateArgs.computerId || d.Packet.computerid == "0") 
-      && (d.Packet.command == "iIssue" || d.Packet.command == "iOpen"));
+      && (d.Packet.packetType == "iIssue" || d.Packet.packetType == "iOpen"));
     
     this.commandlineInteractive = "";
     this.interactiveStdout = "";
@@ -127,7 +127,7 @@ export class PacketCreateModalComponent implements OnInit {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'test',
+      packetType: 'test',
       arguments: { "test": "test" },
       response: {},
     }
@@ -146,7 +146,7 @@ export class PacketCreateModalComponent implements OnInit {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'iOpen',
+      packetType: 'iOpen',
       arguments: { },
       response: {},
     }
@@ -168,7 +168,7 @@ export class PacketCreateModalComponent implements OnInit {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'iIssue',
+      packetType: 'iIssue',
       arguments: { 'commandline': this.commandlineInteractive },
       response: {},
     }
@@ -198,7 +198,7 @@ export class PacketCreateModalComponent implements OnInit {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'exec',
+      packetType: 'exec',
       arguments: params,
       response: {},
     }
@@ -217,7 +217,7 @@ export class PacketCreateModalComponent implements OnInit {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'exec',
+      packetType: 'exec',
       arguments: { 
         "executable": this.executable,
       },
@@ -249,7 +249,7 @@ export class PacketCreateModalComponent implements OnInit {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: packetId,
-      command: 'fileupload',
+      packetType: 'fileupload',
       arguments: { 
         "remoteurl": this.uploadUrlBase + packetId,
         "source": this.uploadSource
@@ -270,7 +270,7 @@ export class PacketCreateModalComponent implements OnInit {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
-      command: 'filedownload',
+      packetType: 'filedownload',
       arguments: { 
         "remoteurl": this.downloadUrlBase + this.downloadUrlFile,
         "destination": this.downloadDestination

@@ -23,16 +23,16 @@
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="command">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> command </th>
-        <td mat-cell *matCellDef="let element"> {{element.Packet.command }} </td>
+    <ng-container matColumnDef="packetType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.Packet.packetType }} </td>
     </ng-container>
 
 
     <ng-container matColumnDef="arguments">
         <th mat-header-cell *matHeaderCellDef> Arguments </th>
         <td mat-cell *matCellDef="let element"> 
-            <container-element [ngSwitch]="element.Packet.command">
+            <container-element [ngSwitch]="element.Packet.packetType">
                 
             <div *ngSwitchCase="'exec'">
                 {{element.Packet.arguments["executable"]}} 
@@ -44,7 +44,9 @@
 
             <div *ngSwitchCase="'fileupload'">
                 {{element.Packet.arguments["source"]}} <br>
-                <a [routerLink]="" (click)="openFileTab(element.Packet.arguments['remoteurl'])">Download as {{element.Packet.arguments["remoteurl"] | strip}}</a>
+                <a [routerLink]="" (click)="openFileTab(element.Packet.arguments['remoteurl'])">
+                    Download as {{element.Packet.arguments["remoteurl"] | strip}}
+                </a>
             </div>
 
             <div *ngSwitchCase="'filedownload'">
@@ -71,7 +73,7 @@
     <ng-container matColumnDef="response">
         <th mat-header-cell *matHeaderCellDef> Response </th>
         <td mat-cell *matCellDef="let element"> 
-            <container-element [ngSwitch]="element.Packet.command">
+            <container-element [ngSwitch]="element.Packet.packetType">
                 <div *ngSwitchCase="'exec'">
                     <pre>{{element.Packet.response["error"]}}{{element.Packet.response["stdout"]}}</pre>
                 </div>

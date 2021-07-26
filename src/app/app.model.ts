@@ -11,7 +11,7 @@ export interface PacketInfo {
 export interface Packet {
   computerid: string
   packetid: string
-  command: string
+  packetType: string
   arguments: { [id: string]: string }
   response: { [id: string]: string }
 }
