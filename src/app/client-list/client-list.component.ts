@@ -10,6 +10,7 @@ import { ClientViewModalComponent } from '../client-view-modal/client-view-modal
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-client-list',
@@ -18,7 +19,7 @@ import { take } from 'rxjs/operators';
 })
 export class ClientListComponent implements OnInit {
   displayedColumns: string[] = [
-    'actions', 'LastSeen', 'ComputerID' ];
+    'actions', 'FirstSeen', 'ComputerID' ];
 
   // Table shit
   dataSource: MatTableDataSource<ClientInfo> = new MatTableDataSource<ClientInfo>();
@@ -34,7 +35,7 @@ export class ClientListComponent implements OnInit {
     timer(0)
     .pipe(take(1))
     .subscribe(() => {
-      this.sort.sort({ id: 'LastSeen', start: 'desc', disableClear: true });
+      this.sort.sort({ id: 'FirstSeen', start: 'desc', disableClear: true });
     });
 
     // Get and update data
@@ -42,6 +43,13 @@ export class ClientListComponent implements OnInit {
     this.adminWebsocketService.clientsEvent.subscribe(data => {
       this.dataSource.data = this.adminWebsocketService.getClients();
     })
+  }
+
+  getClientRelativeLastSeen(clientInfo: ClientInfo) {
+    var dNow: moment.Moment = moment();
+    var dLast: moment.Moment = moment(clientInfo.LastSeen);
+    var diff = dNow.diff(dLast);
+    return moment.duration(diff).humanize();
   }
 
   ngAfterViewInit() {

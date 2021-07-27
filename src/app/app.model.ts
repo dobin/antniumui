@@ -19,6 +19,7 @@ export interface Packet {
 export interface ClientInfo {
   ComputerId: string
   LastSeen: string
+  FirstSeen: string
   LastIp: string
 
   Hostname: string
