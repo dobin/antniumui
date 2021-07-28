@@ -37,7 +37,7 @@ export class PacketCreateModalComponent implements OnInit {
   downloadUrlBase: string = ""
   downloadUrlFile: string = ""
   downloadDestination: string = ""
-  client: ClientInfo
+  client!: ClientInfo
   interactiveStdout: string = ""
   
   commandlineInteractive: string = "hostname"
@@ -52,16 +52,6 @@ export class PacketCreateModalComponent implements OnInit {
     private configService: ConfigService,
     @Inject(MAT_DIALOG_DATA) public packetCreateArgs: PacketCreateArgs
   ) { }
-
-  openFileTab(url: string){
-    let basename = url.substring(url.lastIndexOf('/')+1);
-    let url2 = this.apiService.getAdminUpload(basename);
-    window.open(url2, "_blank");
-  }
-  
-  getRandomInt(): string {
-    return Math.floor(Math.random() * 1000000).toString();
-  }
 
   ngOnInit(): void {
     // Default values (for testing)
@@ -90,19 +80,21 @@ export class PacketCreateModalComponent implements OnInit {
 
     this.client = this.adminWebsocketService.getClientBy(this.packetCreateArgs.computerId);
 
-    // Get initial
+    // Get initial Packet Data
     this.updateInteractive();
-
-    // Get and update data
+    // Update Packet data
     this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
       if (packetInfo != undefined && packetInfo.Packet.computerid == this.packetCreateArgs.computerId) {
         this.updateInteractive();
       }
-
-      // Also update client info (e.g. last seen)
-      this.client = this.adminWebsocketService.getClientBy(this.packetCreateArgs.computerId);
     })
+
+    // Also update client info (e.g. last seen)
+    this.adminWebsocketService.clientsEvent.subscribe((clientInfo: ClientInfo) => {
+      this.client = this.adminWebsocketService.getClientBy(this.packetCreateArgs.computerId);
+    });
+
   }
 
   updateInteractive() {
@@ -142,7 +134,7 @@ export class PacketCreateModalComponent implements OnInit {
     );
   }
 
-  interactiveCmdOpen(force: boolean) {
+  addPacketInteractiveCmdOpen(force: boolean) {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
@@ -164,7 +156,7 @@ export class PacketCreateModalComponent implements OnInit {
     );
   }
 
-  interactiveCmdIssue() {
+  addPacketInteractiveCmdIssue() {
     var packet: Packet = {
       computerid: this.client.ComputerId, 
       packetid: this.getRandomInt(),
@@ -286,5 +278,19 @@ export class PacketCreateModalComponent implements OnInit {
         console.log("SendPacket failed")
       },
     );
+  }
+
+  openFileTab(url: string){
+    let basename = url.substring(url.lastIndexOf('/')+1);
+    let url2 = this.apiService.getAdminUpload(basename);
+    window.open(url2, "_blank");
+  }
+  
+  getRandomInt(): string {
+    return Math.floor(Math.random() * 1000000).toString();
+  }
+
+  getClientRelativeLastSeen(): string {
+    return this.adminWebsocketService.getClientRelativeLastSeen(this.client);
   }
 }

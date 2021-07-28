@@ -1,16 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {AfterViewInit, ViewChild} from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { ClientInfo } from '../app.model';
 import { MatDialog } from "@angular/material/dialog";
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+import { ClientInfo } from '../app.model';
 import { PacketCreateModalComponent, PacketCreateArgs } from '../packet-create-modal/packet-create-modal.component';
 import { ClientViewModalComponent } from '../client-view-modal/client-view-modal.component';
 import { AdminWebsocketService } from '../admin-websocket.service';
-import { timer } from 'rxjs';
-import { take } from 'rxjs/operators';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-client-list',
@@ -45,13 +44,6 @@ export class ClientListComponent implements OnInit {
     })
   }
 
-  getClientRelativeLastSeen(clientInfo: ClientInfo) {
-    var dNow: moment.Moment = moment();
-    var dLast: moment.Moment = moment(clientInfo.LastSeen);
-    var diff = dNow.diff(dLast);
-    return moment.duration(diff).humanize();
-  }
-
   ngAfterViewInit() {
     // Connect the table components
     this.dataSource.sort = this.sort;
@@ -75,4 +67,7 @@ export class ClientListComponent implements OnInit {
     });
   }
 
+  getClientRelativeLastSeen(clientInfo: ClientInfo) {
+    return this.adminWebsocketService.getClientRelativeLastSeen(clientInfo);
+  }
 }

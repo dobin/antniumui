@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';  
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
-import { config, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PacketInfo, ClientInfo, Packet, Campaign } from './app.model';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
+
 
 @Injectable({  
 	providedIn: 'root'  
@@ -45,5 +45,6 @@ export class ApiService {
 	public getAdminUpload(filename: string): string {
 		return this.SERVER_URL + "/admin/upload/" + filename;
 	}
+
 }
 

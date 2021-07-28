@@ -2,13 +2,14 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { HttpErrorResponse } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
-import { map, retry, catchError, delay } from 'rxjs/operators';
+import { retry, delay } from 'rxjs/operators';
+import * as moment from 'moment';
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { PacketInfo, Packet, ClientInfo, Campaign } from './app.model';
 import { ApiService } from './api.service';
 import { ConfigService } from './config.service';
-import { timer } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 interface WebsocketData {
   PacketInfo: PacketInfo,
@@ -143,5 +144,14 @@ export class AdminWebsocketService {
   disconnect() {
     this.socket$.complete();
   }
+
+  
+	// Util functions here for now...
+	public getClientRelativeLastSeen(clientInfo: ClientInfo) {
+		var dNow: moment.Moment = moment();
+		var dLast: moment.Moment = moment(clientInfo.LastSeen);
+		var diff = dNow.diff(dLast);
+		return moment.duration(diff).humanize();
+	}
 
 }
