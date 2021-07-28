@@ -1,10 +1,24 @@
-<mat-card>
-Host: {{client.ComputerId}} | 
-IP:  {{client.LastIp}} |
-LastSeen: {{client.LastSeen | date:'short'}}
-Ago: {{getClientRelativeLastSeen()}}
+<mat-card  class="moarspace">
+    <mat-grid-list cols="4" rowHeight="1em">
+        <mat-grid-tile>
+            {{client.ComputerId}}
+        </mat-grid-tile>
+    
+        <mat-grid-tile>
+            {{client.LastIp}}
+        </mat-grid-tile>
+    
+        <mat-grid-tile>
+            
+        </mat-grid-tile>
+    
+        <mat-grid-tile>
+            queried {{getClientRelativeLastSeen()}} ago
+        </mat-grid-tile>
+    </mat-grid-list>
 </mat-card>
-<br>
+
+<mat-card  class="moarspace">
 
 <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start">
     <mat-tab label="Interactive">
@@ -96,4 +110,8 @@ Ago: {{getClientRelativeLastSeen()}}
     </mat-tab>
 </mat-tab-group>
  
-<app-packet-table *ngIf="selectedTabIndex != 0" [computerId]="packetCreateArgs.computerId"></app-packet-table>
+</mat-card>
+
+<mat-card *ngIf="selectedTabIndex != 0"  >
+    <app-packet-table [computerId]="packetCreateArgs.computerId"></app-packet-table>
+</mat-card>

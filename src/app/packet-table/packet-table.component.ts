@@ -99,7 +99,7 @@ export class PacketTableComponent implements OnInit {
 
     const dialogRef = this.dialog.open(PacketCreateModalComponent, {
       width: '80em',
-      height: '50em',
+      height: '55em',
       data: data,
     });
   }
