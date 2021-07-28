@@ -26,11 +26,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { PacketInfoListComponent } from './packetinfo-list/packetinfo-list.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { PacketInfoListComponent } from './packetinfo-list/packetinfo-list.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { PacketCreateModalComponent } from './packet-create-modal/packet-create-modal.component';
-
 import { AuthInterceptor } from './auth-interceptor';
 import { StripPipe } from './strip-pipe'
 import { CampaignViewComponent } from './campaign-view/campaign-view.component';
@@ -81,6 +83,7 @@ import { ClientViewModalComponent } from './client-view-modal/client-view-modal.
     MatMenuModule,
     MatCheckboxModule,
     MatTooltipModule,
+    MatSnackBarModule,
 
     FlexLayoutModule,
   ],

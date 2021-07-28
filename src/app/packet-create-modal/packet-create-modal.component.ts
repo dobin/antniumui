@@ -1,17 +1,10 @@
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { PacketInfo, Packet, ClientInfo, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
-import {AfterViewInit, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource } from '@angular/material/table';
 import { AdminWebsocketService } from '../admin-websocket.service';
-import { timer } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { ConfigService } from '../config.service';
-import { PacketTableComponent } from '../packet-table/packet-table.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PacketCreateArgs {
   computerId: string,
@@ -49,7 +42,7 @@ export class PacketCreateModalComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
-    private configService: ConfigService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public packetCreateArgs: PacketCreateArgs
   ) { }
 
@@ -111,6 +104,9 @@ export class PacketCreateModalComponent implements OnInit {
       }
       if (element.Packet.response.hasOwnProperty("stderr")) {
         this.interactiveStdout += element.Packet.response['stderr'];
+      }
+      if (element.Packet.response.hasOwnProperty("error")) {
+        this.interactiveStdout += element.Packet.response['error'];
       }
     });
   }
@@ -278,6 +274,14 @@ export class PacketCreateModalComponent implements OnInit {
         console.log("SendPacket failed")
       },
     );
+  }
+
+  // Utils:
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000
+    });
   }
 
   openFileTab(url: string){
