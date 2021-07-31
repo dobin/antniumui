@@ -1,5 +1,103 @@
 <h1> Antanium </h1>
 
+<h2> Model </h2>
+
+<p>
+   Packet is the main datastructure we send to the client, and receive it as answer. 
+   It is always initiated by the server. It is stateless. 
+</p><p>
+   PacketInfo is the data structure the server uses to track additional information
+   of the packet, like the source IP of the client. 
+</p><p>
+   It is available via "admin/packets" and "admin/packets/[computerId]" REST interfaces, 
+   and also pushed via "/ws" websocket, which is used by the UI. 
+</p>
+
+<pre>
+export interface Packet &#123;
+      computerid: string
+      packetid: string
+      packetType: string
+      arguments: &#123; [id: string]: string &#125;
+      response: &#123; [id: string]: string &#125;
+&#125;
+
+export interface PacketInfo &#123;
+      Packet: Packet
+      State: number
+      ClientIp: string
+      TimeRecorded: string
+      TimeSent: string
+      TimeAnswered: string
+&#125;
+</pre>
+
+<p>A Packet may look like this:</p>
+<pre>
+&#123;
+      "computerid": "c429d02sdke53b4hlth0",
+      "packetid": "400306",
+      "packetType": "exec",
+      "arguments": &#123;
+           "executable": "cmd",
+           "param0": "/C",
+           "param1": "whoami"
+      &#125;,
+      "response": &#123;
+           "stdout": "host\\hacker\\r\\n"
+      &#125;
+&#125;
+</pre>
+
+<br>
+<p>
+   Every once connected client (-binary) will have a ClientInfo structure on the server. 
+   It is used to track client information, like LastSeen. 
+</p><p>
+   It is available via "admin/clients" REST, and automatically updated every few seconds 
+   on the UI. It contains information from the packet with the "ping" type 
+   (sent periodically by the client).
+</p>
+
+<pre>
+export interface ClientInfo &#123;
+      // Data gathered by the server
+      ComputerId: string
+      LastSeen: string
+      FirstSeen: string
+      LastIp: string
+    
+      // Gathered by the client upon start
+      Hostname: string
+      LocalIps: string[]
+
+      // Updated when new Executors connect
+      Executors: string[]
+&#125;
+</pre>
+
+<br>
+<p>A campaign is a set of configuration values which connect the client and server for 
+   a specific engagement. It is used as configuration in the client and the server. 
+</p>
+
+<pre>
+export interface Campaign &#123;
+      ApiKey:      string
+      AdminApiKey: string
+      EncKey:      string
+      WithZip:     boolean
+      WithEnc:     boolean
+    
+      ServerUrl: string
+    
+      PacketSendPath:   string
+      PacketGetPath:    string
+      FileUploadPath:   string
+      FileDownloadPath: string
+&#125;
+</pre>
+
 <h2> Dataflow </h2>
 
 <pre>
@@ -64,5 +162,5 @@ The only thing transported are packets. With empty packet.response when incoming
 │                 │  │                                                           │  │                      │
 └─────────────────┘  └───────────────────────────────────────────────────────────┘  └──────────────────────┘
 
-                 HTTP               Channel            Channel                Various
+                 HTTP               Channel            Channels               Various
 </pre>
