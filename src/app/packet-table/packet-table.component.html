@@ -16,7 +16,7 @@
     </ng-container>
 
     <ng-container matColumnDef="ClientIp">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Client </th>
         <td mat-cell *matCellDef="let element"> 
             {{element.Packet.computerid}} <br>
             {{element.ClientIp}}
@@ -24,8 +24,10 @@
     </ng-container>
 
     <ng-container matColumnDef="packetType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-        <td mat-cell *matCellDef="let element"> {{element.Packet.packetType }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> What </th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.Packet.packetType }} @ {{element.Packet.downstreamId}}
+         </td>
     </ng-container>
 
 

@@ -16,19 +16,20 @@
 
 <pre>
 export interface Packet &#123;
-      computerid: string
-      packetid: string
-      packetType: string
-      arguments: &#123; [id: string]: string &#125;
-      response: &#123; [id: string]: string &#125;
+      computerid:   string
+      packetid:     string
+      packetType:   string
+      arguments:    &#123; [id: string]: string &#125;
+      response:     &#123; [id: string]: string &#125;
+      downstreamId: string
 &#125;
 
 export interface PacketInfo &#123;
-      Packet: Packet
-      State: number
-      ClientIp: string
+      Packet:       Packet
+      State:        number
+      ClientIp:     string
       TimeRecorded: string
-      TimeSent: string
+      TimeSent:     string
       TimeAnswered: string
 &#125;
 </pre>
@@ -36,17 +37,18 @@ export interface PacketInfo &#123;
 <p>A Packet may look like this:</p>
 <pre>
 &#123;
-      "computerid": "c429d02sdke53b4hlth0",
-      "packetid": "400306",
-      "packetType": "exec",
+      "computerid":   "c429d02sdke53b4hlth0",
+      "packetid":     "400306",
+      "packetType":   "exec",
       "arguments": &#123;
            "executable": "cmd",
-           "param0": "/C",
-           "param1": "whoami"
+           "param0":     "/C",
+           "param1":     "whoami"
       &#125;,
       "response": &#123;
            "stdout": "host\\hacker\\r\\n"
-      &#125;
+      &#125;,
+      "downstreamId": "client"
 &#125;
 </pre>
 
@@ -64,16 +66,13 @@ export interface PacketInfo &#123;
 export interface ClientInfo &#123;
       // Data gathered by the server
       ComputerId: string
-      LastSeen: string
-      FirstSeen: string
-      LastIp: string
+      LastSeen:   string
+      FirstSeen:  string
+      LastIp:     string
     
       // Gathered by the client upon start
       Hostname: string
       LocalIps: string[]
-
-      // Updated when new Executors connect
-      Executors: string[]
 &#125;
 </pre>
 

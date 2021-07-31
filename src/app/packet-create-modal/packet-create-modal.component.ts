@@ -120,6 +120,7 @@ export class PacketCreateModalComponent implements OnInit {
       packetType: 'test',
       arguments: { "test": "test" },
       response: {},
+      downstreamId: this.downstream,
     }
 
     this.apiService.sendPacket(packet).subscribe(
@@ -139,6 +140,7 @@ export class PacketCreateModalComponent implements OnInit {
       packetType: 'iOpen',
       arguments: { },
       response: {},
+      downstreamId: this.downstream,
     }
     if (force) {
       packet.arguments['force'] = "force";
@@ -161,6 +163,7 @@ export class PacketCreateModalComponent implements OnInit {
       packetType: 'iIssue',
       arguments: { 'commandline': this.commandlineInteractive },
       response: {},
+      downstreamId: this.downstream,
     }
 
     this.apiService.sendPacket(packet).subscribe(
@@ -179,7 +182,6 @@ export class PacketCreateModalComponent implements OnInit {
     var paramsArr = split.slice(1);
 
     var params:{ [id: string]: string } = {};
-    params["channelId"] = this.downstream;
     params["executable"] = executable;
     for(var n=0; n<paramsArr.length; n++) {
       params["param" + n] = paramsArr[n];
@@ -192,6 +194,7 @@ export class PacketCreateModalComponent implements OnInit {
       packetType: 'exec',
       arguments: params,
       response: {},
+      downstreamId: this.downstream,
     }
 
     this.apiService.sendPacket(packet).subscribe(
@@ -211,9 +214,9 @@ export class PacketCreateModalComponent implements OnInit {
       packetType: 'exec',
       arguments: { 
         "executable": this.executable,
-        "channelId": this.downstream,
       },
       response: {},
+      downstreamId: this.downstream,
     }
 
     if (this.param1 != "") {
@@ -247,6 +250,7 @@ export class PacketCreateModalComponent implements OnInit {
         "source": this.uploadSource
       },
       response: {},
+      downstreamId: this.downstream,
     }
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
@@ -268,6 +272,7 @@ export class PacketCreateModalComponent implements OnInit {
         "destination": this.downloadDestination
       },
       response: {},
+      downstreamId: this.downstream,
     }
 
     this.apiService.sendPacket(packet).subscribe(

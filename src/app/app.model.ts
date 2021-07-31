@@ -14,6 +14,7 @@ export interface Packet {
   packetType: string
   arguments: { [id: string]: string }
   response: { [id: string]: string }
+  downstreamId: string
 }
 
 export interface ClientInfo {
