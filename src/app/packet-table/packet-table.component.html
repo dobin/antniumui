@@ -26,7 +26,11 @@
     <ng-container matColumnDef="packetType">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> What </th>
         <td mat-cell *matCellDef="let element"> 
-            {{element.Packet.packetType }} @ {{element.Packet.downstreamId}}
+            {{element.Packet.packetType }} 
+            
+            <ng-container *ngIf="element.Packet.downstreamId != 'client'">
+                @ {{element.Packet.downstreamId}}
+            </ng-container>
          </td>
     </ng-container>
 
