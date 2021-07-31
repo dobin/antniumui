@@ -1,28 +1,27 @@
 <h1> Antanium </h1>
 
-<h2> Architecture </h2>
+<h2> Dataflow </h2>
 
-Data flow of componenets overview:
 <pre>
-                               ┌─────┐ ┌─────────┐
-                               │     │ │         │
-                               │CmdDb│ │ClientDb │
-                               │     │ │         │
-                               └──┬──┘ └─┬───────┘
-                                  │      │
-                                  │      │
-                                  │      │
-┌──────────────┐               ┌──┴──────┴──┐               ┌─────────┐
-│              │               │            │               │         │
-│    Client    │               │   Server   │ Clients       │   UI    │
-│              │               │            ├──────────────►│         │
-│              │       Packet  │            │ Packets       │         │
-│ [ComputerId] │◄──────────────┤ /get       ├──────────────►│         │
-│  [ClientIp]  │               │            │ WS Notify     │         │
-│              │ Answer        │            ├──────────────►│         │
-│              ├──────────────►│ /send      │   New Packet  │         │
-│              │               │            │◄──────────────┤         │
-│              │               └────────────┘               └─────────┘
+                             ┌────────┐ ┌────────┐
+                             │        │ │        │
+                             │PacketDb│ │ClientDb│
+                             │        │ │        │
+                             └────┬───┘ └─┬──────┘
+                                  │       │
+                                  │       │
+                                  │       │
+┌──────────────┐               ┌──┴───────┴─┐               ┌────────┐
+│              │               │            │               │        │
+│    Client    │               │   Server   │ Clients       │   UI   │
+│              │               │            ├──────────────►│        │
+│              │       Packet  │            │ Packets       │        │
+│ [ComputerId] │◄──────────────┤ /get       ├──────────────►│        │
+│  [ClientIp]  │               │            │ WS Notify     │        │
+│              │ Answer        │            ├──────────────►│        │
+│              ├──────────────►│ /send      │    New Packet │        │
+│              │               │            │◄──────────────┤        │
+│              │               └────────────┘               └────────┘
 │              │                                             UIIP:4200
 │              │               ┌────────────┐
 │              │  FileDownload │            │
@@ -33,20 +32,37 @@ Data flow of componenets overview:
 │              ├──────────────►│ /upload  P │
 │              │               │            │
 └──────────────┘               └────────────┘
+
                                 ServerIP:4444
-
-
        │          Auth:              │          Auth:            │
        │          ApiKey             │          AdminApiKey      │
        │                             │                           │
        │                             │                           │
        │          Encryption:        │                           │
        │          EncKey             │                           │
-       │                             │                           │
-       │                             │                           │
-       │                             │                           │
-       │                             │                           │
-       │                             │                           │
-       │                             │                           │
 
+
+</pre>
+
+<h2>Client data-flow, with Executors</h2>
+
+The only thing transported are packets. With empty packet.response when incoming, and response when answering the packet to the server. 
+<pre>
+┌─────────────────┐  ┌───────────────────────────────────────────────────────────┐  ┌──────────────────────┐
+│ Binary: server  │  │ Binary: client                                            │  │   Binary: executor   │
+│                 │  │                                                           │  │                      │
+│                 │  │                                                           │  │                      │
+│                 │  │                                                           │  │                      │
+│  ┌──────────┐   │  │   ┌──────────┐      ┌──────────┐       ┌──────────────┐   │  │   ┌──────────┐       │
+│  │  Server  │   │  │   │ Upstream │      │  Client  │       │  Downstream  │   │  │   │ Executor ├┐      │
+│  │          ├───┼──┼──►│          ├─────►│          ├──────►│              ├───┼──┼───┤          ││      │
+│  │          │   │  │   │          │      │          │       │              │   │  │   │          ││      │
+│  │          │   │  │   │          │      │          │       │              │   │  │   │          ││      │
+│  │          │◄──┼──┼───┤          │◄─────┤          │◄──────┤              │◄──┼──┼───┤          ││      │
+│  └──────────┘   │  │   └──────────┘      └──────────┘       └──────────────┘   │  │   └┬─────────┘│      │
+│                 │  │                                                           │  │    └──────────┘      │
+│                 │  │                                                           │  │                      │
+└─────────────────┘  └───────────────────────────────────────────────────────────┘  └──────────────────────┘
+
+                 HTTP               Channel            Channel                Various
 </pre>
