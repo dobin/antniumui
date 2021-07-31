@@ -39,6 +39,8 @@ export class PacketCreateModalComponent implements OnInit {
   commandline: string = "cmd /C hostname"
   interval: any
 
+  downstream: string = "client"
+
   constructor(
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
@@ -177,7 +179,8 @@ export class PacketCreateModalComponent implements OnInit {
     var paramsArr = split.slice(1);
 
     var params:{ [id: string]: string } = {};
-    params["executable"] = executable
+    params["channelId"] = this.downstream;
+    params["executable"] = executable;
     for(var n=0; n<paramsArr.length; n++) {
       params["param" + n] = paramsArr[n];
     }
@@ -208,6 +211,7 @@ export class PacketCreateModalComponent implements OnInit {
       packetType: 'exec',
       arguments: { 
         "executable": this.executable,
+        "channelId": this.downstream,
       },
       response: {},
     }
