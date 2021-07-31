@@ -40,6 +40,7 @@ import { ConfigModalComponent } from './config-modal/config-modal.component';
 import { DocsComponent } from './docs/docs.component';
 import { PacketTableComponent } from './packet-table/packet-table.component';
 import { ClientViewModalComponent } from './client-view-modal/client-view-modal.component';
+import { ClientsPageComponent } from './clients-page/clients-page.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ClientViewModalComponent } from './client-view-modal/client-view-modal.
     DocsComponent,
     PacketTableComponent,
     ClientViewModalComponent,
+    ClientsPageComponent,
   ],
   imports: [
     BrowserModule,
