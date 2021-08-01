@@ -27,8 +27,12 @@
     <mat-tab label="Interactive">
 
         <mat-card fxLayout="column"  fxLayoutGap="15px">
-            <button mat-raised-button (click)="addPacketInteractiveCmdOpen(false)">Open</button>
-            <button mat-raised-button (click)="addPacketInteractiveCmdOpen(true)">ForceOpen</button>
+            <md-input-container fxFlex="50" fxFill> 
+                <button mat-raised-button (click)="addPacketInteractiveCmdOpen(false)">Open</button>
+                &nbsp;
+                <button mat-raised-button (click)="addPacketInteractiveCmdOpen(true)">ForceOpen</button>
+            </md-input-container>
+                
 
             <md-input-container fxFlex="50" fxFill>
                 <!-- we check interactiveStdout on [scrollTop] to avoid a race condition, giving ugly warning. 
