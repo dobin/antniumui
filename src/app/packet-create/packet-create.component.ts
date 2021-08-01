@@ -27,7 +27,7 @@ export class PacketCreateComponent implements OnInit {
   downloadUrlBase: string = ""
   downloadUrlFile: string = ""
   downloadDestination: string = ""
-  client!: ClientInfo
+  client: ClientInfo = {} as ClientInfo// fake clientinfo so page-reload works
   interactiveStdout: string = ""
   
   commandlineInteractive: string = "hostname"
@@ -69,7 +69,11 @@ export class PacketCreateComponent implements OnInit {
       );
     }
 
-    this.client = this.adminWebsocketService.getClientBy(this.computerId);
+    // On page reload, it may not be immediately available
+    var client = this.adminWebsocketService.getClientBy(this.computerId);
+    if (client != undefined) {
+      this.client = client;
+    }
 
     // Get initial Packet Data
     this.updateInteractive();

@@ -1,0 +1,5 @@
+/* to avoid a race condition, giving ugly warning. 
+   https://stackoverflow.com/questions/35232731/angular-2-scroll-to-bottom-chat-style  */
+textarea {
+    overflow:auto; height: 100%;
+}
