@@ -41,6 +41,8 @@ import { DocsComponent } from './docs/docs.component';
 import { PacketTableComponent } from './packet-table/packet-table.component';
 import { ClientViewModalComponent } from './client-view-modal/client-view-modal.component';
 import { ClientsPageComponent } from './clients-page/clients-page.component';
+import { PacketCreateComponent } from './packet-create/packet-create.component';
+import { PacketCreatePageComponent } from './packet-create-page/packet-create-page.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { ClientsPageComponent } from './clients-page/clients-page.component';
     PacketTableComponent,
     ClientViewModalComponent,
     ClientsPageComponent,
+    PacketCreateComponent,
+    PacketCreatePageComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,9 @@
             <button mat-icon-button (click)="showModalPacketCreate(element.Packet.computerid)">
                 <mat-icon>slideshow</mat-icon>
             </button>
+            <button mat-icon-button [routerLink]="[ '/packetcreate/', element.Packet.computerid ]">
+                <mat-icon>slideshow</mat-icon>
+            </button>
         </td>
     </ng-container>
 

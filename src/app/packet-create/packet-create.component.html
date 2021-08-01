@@ -1,0 +1,120 @@
+<mat-card  class="moarspace">
+    <mat-grid-list cols="4" rowHeight="1em">
+        <mat-grid-tile>
+            {{client.ComputerId}}
+        </mat-grid-tile>
+    
+        <mat-grid-tile>
+            {{client.LastIp}}
+        </mat-grid-tile>
+    
+        <mat-grid-tile>
+            <mat-form-field fxFill>
+                <mat-label>downstream</mat-label>
+                <input matInput type="text" [(ngModel)]="downstream">
+            </mat-form-field>
+        </mat-grid-tile>
+    
+        <mat-grid-tile>
+            queried {{getClientRelativeLastSeen()}} ago
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-card>
+
+<mat-card  class="moarspace">
+
+<mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start">
+    <mat-tab label="Interactive">
+
+        <mat-card fxLayout="column"  fxLayoutGap="15px">
+            <button mat-raised-button (click)="addPacketInteractiveCmdOpen(false)">Open</button>
+            <button mat-raised-button (click)="addPacketInteractiveCmdOpen(true)">ForceOpen</button>
+
+            <md-input-container fxFlex="50" fxFill>
+                <textarea #textarea [scrollTop]="textarea.scrollHeight" style="width: 80em;" name="Output"  [(ngModel)]="interactiveStdout" mdInput rows="30"></textarea>
+            </md-input-container>
+
+            <mat-form-field fxFlex="50" fxFill>
+                <mat-label>commandline</mat-label>
+                <input matInput type="text" (keyup.enter)="addPacketInteractiveCmdIssue()" [(ngModel)]="commandlineInteractive">
+            </mat-form-field>
+        </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Execute">
+        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="addPacketExecLine()">Send</button>
+            <mat-form-field fxFlex="70" fxFill>
+                <mat-label>commandline</mat-label>
+                <input matInput type="text" (keyup.enter)="addPacketExecLine()" [(ngModel)]="commandline">
+            </mat-form-field>
+        </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Execute 2">
+        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="addPacketExecArgs()">Send</button>
+
+            <mat-form-field fxFlex>
+                <mat-label>Executable</mat-label>
+                <input matInput type="text" [(ngModel)]="executable">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+                <mat-label>Parameter 1</mat-label>
+                <input matInput type="text" [(ngModel)]="param1">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+                <mat-label>Parameter 2</mat-label>
+                <input matInput type="text" [(ngModel)]="param2">
+            </mat-form-field>
+            <mat-form-field fxFlex>
+                <mat-label>Parameter 3</mat-label>
+                <input matInput type="text" [(ngModel)]="param3">
+            </mat-form-field>
+        </mat-card>
+    </mat-tab>
+
+    <mat-tab label="FileUpload">
+        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="addPacketUpload()">Send</button>
+
+            <mat-form-field fxFlex="70">
+                <mat-label>Remote file path</mat-label>
+                <input matInput type="text" [(ngModel)]="uploadSource">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Upload URL</mat-label>
+                <input matInput type="text" [(ngModel)]="uploadUrlBase">
+            </mat-form-field>
+        </mat-card>
+    </mat-tab>
+
+    <mat-tab label="FileDownload">
+        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="addPacketDownload()">Send</button>
+
+            <mat-form-field fxFlex="60">
+                <mat-label>downloadDestination</mat-label>
+                <input matInput type="text" [(ngModel)]="downloadDestination">
+            </mat-form-field>
+            {{downloadUrlBase}}
+            <mat-form-field>
+                <mat-label>downloadUrl</mat-label>
+                <input matInput type="text" [(ngModel)]="downloadUrlFile">
+            </mat-form-field>
+        </mat-card>
+
+    </mat-tab>
+
+    <mat-tab label="Test">
+        <button mat-raised-button (click)="addPacketTest()">TestPacket</button>
+        <br><br>
+    </mat-tab>
+</mat-tab-group>
+ 
+</mat-card>
+
+<mat-card *ngIf="selectedTabIndex != 0"  >
+    <app-packet-table [computerId]="computerId"></app-packet-table>
+</mat-card>

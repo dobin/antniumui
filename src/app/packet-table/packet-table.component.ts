@@ -12,7 +12,8 @@ import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
-import { PacketCreateModalComponent, PacketCreateArgs} from '../packet-create-modal/packet-create-modal.component';
+import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
+import { RouterModule, Routes, Router } from '@angular/router';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class PacketTableComponent implements OnInit {
     private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
     private configService: ConfigService,
+    private router: Router
   ) { }
 
   ngAfterViewInit() {
@@ -93,14 +95,10 @@ export class PacketTableComponent implements OnInit {
 
 
   showModalPacketCreate(computerId: string) {
-    var data: PacketCreateArgs = {
-      computerId: computerId,
-    }
-
     const dialogRef = this.dialog.open(PacketCreateModalComponent, {
       width: '80em',
       height: '55em',
-      data: data,
+      data: computerId,
     });
   }
 

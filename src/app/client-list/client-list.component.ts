@@ -7,7 +7,7 @@ import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { ClientInfo } from '../app.model';
-import { PacketCreateModalComponent, PacketCreateArgs } from '../packet-create-modal/packet-create-modal.component';
+import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
 import { ClientViewModalComponent } from '../client-view-modal/client-view-modal.component';
 import { AdminWebsocketService } from '../admin-websocket.service';
 
@@ -50,13 +50,9 @@ export class ClientListComponent implements OnInit {
   }
 
   showModalPacketCreate(computerId: string) {
-    var data: PacketCreateArgs = {
-      computerId: computerId,
-    }
-
     const dialogRef = this.dialog.open(PacketCreateModalComponent, {
       width: '80em',
-      data: data,
+      data: computerId,
     });
   }
 
