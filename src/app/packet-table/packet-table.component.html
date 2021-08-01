@@ -110,8 +110,8 @@
 
                 <div *ngSwitchCase="'iIssue'">
                     <pre>{{element.Packet.response["stdout"]}}</pre>
-
                     <pre>{{element.Packet.response["stderr"]}}</pre>
+                    <pre>{{element.Packet.response["error"]}}</pre>
                 </div>
 
                 <div *ngSwitchCase="'downstreams'">
