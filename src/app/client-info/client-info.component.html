@@ -1,3 +1,4 @@
+<br>
 <mat-card  class="moarspace">
     <h3>Client:</h3>
     <ul>
@@ -9,10 +10,25 @@
 <br>
 
 <mat-card  class="moarspace">
-    <h3>Downstreams:</h3>
-    <ul>
-        <li  *ngFor="let downstreamInfo of downstreamList" > {{downstreamInfo.Name}} : {{downstreamInfo.Info}}</li>
-    </ul>
+    <table fxFlex mat-table [dataSource]="downstreamList" class="demo-table">
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{element.Name}}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Info">
+          <th mat-header-cell *matHeaderCellDef>Info</th>
+          <td mat-cell *matCellDef="let element">{{element.Info}}</td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+            mat-row
+            (click)="rowClicked(row)"
+            [class.demo-row-is-clicked]="clickedRow == row"
+            *matRowDef="let row; columns: displayedColumns;"
+        ></tr>
+    </table>
 </mat-card>
 <br>
 

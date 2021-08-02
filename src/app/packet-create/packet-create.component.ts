@@ -40,7 +40,7 @@ export class PacketCreateComponent implements OnInit {
   commandline: string = "cmd /C hostname"
   interval: any
 
-  downstream: string = "client"
+  downstreamId: string = "client"
 
   constructor(
     private apiService: ApiService,
@@ -82,6 +82,11 @@ export class PacketCreateComponent implements OnInit {
         this.updateInteractive();
       }
     })
+
+    // Subscribe to downstream selection
+    this.adminWebsocketService.downstreamSelection.subscribe(downstreamId => {
+      this.downstreamId = downstreamId;
+    });
   }
 
   updateInteractive() {
@@ -112,7 +117,7 @@ export class PacketCreateComponent implements OnInit {
       packetType: 'test',
       arguments: { "test": "test" },
       response: {},
-      downstreamId: this.downstream,
+      downstreamId: this.downstreamId,
     }
 
     this.apiService.sendPacket(packet).subscribe(
@@ -132,7 +137,7 @@ export class PacketCreateComponent implements OnInit {
       packetType: 'iOpen',
       arguments: { },
       response: {},
-      downstreamId: this.downstream,
+      downstreamId: this.downstreamId,
     }
     if (force) {
       packet.arguments['force'] = "force";
@@ -155,7 +160,7 @@ export class PacketCreateComponent implements OnInit {
       packetType: 'iIssue',
       arguments: { 'commandline': this.commandlineInteractive },
       response: {},
-      downstreamId: this.downstream,
+      downstreamId: this.downstreamId,
     }
 
     this.apiService.sendPacket(packet).subscribe(
@@ -203,7 +208,7 @@ export class PacketCreateComponent implements OnInit {
       packetType: 'exec',
       arguments: params,
       response: {},
-      downstreamId: this.downstream,
+      downstreamId: this.downstreamId,
     }
 
     this.apiService.sendPacket(packet).subscribe(
@@ -227,7 +232,7 @@ export class PacketCreateComponent implements OnInit {
         "source": this.uploadSource
       },
       response: {},
-      downstreamId: this.downstream,
+      downstreamId: this.downstreamId,
     }
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
@@ -249,7 +254,7 @@ export class PacketCreateComponent implements OnInit {
         "destination": this.downloadDestination
       },
       response: {},
-      downstreamId: this.downstream,
+      downstreamId: this.downstreamId,
     }
 
     this.apiService.sendPacket(packet).subscribe(

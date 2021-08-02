@@ -6,6 +6,7 @@ import { retry, delay } from 'rxjs/operators';
 import * as moment from 'moment';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo } from './app.model';
 import { ApiService } from './api.service';
@@ -19,19 +20,21 @@ interface WebsocketData {
   providedIn: 'root'
 })
 export class AdminWebsocketService {
-  private socket$!: WebSocketSubject<any>;
-  private subscription!: Subscription;
+  public packetInfosEvent: EventEmitter<any> = new EventEmitter();
+  public clientsEvent: EventEmitter<any> = new EventEmitter();
+  public downstreamsEvent: EventEmitter<any> = new EventEmitter();
+  public downstreamSelection: BehaviorSubject<string> = new BehaviorSubject<string>("client");
 
   public websocketStatus = "";
   public restStatus = "";
+
+  private socket$!: WebSocketSubject<any>;
+  private subscription!: Subscription;
 
   private packetInfos: PacketInfo[] = [];
   private clients: ClientInfo[] = [];
   private downstreams: { [id: string]: DownstreamInfo[] } = {};
 
-  public packetInfosEvent: EventEmitter<any> = new EventEmitter();
-  public clientsEvent: EventEmitter<any> = new EventEmitter();
-  public downstreamsEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(		
     private apiService: ApiService,
