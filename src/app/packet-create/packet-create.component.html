@@ -3,11 +3,11 @@
 <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start">
     <mat-tab label="Execute">
         <br>
-        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button fxFlex mat-raised-button (click)="sendPacketExec()">Send</button>
+        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <button color="primary" mat-raised-button (click)="sendPacketExec()">Enter</button>
 
             <ng-container *ngIf="selectExecType == 'line'">
-                <mat-form-field fxFlex="80" fxFill>
+                <mat-form-field fxFlex="80" fxFill appearance="outline">
                     <mat-label>commandline</mat-label>
                     <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="commandline">
                 </mat-form-field>
@@ -32,14 +32,17 @@
                 </mat-form-field>
             </ng-container>
 
-            <mat-select  fxFlex [(value)]="selectExecType">
-                <mat-option value="line">
-                    Line
-                </mat-option>
-                <mat-option value="array">
-                    Array
-                </mat-option>
-            </mat-select>
+            <mat-form-field appearance="fill">
+                <mat-label>Input</mat-label>
+                <mat-select [(value)]="selectExecType">
+                    <mat-option value="line">
+                        Line
+                    </mat-option>
+                    <mat-option value="array">
+                        Array
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </mat-container>
     </mat-tab>
 
