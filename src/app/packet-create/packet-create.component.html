@@ -1,10 +1,51 @@
+<br>
 
 
 <mat-card  class="moarspace">
 
 <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start">
-    <mat-tab label="Interactive">
+    <mat-tab label="Execute">
+        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button fxFlex mat-raised-button (click)="sendPacketExec()">Send</button>
 
+            <ng-container *ngIf="selectExecType == 'line'">
+                <mat-form-field fxFlex="80" fxFill>
+                    <mat-label>commandline</mat-label>
+                    <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="commandline">
+                </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngIf="selectExecType == 'array'">
+                <mat-form-field fxFlex>
+                    <mat-label>Executable</mat-label>
+                    <input matInput type="text" [(ngModel)]="executable">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <mat-label>Parameter 1</mat-label>
+                    <input matInput type="text" [(ngModel)]="param1">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <mat-label>Parameter 2</mat-label>
+                    <input matInput type="text" [(ngModel)]="param2">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <mat-label>Parameter 3</mat-label>
+                    <input matInput type="text" [(ngModel)]="param3">
+                </mat-form-field>
+            </ng-container>
+
+            <mat-select  fxFlex [(value)]="selectExecType">
+                <mat-option value="line">
+                    Line
+                </mat-option>
+                <mat-option value="array">
+                    Array
+                </mat-option>
+            </mat-select>
+        </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Shell">
         <mat-card fxLayout="column"  fxLayoutGap="15px">
             <md-input-container fxFlex="50" fxFill>
                 <!-- we check interactiveStdout on [scrollTop] to avoid a race condition, giving ugly warning. 
@@ -17,53 +58,20 @@
 
             <mat-form-field fxFlex="50" fxFill>
                 <mat-label>commandline</mat-label>
-                <input matInput type="text" (keyup.enter)="addPacketInteractiveCmdIssue()" [(ngModel)]="commandlineInteractive">
+                <input matInput type="text" (keyup.enter)="sendPacketInteractiveCmdIssue()" [(ngModel)]="commandlineInteractive">
             </mat-form-field>
 
             <md-input-container fxFlex="50" fxFill> 
-                <button mat-raised-button (click)="addPacketInteractiveCmdOpen(false)">Open</button>
+                <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(false)">Open</button>
                 &nbsp;
-                <button mat-raised-button (click)="addPacketInteractiveCmdOpen(true)">ForceOpen</button>
+                <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">ForceOpen</button>
             </md-input-container>
         </mat-card>
     </mat-tab>
-
-    <mat-tab label="Execute">
+    
+    <mat-tab label="Upload">
         <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="addPacketExecLine()">Send</button>
-            <mat-form-field fxFlex="70" fxFill>
-                <mat-label>commandline</mat-label>
-                <input matInput type="text" (keyup.enter)="addPacketExecLine()" [(ngModel)]="commandline">
-            </mat-form-field>
-        </mat-card>
-    </mat-tab>
-
-    <mat-tab label="Execute 2">
-        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="addPacketExecArgs()">Send</button>
-
-            <mat-form-field fxFlex>
-                <mat-label>Executable</mat-label>
-                <input matInput type="text" [(ngModel)]="executable">
-            </mat-form-field>
-            <mat-form-field fxFlex>
-                <mat-label>Parameter 1</mat-label>
-                <input matInput type="text" [(ngModel)]="param1">
-            </mat-form-field>
-            <mat-form-field fxFlex>
-                <mat-label>Parameter 2</mat-label>
-                <input matInput type="text" [(ngModel)]="param2">
-            </mat-form-field>
-            <mat-form-field fxFlex>
-                <mat-label>Parameter 3</mat-label>
-                <input matInput type="text" [(ngModel)]="param3">
-            </mat-form-field>
-        </mat-card>
-    </mat-tab>
-
-    <mat-tab label="FileUpload">
-        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="addPacketUpload()">Send</button>
+            <button mat-raised-button (click)="sendPacketUpload()">Send</button>
 
             <mat-form-field fxFlex="70">
                 <mat-label>Remote file path</mat-label>
@@ -77,9 +85,9 @@
         </mat-card>
     </mat-tab>
 
-    <mat-tab label="FileDownload">
+    <mat-tab label="Download">
         <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="addPacketDownload()">Send</button>
+            <button mat-raised-button (click)="sendPacketDownload()">Send</button>
 
             <mat-form-field fxFlex="60">
                 <mat-label>downloadDestination</mat-label>
@@ -94,14 +102,16 @@
 
     </mat-tab>
 
+    <!--
     <mat-tab label="Test">
-        <button mat-raised-button (click)="addPacketTest()">TestPacket</button>
+        <button mat-raised-button (click)="sendPacketTest()">TestPacket</button>
         <br><br>
     </mat-tab>
+    -->
 </mat-tab-group>
  
 </mat-card>
 
-<mat-card *ngIf="selectedTabIndex != 0"  >
+<mat-card *ngIf="selectedTabIndex != 1"  >
     <app-packet-table [computerId]="computerId"></app-packet-table>
 </mat-card>

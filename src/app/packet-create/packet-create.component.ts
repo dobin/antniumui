@@ -11,7 +11,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./packet-create.component.css']
 })
 export class PacketCreateComponent implements OnInit {
+  // Data
   @Input() computerId = "";
+
+
+  // UI
+  selectExecType: string = "line"
 
   serverurl: string = ""
   executable: string = ""
@@ -77,9 +82,6 @@ export class PacketCreateComponent implements OnInit {
         this.updateInteractive();
       }
     })
-
-
-
   }
 
   updateInteractive() {
@@ -103,7 +105,7 @@ export class PacketCreateComponent implements OnInit {
     });
   }
 
-  addPacketTest() {
+  sendPacketTest() {
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: this.getRandomInt(),
@@ -123,7 +125,7 @@ export class PacketCreateComponent implements OnInit {
     );
   }
 
-  addPacketInteractiveCmdOpen(force: boolean) {
+  sendPacketInteractiveCmdOpen(force: boolean) {
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: this.getRandomInt(),
@@ -146,7 +148,7 @@ export class PacketCreateComponent implements OnInit {
     );
   }
 
-  addPacketInteractiveCmdIssue() {
+  sendPacketInteractiveCmdIssue() {
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: this.getRandomInt(),
@@ -166,17 +168,34 @@ export class PacketCreateComponent implements OnInit {
     );
   }
 
-  addPacketExecLine() {
+  sendPacketExec() {
     var split = this.commandline.split(" ")
     var executable: string = split[0];
     var paramsArr = split.slice(1);
 
     var params:{ [id: string]: string } = {};
-    params["executable"] = executable;
-    for(var n=0; n<paramsArr.length; n++) {
-      params["param" + n] = paramsArr[n];
+    if (this.selectExecType == "line") {
+      console.log("line", params);
+      params["executable"] = executable;
+      for(var n=0; n<paramsArr.length; n++) {
+        params["param" + n] = paramsArr[n];
+      }
+    } else if (this.selectExecType == "array") {
+      console.log("array", params);
+      params["executable"] = this.executable;
+      if (this.param1 != "") {
+        params["param0"] = this.param1;
+      }
+      if (this.param2 != "") {
+        params["param1"] = this.param2;
+      }
+      if (this.param3 != "") {
+        params["param2"] = this.param3;
+      }
+    } else {
+      console.log("Unknown: " + this.selectExecType);
+      return;
     }
-    console.log(params);
 
     var packet: Packet = {
       computerid: this.computerId, 
@@ -197,39 +216,7 @@ export class PacketCreateComponent implements OnInit {
     );
   }
 
-  addPacketExecArgs() {
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.getRandomInt(),
-      packetType: 'exec',
-      arguments: { 
-        "executable": this.executable,
-      },
-      response: {},
-      downstreamId: this.downstream,
-    }
-
-    if (this.param1 != "") {
-      packet.arguments["param0"] = this.param1;
-    }
-    if (this.param2 != "") {
-      packet.arguments["param1"] = this.param2;
-    }
-    if (this.param3 != "") {
-      packet.arguments["param2"] = this.param3;
-    }
-
-    this.apiService.sendPacket(packet).subscribe(
-      (data: any) => { 
-        console.log("SendPacket successful")
-      },
-      (err: HttpErrorResponse) => {
-        console.log("SendPacket failed")
-      },
-    );
-  }
-
-  addPacketUpload() {
+  sendPacketUpload() {
     var packetId = this.getRandomInt();
     var packet: Packet = {
       computerid: this.computerId, 
@@ -252,7 +239,7 @@ export class PacketCreateComponent implements OnInit {
     );
   }
 
-  addPacketDownload() {
+  sendPacketDownload() {
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: this.getRandomInt(),
