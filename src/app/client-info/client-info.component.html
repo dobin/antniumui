@@ -1,5 +1,4 @@
-<br>
-<mat-card  class="moarspace">
+<mat-card>
     <h3>Client:</h3>
     <ul>
         <li>{{client.ComputerId }}</li>
@@ -7,9 +6,8 @@
         <li>queried {{getClientRelativeLastSeen()}} ago</li>
     </ul>
 </mat-card>
-<br>
 
-<mat-card  class="moarspace">
+<mat-card>
     <table fxFlex mat-table [dataSource]="downstreamList" class="demo-table">
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -30,16 +28,14 @@
         ></tr>
     </table>
 </mat-card>
-<br>
 
-<mat-card  class="moarspace">
+<mat-card>
     <h3>Static Files:</h3>
     <ul>
     </ul>
 </mat-card>
-<br>
 
-<mat-card  class="moarspace">
+<mat-card>
     <h3>Uploaded Files:</h3>
     <ul>
     </ul>

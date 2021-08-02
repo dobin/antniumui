@@ -1,11 +1,9 @@
-<br>
-
-
-<mat-card  class="moarspace">
+<mat-card >
 
 <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start">
     <mat-tab label="Execute">
-        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <br>
+        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <button fxFlex mat-raised-button (click)="sendPacketExec()">Send</button>
 
             <ng-container *ngIf="selectExecType == 'line'">
@@ -42,11 +40,12 @@
                     Array
                 </mat-option>
             </mat-select>
-        </mat-card>
+        </mat-container>
     </mat-tab>
 
     <mat-tab label="Shell">
-        <mat-card fxLayout="column"  fxLayoutGap="15px">
+        <br>
+        <mat-container fxLayout="column"  fxLayoutGap="15px">
             <md-input-container fxFlex="50" fxFill>
                 <!-- we check interactiveStdout on [scrollTop] to avoid a race condition, giving ugly warning. 
                     https://stackoverflow.com/questions/35232731/angular-2-scroll-to-bottom-chat-style -->
@@ -66,11 +65,14 @@
                 &nbsp;
                 <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">ForceOpen</button>
             </md-input-container>
-        </mat-card>
+
+            <br>
+        </mat-container>
     </mat-tab>
     
     <mat-tab label="Upload">
-        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <br>
+        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <button mat-raised-button (click)="sendPacketUpload()">Send</button>
 
             <mat-form-field fxFlex="70">
@@ -82,11 +84,12 @@
                 <mat-label>Upload URL</mat-label>
                 <input matInput type="text" [(ngModel)]="uploadUrlBase">
             </mat-form-field>
-        </mat-card>
+        </mat-container>
     </mat-tab>
 
     <mat-tab label="Download">
-        <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <br>
+        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
             <button mat-raised-button (click)="sendPacketDownload()">Send</button>
 
             <mat-form-field fxFlex="60">
@@ -98,7 +101,7 @@
                 <mat-label>downloadUrl</mat-label>
                 <input matInput type="text" [(ngModel)]="downloadUrlFile">
             </mat-form-field>
-        </mat-card>
+        </mat-container>
 
     </mat-tab>
 
