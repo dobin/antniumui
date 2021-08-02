@@ -45,7 +45,7 @@ export class AdminWebsocketService {
 
   private connect() {
     // Get initial data
-    this.apiService.refreshPackets()
+    this.apiService.getPackets()
       .pipe(
         retry(30), 
         delay(1000) 
@@ -128,7 +128,7 @@ export class AdminWebsocketService {
   }
 
   private refreshClients() {
-    this.apiService.refreshClients().subscribe(
+    this.apiService.getClients().subscribe(
       (data: ClientInfo[]) => { 
           this.clients = data;
           this.clientsEvent.emit(data);

@@ -63,7 +63,7 @@ export class PacketTableComponent implements OnInit {
       this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
     });
 
-    this.apiService.refreshPacketsClient(this.computerId).subscribe(
+    this.apiService.getPacketsClient(this.computerId).subscribe(
       (data2: PacketInfo[]) => {
         this.dataSource.data = data2;
       },

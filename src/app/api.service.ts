@@ -26,15 +26,15 @@ export class ApiService {
 		return this.httpClient.get<Campaign>(this.SERVER_URL + "/admin/campaign");
 	}
 
-	public refreshPackets(): Observable<PacketInfo[]> {
+	public getPackets(): Observable<PacketInfo[]> {
 		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/packets");
 	}
 
-	public refreshPacketsClient(computerId: string): Observable<PacketInfo[]> {
+	public getPacketsClient(computerId: string): Observable<PacketInfo[]> {
 		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/packets/" + computerId);
 	}
 
-	public refreshClients(): Observable<ClientInfo[]> {
+	public getClients(): Observable<ClientInfo[]> {
 		return this.httpClient.get<ClientInfo[]>(this.SERVER_URL + "/admin/clients");
 	}
 
