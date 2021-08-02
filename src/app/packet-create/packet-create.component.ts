@@ -86,6 +86,7 @@ export class PacketCreateComponent implements OnInit {
     // Subscribe to downstream selection
     this.adminWebsocketService.downstreamSelection.subscribe(downstreamId => {
       this.downstreamId = downstreamId;
+      this.updateInteractive();
     });
   }
 
@@ -93,7 +94,9 @@ export class PacketCreateComponent implements OnInit {
     var data2 = this.adminWebsocketService.getPacketInfos();
     var newData = data2.filter(d => 
       (d.Packet.computerid == this.computerId || d.Packet.computerid == "0") 
-      && (d.Packet.packetType == "iIssue" || d.Packet.packetType == "iOpen"));
+      && (d.Packet.packetType == "iIssue" || d.Packet.packetType == "iOpen")
+      && (d.Packet.downstreamId == "" || d.Packet.downstreamId == this.downstreamId)
+    );
     
     this.commandlineInteractive = "";
     this.interactiveStdout = "";
