@@ -33,6 +33,10 @@ export class ClientInfoComponent implements OnInit {
     });
 
     this.downstreamList = this.adminWebsocketService.getDownstreamListFor(this.computerId); // useless, as often empty
+    if (this.downstreamList != undefined) {
+      this.clickedRow = this.downstreamList[0]; 
+    }
+
     this.adminWebsocketService.downstreamsEvent.subscribe((data: any) => {
       var downstreamList = this.adminWebsocketService.getDownstreamListFor(this.computerId);
 
