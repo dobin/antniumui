@@ -63,7 +63,6 @@ export class PacketCreateComponent implements OnInit {
           this.uploadSource = "README.md";
     
           this.downloadUrlBase = campaign.ServerUrl + campaign.FileDownloadPath;
-          console.log("0: ", this.serverurl);
           this.downloadUrlFile = "test.txt";
           this.downloadDestination = "test.txt";
         },
@@ -78,7 +77,7 @@ export class PacketCreateComponent implements OnInit {
     // Update Packet data
     this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (packetInfo != undefined && packetInfo.Packet.computerid == this.computerId) {
+      if (packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
         this.updateInteractive();
       }
     })
