@@ -41,3 +41,10 @@ export interface Campaign {
   FileUploadPath:   string
   FileDownloadPath: string
 }
+
+/* Not defined on server */
+
+export interface DownstreamInfo {
+  Name: string
+  Info: string
+}

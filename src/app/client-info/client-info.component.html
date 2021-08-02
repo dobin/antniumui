@@ -1,15 +1,30 @@
 <mat-card  class="moarspace">
-    <mat-grid-list cols="1" rowHeight="1em">
-        <mat-grid-tile>
-            {{client.ComputerId }}
-        </mat-grid-tile>
-    
-        <mat-grid-tile>
-            {{client.LastIp}}
-        </mat-grid-tile>
+    <h3>Client:</h3>
+    <ul>
+        <li>{{client.ComputerId }}</li>
+        <li>{{client.LastIp}}</li>
+        <li>queried {{getClientRelativeLastSeen()}} ago</li>
+    </ul>
+</mat-card>
+<br>
 
-        <mat-grid-tile>
-            queried {{getClientRelativeLastSeen()}} ago
-        </mat-grid-tile>
-    </mat-grid-list>
+<mat-card  class="moarspace">
+    <h3>Downstreams:</h3>
+    <ul>
+        <li  *ngFor="let downstreamInfo of downstreamList" > {{downstreamInfo.Name}} : {{downstreamInfo.Info}}</li>
+    </ul>
+</mat-card>
+<br>
+
+<mat-card  class="moarspace">
+    <h3>Static Files:</h3>
+    <ul>
+    </ul>
+</mat-card>
+<br>
+
+<mat-card  class="moarspace">
+    <h3>Uploaded Files:</h3>
+    <ul>
+    </ul>
 </mat-card>

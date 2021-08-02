@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { PacketInfo, Packet, ClientInfo, Campaign } from './app.model';
+import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo } from './app.model';
 import { ApiService } from './api.service';
 import { ConfigService } from './config.service';
 
@@ -27,9 +27,11 @@ export class AdminWebsocketService {
 
   private packetInfos: PacketInfo[] = [];
   private clients: ClientInfo[] = [];
+  private downstreams: { [id: string]: DownstreamInfo[] } = {};
 
   public packetInfosEvent: EventEmitter<any> = new EventEmitter();
   public clientsEvent: EventEmitter<any> = new EventEmitter();
+  public downstreamsEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(		
     private apiService: ApiService,
@@ -44,14 +46,20 @@ export class AdminWebsocketService {
   }
 
   private connect() {
-    // Get initial data
+    // Get initial data. Updates are handled via websocket
+    // If server is available, also start websocket
     this.apiService.getPackets()
       .pipe(
         retry(30), 
         delay(1000) 
       )
       .subscribe(
-        (data: PacketInfo[]) => { 
+        (data: PacketInfo[]) => {
+          for (const packetInfo of data) {
+            // Check if its channel list update
+            this.updateDownstreams(packetInfo)
+          }
+          
           this.packetInfos = data;
           this.packetInfosEvent.emit(undefined); // undefined is broadcast all
           this.connectWs();
@@ -109,11 +117,52 @@ export class AdminWebsocketService {
         Object.assign(this.packetInfos[index], data.PacketInfo);
       }
 
+      // Check if its channel list update
+      this.updateDownstreams(data.PacketInfo)
+
       // Notify
       this.packetInfosEvent.emit(data.PacketInfo);
      });
   }
 
+
+  private updateDownstreams(packetInfo: PacketInfo) {
+    if (packetInfo.Packet.packetType != "downstreams") {
+      return;
+    }
+
+    this.downstreams[packetInfo.Packet.computerid] = this.downstreamPacketResponseToData(packetInfo);
+    this.downstreamsEvent.emit("");
+  }
+
+  private downstreamPacketResponseToData(packetInfo: PacketInfo): DownstreamInfo[] {
+    var ret: DownstreamInfo[] = [];
+
+    var n = 0;
+    while (true) {
+      var e1 = "name" + n;
+      if (e1 in packetInfo.Packet.response) {
+        var d: DownstreamInfo = {
+          Name: packetInfo.Packet.response[e1],
+          Info: "",
+        };
+        ret.push(d);
+      } else {
+        break;
+      }
+      if (n > 10) {
+        break;
+      }
+      n += 1;
+    }
+
+    return ret;
+  }
+
+  public getDownstreamListFor(computerId: string): DownstreamInfo[] {
+    return this.downstreams[computerId];
+  }
+  
 
   public getPacketInfos(): PacketInfo[] {
     return this.packetInfos;
@@ -153,5 +202,8 @@ export class AdminWebsocketService {
 		var diff = dNow.diff(dLast);
 		return moment.duration(diff).humanize();
 	}
+
+
+
 
 }
