@@ -3,3 +3,7 @@
 textarea {
     overflow:auto; height: 100%;
 }
+
+.shell {
+    font-family: "monospace", monospace !important;
+  }
