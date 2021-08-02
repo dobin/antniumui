@@ -43,6 +43,7 @@ import { ClientViewModalComponent } from './client-view-modal/client-view-modal.
 import { ClientsPageComponent } from './clients-page/clients-page.component';
 import { PacketCreateComponent } from './packet-create/packet-create.component';
 import { PacketCreatePageComponent } from './packet-create-page/packet-create-page.component';
+import { ClientInfoComponent } from './client-info/client-info.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { PacketCreatePageComponent } from './packet-create-page/packet-create-pa
     ClientsPageComponent,
     PacketCreateComponent,
     PacketCreatePageComponent,
+    ClientInfoComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+<mat-card  class="moarspace">
+    <mat-grid-list cols="1" rowHeight="1em">
+        <mat-grid-tile>
+            {{client.ComputerId }}
+        </mat-grid-tile>
+    
+        <mat-grid-tile>
+            {{client.LastIp}}
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            queried {{getClientRelativeLastSeen()}} ago
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-card>

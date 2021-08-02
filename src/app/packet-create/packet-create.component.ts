@@ -27,7 +27,6 @@ export class PacketCreateComponent implements OnInit {
   downloadUrlBase: string = ""
   downloadUrlFile: string = ""
   downloadDestination: string = ""
-  client: ClientInfo = {} as ClientInfo// fake clientinfo so page-reload works
   interactiveStdout: string = ""
   
   commandlineInteractive: string = "hostname"
@@ -69,12 +68,6 @@ export class PacketCreateComponent implements OnInit {
       );
     }
 
-    // On page reload, it may not be immediately available
-    var client = this.adminWebsocketService.getClientBy(this.computerId);
-    if (client != undefined) {
-      this.client = client;
-    }
-
     // Get initial Packet Data
     this.updateInteractive();
     // Update Packet data
@@ -85,10 +78,7 @@ export class PacketCreateComponent implements OnInit {
       }
     })
 
-    // Also update client info (e.g. last seen)
-    this.adminWebsocketService.clientsEvent.subscribe((clientInfo: ClientInfo) => {
-      this.client = this.adminWebsocketService.getClientBy(this.computerId);
-    });
+
 
   }
 
@@ -115,7 +105,7 @@ export class PacketCreateComponent implements OnInit {
 
   addPacketTest() {
     var packet: Packet = {
-      computerid: this.client.ComputerId, 
+      computerid: this.computerId, 
       packetid: this.getRandomInt(),
       packetType: 'test',
       arguments: { "test": "test" },
@@ -135,7 +125,7 @@ export class PacketCreateComponent implements OnInit {
 
   addPacketInteractiveCmdOpen(force: boolean) {
     var packet: Packet = {
-      computerid: this.client.ComputerId, 
+      computerid: this.computerId, 
       packetid: this.getRandomInt(),
       packetType: 'iOpen',
       arguments: { },
@@ -158,7 +148,7 @@ export class PacketCreateComponent implements OnInit {
 
   addPacketInteractiveCmdIssue() {
     var packet: Packet = {
-      computerid: this.client.ComputerId, 
+      computerid: this.computerId, 
       packetid: this.getRandomInt(),
       packetType: 'iIssue',
       arguments: { 'commandline': this.commandlineInteractive },
@@ -189,7 +179,7 @@ export class PacketCreateComponent implements OnInit {
     console.log(params);
 
     var packet: Packet = {
-      computerid: this.client.ComputerId, 
+      computerid: this.computerId, 
       packetid: this.getRandomInt(),
       packetType: 'exec',
       arguments: params,
@@ -209,7 +199,7 @@ export class PacketCreateComponent implements OnInit {
 
   addPacketExecArgs() {
     var packet: Packet = {
-      computerid: this.client.ComputerId, 
+      computerid: this.computerId, 
       packetid: this.getRandomInt(),
       packetType: 'exec',
       arguments: { 
@@ -242,7 +232,7 @@ export class PacketCreateComponent implements OnInit {
   addPacketUpload() {
     var packetId = this.getRandomInt();
     var packet: Packet = {
-      computerid: this.client.ComputerId, 
+      computerid: this.computerId, 
       packetid: packetId,
       packetType: 'fileupload',
       arguments: { 
@@ -264,7 +254,7 @@ export class PacketCreateComponent implements OnInit {
 
   addPacketDownload() {
     var packet: Packet = {
-      computerid: this.client.ComputerId, 
+      computerid: this.computerId, 
       packetid: this.getRandomInt(),
       packetType: 'filedownload',
       arguments: { 
@@ -303,7 +293,4 @@ export class PacketCreateComponent implements OnInit {
     return Math.floor(Math.random() * 1000000).toString();
   }
 
-  getClientRelativeLastSeen(): string {
-    return this.adminWebsocketService.getClientRelativeLastSeen(this.client);
-  }
 }
