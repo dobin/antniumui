@@ -102,8 +102,12 @@ export class PacketTableComponent implements OnInit {
     });
   }
 
-  openFileTab(packet: Packet){
-    this.apiService.downloadClientUpload(packet);
+  openUploadFile(packet: Packet){
+    var campaign = this.adminWebsocketService.getCampaign();
+    var filename = this.apiService.basename(packet.arguments["source"]);
+    var url = campaign.ServerUrl + "/admin/upload/" + packet.computerid + "." + packet.packetid + "." + filename;
+
+    this.apiService.downloadClientUpload(url);
   }
 
 }

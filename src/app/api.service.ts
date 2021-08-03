@@ -49,10 +49,7 @@ export class ApiService {
 		return this.httpClient.get<DirEntry[]>(this.SERVER_URL + "/admin/statics");
 	}
 
-	public downloadClientUpload(packet: Packet) {
-		var filename = packet.computerid + "." + packet.packetid + "." + this.basename(packet.arguments["source"])
-		var url = this.SERVER_URL + "/admin/upload/" + filename;
-	
+	public downloadClientUpload(url: string) {
 		// https://stackoverflow.com/questions/51682514/angular-how-to-download-a-file-from-httpclient
 		this.httpClient.get(url,{responseType: 'blob' as 'json'}).subscribe(
 			(response: any) =>{
@@ -61,8 +58,8 @@ export class ApiService {
 				binaryData.push(response);
 				let downloadLink = document.createElement('a');
 				downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
-				if (filename)
-					downloadLink.setAttribute('download', filename);
+				//if (filename)
+				//	downloadLink.setAttribute('download', filename);
 				document.body.appendChild(downloadLink);
 				downloadLink.click();
 			}

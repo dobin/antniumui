@@ -54,10 +54,10 @@
             </div>
 
             <div *ngSwitchCase="'fileupload'">
-                {{element.Packet.arguments["source"]}} <br>
-                <a [routerLink]="" (click)="openFileTab(element.Packet)">
-                    Download as {{element.Packet.arguments["remoteurl"] | strip}}
-                </a>
+                {{element.Packet.arguments["source"]}} 
+                <button mat-icon-button (click)="openUploadFile(element.Packet)">
+                    <mat-icon>file_download</mat-icon>
+                </button>
             </div>
 
             <div *ngSwitchCase="'filedownload'">

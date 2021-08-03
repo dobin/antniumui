@@ -38,6 +38,7 @@ export class AdminWebsocketService {
 
   private uploads: DirEntry[] = [];
   private statics: DirEntry[] = [];
+  private campaign: Campaign;
 
   constructor(		
     private apiService: ApiService,
@@ -51,7 +52,21 @@ export class AdminWebsocketService {
     this.connect();
   }
 
+  public getCampaign(): Campaign {
+    return this.campaign;
+  }
+  
+
   private connect() {
+    this.apiService.getCampaign().subscribe(
+      (campaign: Campaign) => { 
+        this.campaign = campaign;
+      },
+      (err: HttpErrorResponse) => {
+        console.log("HTTP Error: " + err);
+      },
+    );
+
     // Get initial data. Updates are handled via websocket
     // If server is available, also start websocket
     this.apiService.getPackets()

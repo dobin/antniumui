@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-client-info',
@@ -21,6 +22,7 @@ export class ClientInfoComponent implements OnInit {
   clickedRow: any;
 
   constructor(
+    private apiService: ApiService,
     private adminWebsocketService: AdminWebsocketService,
   ) { }
 
@@ -71,4 +73,19 @@ export class ClientInfoComponent implements OnInit {
   getClientRelativeLastSeen(): string {
     return this.adminWebsocketService.getClientRelativeLastSeen(this.client);
   }
+
+  downloadStatic(filename: string) {
+    var campaign = this.adminWebsocketService.getCampaign();
+    var url = campaign.ServerUrl + campaign.FileDownloadPath + filename;
+    //this.apiService.downloadClientUpload(url);
+    window.open(url, "_blank") // Its public anyway
+  }
+
+  downloadUpload(filename: string) {
+    var campaign = this.adminWebsocketService.getCampaign();
+    var url = campaign.ServerUrl + "/admin/upload/" + filename;
+    // Not public, need authenticated http client
+    this.apiService.downloadClientUpload(url);
+  }
+
 }
