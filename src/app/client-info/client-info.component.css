@@ -1,3 +1,7 @@
 .demo-row-is-clicked {
-    font-weight: bold;
+  font-weight: bold;
   }
+
+.demo-table {
+  font-weight: lighter;
+}

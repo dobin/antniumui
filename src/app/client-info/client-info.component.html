@@ -12,7 +12,9 @@
     <table style="width: 100%" mat-table [dataSource]="downstreamList" class="demo-table">
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let element">{{element.Name}}</td>
+          <td mat-cell *matCellDef="let element">
+              <label [class.demo-row-is-clicked]="clickedRow == element">{{element.Name}}</label>
+            </td>
         </ng-container>
       
         <ng-container matColumnDef="Info">
@@ -23,7 +25,6 @@
         <tr
             mat-row
             (click)="rowClicked(row)"
-            [class.demo-row-is-clicked]="clickedRow == row"
             *matRowDef="let row; columns: displayedColumns;"
         ></tr>
     </table>
