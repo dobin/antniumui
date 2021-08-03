@@ -74,39 +74,32 @@ export class AdminWebsocketService {
   }
 
   private connectWs() {
-    console.log("ConnectWS");
+    console.log("Connect to websocket");
 
-    // Make WS, connect
-    if (!this.socket$ || this.socket$.closed) {
-    } else {
-    }
-
-      var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/ws";
-      this.socket$ = webSocket({
-        url: newUrl,
-        openObserver: {
-          next: () => {
-            console.log("Websocket open");
-            this.websocketStatus = "Open";
-          },
+    var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/ws";
+    this.socket$ = webSocket({
+      url: newUrl,
+      openObserver: {
+        next: () => {
+          console.log("Websocket open");
+          this.websocketStatus = "Open";
         },
-        closeObserver: {
-          next: () => {
-            this.websocketStatus = "Closed";
-            console.log('[WebSocket]: connection closed, retrying');
-            timer(0)
-            .pipe(take(1))
-            .subscribe(() => {
-              this.connect();
-            });
-            
-          }
-        },
-      });
-
-      // Send our authentication token
-      this.socket$.next(this.configService.getAdminApiKey());
-
+      },
+      closeObserver: {
+        next: () => {
+          this.websocketStatus = "Closed";
+          console.log('[WebSocket]: connection closed, retrying');
+          timer(0)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.connect();
+          });
+          
+        }
+      },
+    });
+    // Send our authentication token
+    this.socket$.next(this.configService.getAdminApiKey());
 
     // Function to listen for updates from WS
     this.socket$.subscribe((data: WebsocketData) => {
@@ -163,7 +156,18 @@ export class AdminWebsocketService {
   }
 
   public getDownstreamListFor(computerId: string): DownstreamInfo[] {
-    return this.downstreams[computerId];
+    var data = this.downstreams[computerId]
+
+    // If no downstream packet has yet been received, just return fake default one
+    if (data == undefined || data.length == 0) {
+      data = [];
+      data.push({
+        Name: "client",
+        Info: "Default client.exe",
+      })
+    }
+
+    return data;
   }
   
 
