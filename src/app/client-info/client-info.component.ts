@@ -58,10 +58,11 @@ export class ClientInfoComponent implements OnInit {
       }
     });
 
-    // Subscribe to downstream selection
+    // Subscribe to clientfileupdates
     this.adminWebsocketService.clientFilesUpdates.subscribe(nothing => {
       this.staticList = this.adminWebsocketService.getStatics();
-      this.uploadList = this.adminWebsocketService.getUploads();
+      var uploadList = this.adminWebsocketService.getUploads();
+      this.uploadList = uploadList.filter(f => f.name.startsWith(this.computerId))
     });
   }
 
