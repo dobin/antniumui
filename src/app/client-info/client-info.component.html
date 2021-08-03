@@ -39,7 +39,7 @@
     </div>
 </mat-card>
 
-<mat-card>
+<mat-card *ngIf="uploadList.length > 0">
     <h3>Uploaded Files:</h3>
     <div *ngFor="let dirEntry of uploadList">
         <button mat-icon-button (click)="downloadUpload(dirEntry.name)">
