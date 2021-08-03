@@ -42,7 +42,8 @@ export class ApiService {
 		return this.httpClient.post(this.SERVER_URL + "/admin/addPacket", JSON.stringify(packet));
 	}
 
-	public getAdminUpload(filename: string): any {
+	public downloadClientUpload(packet: Packet) {
+		var filename = packet.computerid + "." + packet.packetid + "." + this.basename(packet.arguments["source"])
 		var url = this.SERVER_URL + "/admin/upload/" + filename;
 	
 		// https://stackoverflow.com/questions/51682514/angular-how-to-download-a-file-from-httpclient
@@ -61,5 +62,10 @@ export class ApiService {
 		)
 	}
 
+	// https://stackoverflow.com/questions/3820381/need-a-basename-function-in-javascript
+	basename(str: string) {
+		var sep = "/";
+		return str.substr(str.lastIndexOf(sep) + 1);
+	}
 }
 

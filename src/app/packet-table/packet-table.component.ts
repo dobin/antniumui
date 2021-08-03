@@ -102,9 +102,8 @@ export class PacketTableComponent implements OnInit {
     });
   }
 
-  openFileTab(url: string){
-    let basename = url.substring(url.lastIndexOf('/')+1);
-    this.apiService.getAdminUpload(basename);
+  openFileTab(packet: Packet){
+    this.apiService.downloadClientUpload(packet);
   }
 
 }

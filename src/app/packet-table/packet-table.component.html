@@ -55,7 +55,7 @@
 
             <div *ngSwitchCase="'fileupload'">
                 {{element.Packet.arguments["source"]}} <br>
-                <a [routerLink]="" (click)="openFileTab(element.Packet.arguments['remoteurl'])">
+                <a [routerLink]="" (click)="openFileTab(element.Packet)">
                     Download as {{element.Packet.arguments["remoteurl"] | strip}}
                 </a>
             </div>
