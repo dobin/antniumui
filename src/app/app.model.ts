@@ -42,9 +42,17 @@ export interface Campaign {
   FileDownloadPath: string
 }
 
-/* Not defined on server */
+/* Client defined, Not defined on server */
 
 export interface DownstreamInfo {
   Name: string
   Info: string
+}
+
+export interface DirEntry {
+  name: string
+  size: number
+  mode: string
+  modified: string
+  isDir: boolean
 }

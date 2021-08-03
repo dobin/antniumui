@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { AdminWebsocketService } from '../admin-websocket.service';
-import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo } from '../app.model';
+import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
 
 @Component({
   selector: 'app-client-info',
@@ -12,8 +12,11 @@ export class ClientInfoComponent implements OnInit {
 
   client: ClientInfo = {} as ClientInfo// fake clientinfo so page-reload works
   downstreamList: DownstreamInfo[] = [];
+  uploadList: DirEntry[] = [];
+  staticList: DirEntry[] = [];
 
-  displayedColumns: string[] = [ 'Name', 'Info' ]
+
+  displayedColumns: string[] = [ 'Name', 'Info' ];
   dataSource = [];
   clickedRow: any;
 
@@ -53,6 +56,11 @@ export class ClientInfoComponent implements OnInit {
       }
     });
 
+    // Subscribe to downstream selection
+    this.adminWebsocketService.clientFilesUpdates.subscribe(nothing => {
+      this.staticList = this.adminWebsocketService.getStatics();
+      this.uploadList = this.adminWebsocketService.getUploads();
+    });
   }
 
   rowClicked(downstreamInfo: DownstreamInfo) {

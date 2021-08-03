@@ -8,7 +8,7 @@ import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
-import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo } from './app.model';
+import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from './app.model';
 import { ApiService } from './api.service';
 import { ConfigService } from './config.service';
 
@@ -24,7 +24,8 @@ export class AdminWebsocketService {
   public clientsEvent: EventEmitter<any> = new EventEmitter();
   public downstreamsEvent: EventEmitter<any> = new EventEmitter();
   public downstreamSelection: BehaviorSubject<string> = new BehaviorSubject<string>("client");
-
+  public clientFilesUpdates: BehaviorSubject<string> = new BehaviorSubject<string>("client");
+  
   public websocketStatus = "";
   public restStatus = "";
 
@@ -35,6 +36,8 @@ export class AdminWebsocketService {
   private clients: ClientInfo[] = [];
   private downstreams: { [id: string]: DownstreamInfo[] } = {};
 
+  private uploads: DirEntry[] = [];
+  private statics: DirEntry[] = [];
 
   constructor(		
     private apiService: ApiService,
@@ -171,7 +174,13 @@ export class AdminWebsocketService {
 
     return data;
   }
-  
+
+  public getUploads(): DirEntry[] {
+    return this.uploads;
+  }
+  public getStatics(): DirEntry[] {
+    return this.statics;
+  }
 
   public getPacketInfos(): PacketInfo[] {
     return this.packetInfos;
@@ -191,6 +200,25 @@ export class AdminWebsocketService {
           this.clients = data;
           this.clientsEvent.emit(data);
           this.restStatus = "ok";
+        },
+      (err: HttpErrorResponse) => {
+        console.log("HTTP Error: " + err);
+      },
+    );
+
+    this.apiService.getUploads().subscribe(
+      (data: DirEntry[]) => { 
+          this.uploads = data;
+          this.clientFilesUpdates.next("nothing");
+        },
+      (err: HttpErrorResponse) => {
+        console.log("HTTP Error: " + err);
+      },
+    );
+    this.apiService.getStatics().subscribe(
+      (data: DirEntry[]) => { 
+          this.statics = data;
+          this.clientFilesUpdates.next("nothing");
         },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error: " + err);

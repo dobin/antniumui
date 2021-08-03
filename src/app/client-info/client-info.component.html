@@ -31,12 +31,14 @@
 
 <mat-card>
     <h3>Static Files:</h3>
-    <ul>
-    </ul>
+    <label *ngFor="let dirEntry of staticList">
+        {{ dirEntry.name }}
+    </label>
 </mat-card>
 
 <mat-card>
     <h3>Uploaded Files:</h3>
-    <ul>
-    </ul>
+    <label *ngFor="let dirEntry of uploadList">
+        {{ dirEntry.name }}
+    </label>
 </mat-card>

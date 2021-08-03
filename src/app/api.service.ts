@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PacketInfo, ClientInfo, Packet, Campaign } from './app.model';
+import { PacketInfo, ClientInfo, Packet, Campaign, DirEntry } from './app.model';
 import { ConfigService } from './config.service';
 
 
@@ -40,6 +40,13 @@ export class ApiService {
 
 	public sendPacket(packet: Packet) {
 		return this.httpClient.post(this.SERVER_URL + "/admin/addPacket", JSON.stringify(packet));
+	}
+
+	public getUploads(): Observable<DirEntry[]> {
+		return this.httpClient.get<DirEntry[]>(this.SERVER_URL + "/admin/uploads");
+	}
+	public getStatics(): Observable<DirEntry[]> {
+		return this.httpClient.get<DirEntry[]>(this.SERVER_URL + "/admin/statics");
 	}
 
 	public downloadClientUpload(packet: Packet) {

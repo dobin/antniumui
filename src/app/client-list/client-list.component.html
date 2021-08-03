@@ -2,7 +2,12 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Clients </th>
         <td mat-cell *matCellDef="let element">
+            <!--
             <button mat-icon-button (click)="showModalPacketCreate(element.ComputerId)">
+                <mat-icon>slideshow</mat-icon>
+            </button>
+            -->
+            <button mat-icon-button [routerLink]="[ '/packetcreate/', element.ComputerId ]">
                 <mat-icon>slideshow</mat-icon>
             </button>
             <button mat-icon-button (click)="showModalClientInfo(element)">
