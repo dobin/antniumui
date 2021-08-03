@@ -118,7 +118,7 @@
 
                 <div *ngSwitchCase="'downstreams'">
                     <ul >
-                        <li *ngFor="let res of element.Packet.response | keyvalue">{{res.value}}</li>
+                        {{element.Packet.response | json }}
                     </ul>
                 </div>
 

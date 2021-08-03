@@ -137,10 +137,12 @@ export class AdminWebsocketService {
     var n = 0;
     while (true) {
       var e1 = "name" + n;
-      if (e1 in packetInfo.Packet.response) {
+      var e2 = "info" + n;
+
+      if (e1 in packetInfo.Packet.response && e2 in packetInfo.Packet.response) {
         var d: DownstreamInfo = {
           Name: packetInfo.Packet.response[e1],
-          Info: "",
+          Info: packetInfo.Packet.response[e2],
         };
         ret.push(d);
       } else {
@@ -163,7 +165,7 @@ export class AdminWebsocketService {
       data = [];
       data.push({
         Name: "client",
-        Info: "Default client.exe",
+        Info: "client.exe",
       })
     }
 
