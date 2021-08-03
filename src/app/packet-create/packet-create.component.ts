@@ -182,7 +182,6 @@ export class PacketCreateComponent implements OnInit {
 
     var params:{ [id: string]: string } = {};
     if (this.selectExecType == "line") {
-      console.log("line", params);
       params["executable"] = executable;
       for(var n=0; n<paramsArr.length; n++) {
         params["param" + n] = paramsArr[n];
@@ -275,12 +274,6 @@ export class PacketCreateComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 3000
     });
-  }
-
-  openFileTab(url: string){
-    let basename = url.substring(url.lastIndexOf('/')+1);
-    let url2 = this.apiService.getAdminUpload(basename);
-    window.open(url2, "_blank");
   }
   
   getRandomInt(): string {

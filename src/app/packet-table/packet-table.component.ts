@@ -104,8 +104,7 @@ export class PacketTableComponent implements OnInit {
 
   openFileTab(url: string){
     let basename = url.substring(url.lastIndexOf('/')+1);
-    let url2 = this.apiService.getAdminUpload(basename);
-    window.open(url2, "_blank");
+    this.apiService.getAdminUpload(basename);
   }
 
 }
