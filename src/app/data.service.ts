@@ -35,7 +35,7 @@ export class DataService {
   public uploads: DirEntry[] = [];
   public statics: DirEntry[] = [];
  
-  // Loaded: Once
+  // Loaded: Once (no notify)
   public campaign: Campaign = {} as Campaign;
 
 
@@ -57,13 +57,9 @@ export class DataService {
   downloadPackets() {
     // Packets
     this.apiService.getPackets().subscribe(
-        (data: PacketInfo[]) => {
-          for (const packetInfo of data) {
-            // Check if its channel list update
-            this.updateDownstreams(packetInfo)
-          }
-          
-          this.packetInfos = data;
+        (packetInfos: PacketInfo[]) => {
+          this.packetPipeline(packetInfos);
+          this.packetInfos = packetInfos;
           this.packetInfosEvent.emit(undefined); // undefined is broadcast all
         },
         (err: HttpErrorResponse) => {
@@ -133,8 +129,7 @@ export class DataService {
       Object.assign(this.packetInfos[index], packetInfo);
     }
 
-    // Check if its channel list update
-    this.updateDownstreams(packetInfo)
+    this.packetPipeline([packetInfo])
 
     // Notify
     this.packetInfosEvent.emit(packetInfo);
@@ -142,6 +137,15 @@ export class DataService {
 
 
   /** Update local data structures based on events **/
+
+  private packetPipeline(packetInfos: PacketInfo[]) {
+    for (const packetInfo of packetInfos) {
+      // Update downstreams data structure based on response
+      if (packetInfo.Packet.packetType == "downstreams") {
+        this.updateDownstreams(packetInfo)
+      }
+    }
+  }
 
   private updateDownstreams(packetInfo: PacketInfo) {
     if (packetInfo.Packet.packetType != "downstreams") {
