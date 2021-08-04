@@ -19,7 +19,7 @@ import { DataService } from '../data.service';
 })
 export class ClientListComponent implements OnInit {
   displayedColumns: string[] = [
-    'actions', 'FirstSeen', 'ComputerID' ];
+    'actions', 'ComputerId',  'Hostname', 'FirstSeen', 'LastSeen', 'LastIp','LocalIps' ];
 
   // Table shit
   dataSource: MatTableDataSource<ClientInfo> = new MatTableDataSource<ClientInfo>();

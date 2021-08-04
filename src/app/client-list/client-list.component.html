@@ -16,11 +16,46 @@
         </td>
     </ng-container>
 
+    <ng-container matColumnDef="ComputerId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ComputerId </th>
+        <td mat-cell *matCellDef="let element"> 
+            {{element.ComputerId}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Hostname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hostname </th>
+        <td mat-cell *matCellDef="let element"> 
+            {{ element.Hostname }}
+        </td>
+    </ng-container>
+
     <ng-container matColumnDef="FirstSeen">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> First Seen </th>
         <td mat-cell *matCellDef="let element"> 
-            {{element.FirstSeen | date:'short'}} <br>
+            {{element.FirstSeen | date:'short'}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LastSeen">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> LastSeen </th>
+        <td mat-cell *matCellDef="let element"> 
+            {{ element.LastSeen | date:'short' }} <br>
             active {{getClientRelativeLastSeen(element)}} ago
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LastIp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> LastIp </th>
+        <td mat-cell *matCellDef="let element"> 
+            {{ element.LastIp }}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LocalIps">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> LocalIps </th>
+        <td mat-cell *matCellDef="let element"> 
+            <pre>{{ element.LocalIps | json }}</pre>
         </td>
     </ng-container>
 
