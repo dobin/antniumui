@@ -180,6 +180,18 @@ export class DataService {
     return this.clients.find(c => c.ComputerId == computerId)!;
   }
 
+  /** Data translation **/
+  // Used for constructing links when static filename is known
+	public makeStaticLink(filename: string): string {
+		var url = this.campaign.ServerUrl + this.campaign.FileDownloadPath + filename;
+    return url;
+	}
+
+  // Used for constructing links when upload filename is known
+  public makeUploadLink(filename: string): string {
+    var url = this.campaign.ServerUrl + "/admin/upload/" + filename;
+    return url;
+  }
 
   /** Utility Functions **/
   

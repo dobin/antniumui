@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-file-static-list',
@@ -14,6 +15,7 @@ export class FileStaticListComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
+    private apiService: ApiService,
   ) { }
 
   ngOnInit(): void {
@@ -22,5 +24,9 @@ export class FileStaticListComponent implements OnInit {
     });
   }
 
-
+  downloadStatic(filename: string) {
+    var url = this.dataService.makeStaticLink(filename);
+    // Not public, need authenticated http client
+    this.apiService.downloadClientUpload(url);
+  }
 }

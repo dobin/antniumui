@@ -64,5 +64,6 @@ export class ApiService {
 		var sep = "/";
 		return str.substr(str.lastIndexOf(sep) + 1);
 	}
+
 }
 

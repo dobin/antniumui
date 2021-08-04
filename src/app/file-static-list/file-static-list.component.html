@@ -2,6 +2,10 @@
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Filename </th>
       <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="downloadStatic(element.name)">
+            <mat-icon>file_download</mat-icon>
+          </button>
+
           {{element.name}}
       </td>
     </ng-container>

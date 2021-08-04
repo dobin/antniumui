@@ -77,15 +77,13 @@ export class ClientInfoComponent implements OnInit {
   }
 
   downloadStatic(filename: string) {
-    var campaign = this.dataService.campaign;
-    var url = campaign.ServerUrl + campaign.FileDownloadPath + filename;
+    var url = this.dataService.makeStaticLink(filename);
     //this.apiService.downloadClientUpload(url);
     window.open(url, "_blank") // Its public anyway
   }
 
   downloadUpload(filename: string) {
-    var campaign = this.dataService.campaign;
-    var url = campaign.ServerUrl + "/admin/upload/" + filename;
+    var url = this.dataService.makeUploadLink(filename);
     // Not public, need authenticated http client
     this.apiService.downloadClientUpload(url);
   }
