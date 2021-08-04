@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -18,8 +18,10 @@ import { DataService } from '../data.service';
   styleUrls: ['./client-list.component.css']
 })
 export class ClientListComponent implements OnInit {
-  displayedColumns: string[] = [
-    'actions', 'ComputerId',  'Hostname', 'FirstSeen', 'LastSeen', 'LastIp','LocalIps' ];
+  @Input() short = false;
+
+  displayedColumns: string[] = [];
+
 
   // Table shit
   dataSource: MatTableDataSource<ClientInfo> = new MatTableDataSource<ClientInfo>();
@@ -31,6 +33,12 @@ export class ClientListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.short) {
+      this.displayedColumns = [ 'actions', 'FirstSeen', 'ComputerId'];
+    } else {
+      this.displayedColumns = [ 'actions', 'ComputerId',  'Hostname', 'FirstSeen', 'LastSeen', 'LastIp','LocalIps' ];
+    }
+
     // FIX: JS Warning Race Condition
     timer(0)
     .pipe(take(1))
