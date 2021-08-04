@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
 import { ApiService } from '../api.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-client-info',
@@ -23,27 +24,27 @@ export class ClientInfoComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private adminWebsocketService: AdminWebsocketService,
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
     // On page reload, it may not be immediately available
-    var client = this.adminWebsocketService.getClientBy(this.computerId);
+    var client = this.dataService.getClientBy(this.computerId);
     if (client != undefined) {
       this.client = client;
     }
     // Also update client info (e.g. last seen)
-    this.adminWebsocketService.clientsEvent.subscribe((clientInfo: ClientInfo) => {
-      this.client = this.adminWebsocketService.getClientBy(this.computerId);
+    this.dataService.clientsEvent.subscribe((clientInfo: ClientInfo) => {
+      this.client = this.dataService.getClientBy(this.computerId);
     });
 
-    this.downstreamList = this.adminWebsocketService.getDownstreamListFor(this.computerId); // useless, as often empty
+    this.downstreamList = this.dataService.getDownstreamListFor(this.computerId); // useless, as often empty
     if (this.downstreamList != undefined) {
       this.clickedRow = this.downstreamList[0]; 
     }
 
-    this.adminWebsocketService.downstreamsEvent.subscribe((data: any) => {
-      var downstreamList = this.adminWebsocketService.getDownstreamListFor(this.computerId);
+    this.dataService.downstreamsEvent.subscribe((data: any) => {
+      var downstreamList = this.dataService.getDownstreamListFor(this.computerId);
 
       if (this.downstreamList == undefined) {
         // Select first element upon initializing
@@ -59,31 +60,31 @@ export class ClientInfoComponent implements OnInit {
     });
 
     // Subscribe to clientfileupdates
-    this.adminWebsocketService.clientFilesUpdates.subscribe(nothing => {
-      this.staticList = this.adminWebsocketService.getStatics();
-      var uploadList = this.adminWebsocketService.getUploads();
+    this.dataService.clientFilesUpdates.subscribe(nothing => {
+      this.staticList = this.dataService.statics;
+      var uploadList = this.dataService.uploads;
       this.uploadList = uploadList.filter(f => f.name.startsWith(this.computerId))
     });
   }
 
   rowClicked(downstreamInfo: DownstreamInfo) {
     this.clickedRow = downstreamInfo;
-    this.adminWebsocketService.downstreamSelection.next(downstreamInfo.Name);
+    this.dataService.downstreamSelection.next(downstreamInfo.Name);
   }
 
   getClientRelativeLastSeen(): string {
-    return this.adminWebsocketService.getClientRelativeLastSeen(this.client);
+    return this.dataService.getClientRelativeLastSeen(this.client);
   }
 
   downloadStatic(filename: string) {
-    var campaign = this.adminWebsocketService.getCampaign();
+    var campaign = this.dataService.campaign;
     var url = campaign.ServerUrl + campaign.FileDownloadPath + filename;
     //this.apiService.downloadClientUpload(url);
     window.open(url, "_blank") // Its public anyway
   }
 
   downloadUpload(filename: string) {
-    var campaign = this.adminWebsocketService.getCampaign();
+    var campaign = this.dataService.campaign;
     var url = campaign.ServerUrl + "/admin/upload/" + filename;
     // Not public, need authenticated http client
     this.apiService.downloadClientUpload(url);

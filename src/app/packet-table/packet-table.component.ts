@@ -14,6 +14,7 @@ import { take } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
 import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
 import { RouterModule, Routes, Router } from '@angular/router';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -35,9 +36,7 @@ export class PacketTableComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
-    private adminWebsocketService: AdminWebsocketService,
-    private configService: ConfigService,
-    private router: Router
+    private dataService: DataService
   ) { }
 
   ngAfterViewInit() {
@@ -74,7 +73,7 @@ export class PacketTableComponent implements OnInit {
 
     this.updatePacketInfos();
     // Get and update data
-    this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
+    this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
       if (this.computerId == '' || packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
         this.updatePacketInfos();
@@ -83,7 +82,7 @@ export class PacketTableComponent implements OnInit {
   }
 
   updatePacketInfos() {
-    var data2 = this.adminWebsocketService.getPacketInfos();
+    var data2 = this.dataService.packetInfos;
 
     if (this.computerId == '') {
       this.dataSource.data = data2;
@@ -103,7 +102,7 @@ export class PacketTableComponent implements OnInit {
   }
 
   openUploadFile(packet: Packet){
-    var campaign = this.adminWebsocketService.getCampaign();
+    var campaign = this.dataService.campaign;
     var filename = this.apiService.basename(packet.arguments["source"]);
     var url = campaign.ServerUrl + "/admin/upload/" + packet.computerid + "." + packet.packetid + "." + filename;
 

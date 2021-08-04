@@ -10,6 +10,7 @@ import { ClientInfo } from '../app.model';
 import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
 import { ClientViewModalComponent } from '../client-view-modal/client-view-modal.component';
 import { AdminWebsocketService } from '../admin-websocket.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-client-list',
@@ -26,7 +27,7 @@ export class ClientListComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private adminWebsocketService: AdminWebsocketService,
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -38,9 +39,9 @@ export class ClientListComponent implements OnInit {
     });
 
     // Get and update data
-    this.dataSource.data = this.adminWebsocketService.getClients();
-    this.adminWebsocketService.clientsEvent.subscribe(data => {
-      this.dataSource.data = this.adminWebsocketService.getClients();
+    this.dataSource.data = this.dataService.clients;
+    this.dataService.clientsEvent.subscribe(data => {
+      this.dataSource.data = this.dataService.clients;
     })
   }
 
@@ -64,6 +65,6 @@ export class ClientListComponent implements OnInit {
   }
 
   getClientRelativeLastSeen(clientInfo: ClientInfo) {
-    return this.adminWebsocketService.getClientRelativeLastSeen(clientInfo);
+    return this.dataService.getClientRelativeLastSeen(clientInfo);
   }
 }

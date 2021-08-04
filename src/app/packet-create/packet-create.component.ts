@@ -4,6 +4,7 @@ import { ApiService } from '../api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AdminWebsocketService } from '../admin-websocket.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-packet-create',
@@ -44,8 +45,8 @@ export class PacketCreateComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private adminWebsocketService: AdminWebsocketService,
     private snackBar: MatSnackBar,
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -75,7 +76,7 @@ export class PacketCreateComponent implements OnInit {
     // Get initial Packet Data
     this.updateInteractive();
     // Update Packet data
-    this.adminWebsocketService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
+    this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
       if (packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
         this.updateInteractive();
@@ -83,14 +84,14 @@ export class PacketCreateComponent implements OnInit {
     })
 
     // Subscribe to downstream selection
-    this.adminWebsocketService.downstreamSelection.subscribe(downstreamId => {
+    this.dataService.downstreamSelection.subscribe(downstreamId => {
       this.downstreamId = downstreamId;
       this.updateInteractive();
     });
   }
 
   updateInteractive() {
-    var data2 = this.adminWebsocketService.getPacketInfos();
+    var data2 = this.dataService.packetInfos;
     var newData = data2.filter(d => 
       (d.Packet.computerid == this.computerId || d.Packet.computerid == "0") 
       && (d.Packet.packetType == "iIssue" || d.Packet.packetType == "iOpen")
@@ -187,7 +188,6 @@ export class PacketCreateComponent implements OnInit {
         params["param" + n] = paramsArr[n];
       }
     } else if (this.selectExecType == "array") {
-      console.log("array", params);
       params["executable"] = this.executable;
       if (this.param1 != "") {
         params["param0"] = this.param1;
