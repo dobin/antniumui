@@ -110,4 +110,33 @@ export class PacketTableComponent implements OnInit {
     this.apiService.downloadClientUpload(url);
   }
 
+
+  public argsToDict(value: { [id: string]: string }): Array<{ [id: string]: string }> {
+    var result = [ ] as Array<{ [id: string]: string }>;
+
+    // Only work up to 9 parameters...
+    var keys = Object.keys(value);
+    var n = 0;
+    while (true) {
+      if (n > 9) {
+        break;
+      }
+
+      var keysIdx = keys.filter(k => k.endsWith(n.toString()));
+      if (keysIdx.length <= 0) {
+        break;
+      }
+
+      var element: { [id: string]: string } = {};
+      for (const key of keysIdx) {
+        var keyClean = key.substr(0, key.length - 1);
+        element[keyClean] = value[key];
+      }
+      result.push(element);
+
+      n += 1;
+    }
+
+    return result;
+  }
 }

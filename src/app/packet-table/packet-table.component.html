@@ -117,9 +117,9 @@
                 </div>
 
                 <div *ngSwitchCase="'downstreams'">
-                    <ul >
-                        {{element.Packet.response | json }}
-                    </ul>
+                    <label *ngFor="let element of argsToDict(element.Packet.response)"> 
+                        {{ element.name }}: {{element.info}} <br>
+                    </label>
                 </div>
 
                 <div *ngSwitchDefault>
