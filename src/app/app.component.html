@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">  
     <img width="1.1%" class="img-fluid" src="/assets/icon.png"> &nbsp;&nbsp;
-    <h1> AntniumUI </h1>  
-    <button mat-button routerLink="/">Home</button>  
-    <button mat-button routerLink="/clients">Clients</button>
-    <button mat-button routerLink="/uploads">Uploads</button>
-    <button mat-button routerLink="/static">Static</button>
-    <button mat-button routerLink="/campaign">Campaign</button>
-    <button mat-button routerLink="/docs">Docs</button>
+    <h1> AntniumUI </h1>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-button [routerLinkActive]="['active']" routerLink="/home">Home</button>  
+    <button mat-button [routerLinkActive]="['active']" routerLink="/clients">Clients</button>
+    <button mat-button [routerLinkActive]="['active']" routerLink="/uploads">Uploads</button>
+    <button mat-button [routerLinkActive]="['active']" routerLink="/static">Static</button>
+    <button mat-button [routerLinkActive]="['active']" routerLink="/campaign">Campaign</button>
+    <button mat-button [routerLinkActive]="['active']" routerLink="/docs">Docs</button>
 
     <span class="example-spacer"></span>
     <button mat-button (click)="openConfigModal()">Config</button>
