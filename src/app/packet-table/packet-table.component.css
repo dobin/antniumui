@@ -6,3 +6,11 @@ td.mat-cell {
     vertical-align: top;
     padding-top: 5px;
 }
+
+.mat-cell {
+    padding: 0 8px 8px 0;
+}
+
+pre {
+    margin-top: 0;
+}

@@ -7,13 +7,15 @@
                 <mat-icon>slideshow</mat-icon>
             </button>
             -->
-            <button mat-icon-button [routerLink]="[ '/packetcreate/', element.ComputerId ]">
-                <mat-icon>slideshow</mat-icon>
-            </button>
-            
-            <button *ngIf="short" mat-icon-button (click)="showModalClientInfo(element)">
-                <mat-icon>preview</mat-icon>
-            </button>
+            <div class="nowrap">
+                <button mat-icon-button [routerLink]="[ '/packetcreate/', element.ComputerId ]">
+                    <mat-icon>slideshow</mat-icon>
+                </button>
+                
+                <button *ngIf="short" mat-icon-button (click)="showModalClientInfo(element)">
+                    <mat-icon>preview</mat-icon>
+                </button>
+            </div>
         </td>
     </ng-container>
 

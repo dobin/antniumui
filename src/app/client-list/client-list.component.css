@@ -1,3 +1,13 @@
 table {
     width: 100%;
 }
+
+/* Default: 40px, a bit too big*/
+.mat-icon-button {
+    width: 32px;
+}
+
+/* padding left right of rows */
+.mat-cell {
+    padding: 0 8px 8px 0;
+}

@@ -16,8 +16,10 @@
     </ng-container>
 
     <ng-container matColumnDef="TimeRecorded">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Time Recorded </th>
-        <td mat-cell *matCellDef="let element"> {{element.TimeRecorded | date:'short' }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created at </th>
+        <td mat-cell *matCellDef="let element"> 
+            <span  class="nowrap">{{element.TimeRecorded | date:'short' }} </span>
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="ClientIp">
@@ -29,12 +31,11 @@
     </ng-container>
 
     <ng-container matColumnDef="packetType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> What </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Command </th>
         <td mat-cell *matCellDef="let element"> 
-            {{element.Packet.packetType }} 
-            
+            {{element.Packet.packetType }}
             <ng-container *ngIf="element.Packet.downstreamId != 'client'">
-                @ {{element.Packet.downstreamId}}
+                @{{element.Packet.downstreamId}}
             </ng-container>
          </td>
     </ng-container>
@@ -45,7 +46,7 @@
         <td mat-cell *matCellDef="let element"> 
             <container-element [ngSwitch]="element.Packet.packetType">
                 
-            <div *ngSwitchCase="'exec'">
+            <div *ngSwitchCase="'exec'" class="nowrap">
                 {{element.Packet.arguments["executable"]}} 
                 {{element.Packet.arguments["param0"]}} 
                 {{element.Packet.arguments["param1"]}}
@@ -89,7 +90,9 @@
         <td mat-cell *matCellDef="let element"> 
             <container-element [ngSwitch]="element.Packet.packetType">
                 <div *ngSwitchCase="'exec'">
-                    <pre>{{element.Packet.response["error"]}}{{element.Packet.response["stdout"]}}</pre>
+                    {{element.Packet.response["error"]}}
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
+                    
                 </div>
             
                 <div *ngSwitchCase="'fileupload'">
@@ -103,17 +106,16 @@
                 </div>
 
                 <div *ngSwitchCase="'iOpen'">
-                    <pre>{{element.Packet.response["stdout"]}}</pre>
-
-                    <pre>{{element.Packet.response["stderr"]}}</pre>
-
                     {{element.Packet.response["error"]}}
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
+                    
                 </div>
 
                 <div *ngSwitchCase="'iIssue'">
+                    {{element.Packet.response["error"]}}
                     <pre>{{element.Packet.response["stdout"]}}</pre>
                     <pre>{{element.Packet.response["stderr"]}}</pre>
-                    <pre>{{element.Packet.response["error"]}}</pre>
                 </div>
 
                 <div *ngSwitchCase="'downstreams'">
@@ -130,20 +132,20 @@
     </ng-container>
 
     <ng-container matColumnDef="State">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
         <td mat-cell *matCellDef="let element"> 
             <container-element [ngSwitch]="element.State">
                 <div *ngSwitchCase="'0'">
-                    srv received
+                    &rarr;
                 </div>
                 <div *ngSwitchCase="'1'">
-                    cli sent
+                    !
                 </div>
                 <div *ngSwitchCase="'2'">
-                    cli answered
+                    &larr;
                 </div>
                 <div *ngSwitchCase="'3'">
-                    from cli
+                    &larr;c
                 </div>
             </container-element>
         </td>
