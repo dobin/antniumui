@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-file-static-list',
@@ -8,8 +9,8 @@ import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } fr
   styleUrls: ['./file-static-list.component.css']
 })
 export class FileStaticListComponent implements OnInit {
-  staticList: DirEntry[] = [];
   displayedColumns: string[] = [ 'name', 'size', 'modified', 'isDir' ];
+  dataSource: MatTableDataSource<DirEntry> = new MatTableDataSource<DirEntry>();
 
   constructor(
     private dataService: DataService,
@@ -17,7 +18,7 @@ export class FileStaticListComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.clientFilesUpdates.subscribe(nothing => {
-      this.staticList = this.dataService.statics;
+      this.dataSource.data = this.dataService.statics;
     });
   }
 
