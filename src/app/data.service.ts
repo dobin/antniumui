@@ -11,12 +11,21 @@ import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } fr
   providedIn: 'root'
 })
 export class DataService {
+  /* Notifiers */
+  // When: New packet arrived via websocket
   public packetInfosEvent: EventEmitter<any> = new EventEmitter();
+
+  // When: updated (periodically)
   public clientsEvent: EventEmitter<any> = new EventEmitter();
   public downstreamsEvent: EventEmitter<any> = new EventEmitter();
-  public downstreamSelection: BehaviorSubject<string> = new BehaviorSubject<string>("client");
   public clientFilesUpdates: BehaviorSubject<string> = new BehaviorSubject<string>("client");
+
+  // When: user selects a downstream in the UI
+  public downstreamSelection: BehaviorSubject<string> = new BehaviorSubject<string>("client");
   
+
+  /* Data */
+
   // Loaded: once on start, then updated via websocket messages
   public packetInfos: PacketInfo[] = [];
 
@@ -29,6 +38,7 @@ export class DataService {
   // Loaded: Once
   public campaign: Campaign = {} as Campaign;
 
+
   constructor(
     private apiService: ApiService,
   ) { 
@@ -37,7 +47,6 @@ export class DataService {
 
   // Load all initial data
   private init() {
-    console.log("Data: Init");
     this.downloadCampaign();
     this.downloadPackets();
     this.downloadPeriodics();

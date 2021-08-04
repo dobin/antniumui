@@ -25,7 +25,6 @@ export class AdminWebsocketService {
     private configService: ConfigService,
     private dataService: DataService,
   ) {
-    console.log("AdminWebsocket: Constructor")
     this.setupRefresher();
     this.connectWs();
   }
