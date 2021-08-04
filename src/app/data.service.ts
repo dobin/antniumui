@@ -25,7 +25,6 @@ export class DataService {
   
 
   /* Data */
-
   // Loaded: once on start, then updated via websocket messages
   public packetInfos: PacketInfo[] = [];
 
