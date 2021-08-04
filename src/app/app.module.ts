@@ -44,6 +44,8 @@ import { ClientsPageComponent } from './clients-page/clients-page.component';
 import { PacketCreateComponent } from './packet-create/packet-create.component';
 import { PacketCreatePageComponent } from './packet-create-page/packet-create-page.component';
 import { ClientInfoComponent } from './client-info/client-info.component';
+import { FileUploadListComponent } from './file-upload-list/file-upload-list.component';
+import { FileStaticListComponent } from './file-static-list/file-static-list.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { ClientInfoComponent } from './client-info/client-info.component';
     PacketCreateComponent,
     PacketCreatePageComponent,
     ClientInfoComponent,
+    FileUploadListComponent,
+    FileStaticListComponent,
   ],
   imports: [
     BrowserModule,
