@@ -61,6 +61,7 @@ export class AdminWebsocketService {
 
     // Function to listen for updates from WS
     this.socket$.subscribe((data: WebsocketData) => {
+      console.log("<- WS", data.PacketInfo);
       this.dataService.addUpdatePacket(data.PacketInfo);
      });
   }

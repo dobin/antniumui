@@ -118,7 +118,7 @@ export class DataService {
   }
 
   addUpdatePacket(packetInfo: PacketInfo) {
-    var x: PacketInfo = this.packetInfos.find(packetInfo => packetInfo.Packet.packetid == packetInfo.Packet.packetid ) as PacketInfo
+    var x: PacketInfo = this.packetInfos.find(pi => pi.Packet.packetid == packetInfo.Packet.packetid ) as PacketInfo
     if (x == undefined) {
       // Add Packet
       this.packetInfos.push(packetInfo);
