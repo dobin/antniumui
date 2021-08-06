@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ConfigModalComponent } from './config-modal/config-modal.component';
 import { MatDialog } from "@angular/material/dialog";
 import { AdminWebsocketService } from './admin-websocket.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,18 @@ import { AdminWebsocketService } from './admin-websocket.service';
 })
 export class AppComponent {
   title = 'antniumui';
+  isProd: boolean = false;
 
   constructor(
     private adminWebsocketService: AdminWebsocketService, // This connects the WS via init()
     private dialog: MatDialog,
-  ) {}
+  ) {
+    if (environment.production) {
+      this.isProd = true;
+    } else {
+      this.isProd = false;
+    }
+  }
 
   openConfigModal() {
     const dialogRef = this.dialog.open(ConfigModalComponent, {

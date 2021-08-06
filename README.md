@@ -1,5 +1,14 @@
 # Antniumui
 
+Compile for antnium release like:
+```
+ng build --configuration=production --base-href /webui/ --deploy-url /webui/
+cp -R dist/antniumui/* ../antnium/webui
+```
+
+
+# Stuff
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
 
 ## Development server
