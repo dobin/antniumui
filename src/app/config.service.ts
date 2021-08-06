@@ -18,7 +18,7 @@ export class ConfigService {
 
     var serverIp = localStorage.getItem("serverIp");
     if (serverIp == null) {
-      this.serverIp = "http://127.0.0.1:4444";
+      this.serverIp = "http://127.0.0.1:8080";
     } else {
       this.serverIp = serverIp;
     }
