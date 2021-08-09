@@ -17,7 +17,7 @@ export class AppComponent {
   serverIp: string = "";
 
   constructor(
-    //private adminWebsocketService: AdminWebsocketService, // This connects the WS via init()
+    private adminWebsocketService: AdminWebsocketService, // This connects the WS via init()
     private dialog: MatDialog,
     private configService: ConfigService,
   ) {

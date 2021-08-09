@@ -35,6 +35,7 @@ export class AdminWebsocketService {
   }
 
   private connectWs() {
+    console.log("Connect WS");
     var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/ws";
     this.socket$ = webSocket({
       url: newUrl,
@@ -59,6 +60,7 @@ export class AdminWebsocketService {
     // Send our authentication token
     this.socket$.next(this.configService.getAdminApiKey());
 
+    console.log("HM");
     // Function to listen for updates from WS
     this.socket$.subscribe((data: WebsocketData) => {
       console.log("<- WS", data.PacketInfo);
