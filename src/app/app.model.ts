@@ -25,6 +25,9 @@ export interface ClientInfo {
 
   Hostname: string
   LocalIps: string[]
+  Arch: string
+  Processes: string[]
+  insecureTls: boolean
 }
 
 export interface Campaign {
