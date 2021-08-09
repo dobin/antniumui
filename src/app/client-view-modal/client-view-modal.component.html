@@ -13,14 +13,14 @@
 </mat-card>
 
 <mat-card>
-    IPs:
+    Network interfaces, recent:
     <ul>
         <li *ngFor="let localIp of clientInfo.LocalIps">{{localIp}}</li>
     </ul>
 </mat-card>
 
 <mat-card>
-    Processes:
+    Processes, recent:
     <table style="width: 100%" mat-table [dataSource]="dataSource" class="demo-table">
         <ng-container matColumnDef="Name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
