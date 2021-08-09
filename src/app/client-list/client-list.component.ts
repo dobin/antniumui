@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from "@angular/material/dialog";
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { ClientInfo } from '../app.model';
 import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
@@ -26,6 +27,7 @@ export class ClientListComponent implements OnInit {
   // Table shit
   dataSource: MatTableDataSource<ClientInfo> = new MatTableDataSource<ClientInfo>();
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private dialog: MatDialog,
@@ -56,6 +58,7 @@ export class ClientListComponent implements OnInit {
   ngAfterViewInit() {
     // Connect the table components
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   showModalPacketCreate(computerId: string) {
@@ -74,5 +77,13 @@ export class ClientListComponent implements OnInit {
 
   getClientRelativeLastSeen(clientInfo: ClientInfo) {
     return this.dataService.getClientRelativeLastSeen(clientInfo);
+  }
+
+  // Table filter
+  applyFilter(event: any) {
+    var filterValue: string = event.target.value;
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }

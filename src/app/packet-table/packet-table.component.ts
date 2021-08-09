@@ -1,19 +1,14 @@
-import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from "@angular/material/dialog";
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Packet, PacketInfo, ClientInfo, Campaign } from '../app.model';
+import { Packet, PacketInfo } from '../app.model';
 import { ApiService } from '../api.service';
-import {AfterViewInit, ViewChild} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
-import { AdminWebsocketService } from '../admin-websocket.service';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { ConfigService } from '../config.service';
 import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
-import { RouterModule, Routes, Router } from '@angular/router';
 import { DataService } from '../data.service';
 
 
@@ -39,12 +34,17 @@ export class PacketTableComponent implements OnInit {
     private dataService: DataService
   ) { }
 
-  ngAfterViewInit() {
-    // Connect the table components
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  } 
   ngOnInit(): void {
+    // For table filter
+    this.dataSource.filterPredicate = 
+      (data: PacketInfo, filter: string) => !filter || filter == "" || (
+        data.Packet.packetType.includes(filter)
+        || data.Packet.computerid.includes(filter)
+        || data.Packet.packetid.includes(filter)
+        || (Object.values(data.Packet.arguments).filter(s => s.includes(filter))).length > 0
+        || (Object.values(data.Packet.response).filter(s => s.includes(filter))).length > 0
+      );
+
     if (this.computerId != "") {
       this.displayedColumns = [
         'TimeRecorded', 'packetType', 'arguments', 'response'];
@@ -80,6 +80,12 @@ export class PacketTableComponent implements OnInit {
       }
     })
   }
+
+  ngAfterViewInit() {
+    // Connect the table components
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  } 
 
   updatePacketInfos() {
     var data2 = this.dataService.packetInfos;
@@ -137,5 +143,13 @@ export class PacketTableComponent implements OnInit {
     }
 
     return result;
+  }
+
+  // Table filter
+  applyFilter(event: any) {
+    var filterValue: string = event.target.value;
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }

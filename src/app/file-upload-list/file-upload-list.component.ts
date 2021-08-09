@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
-import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
+import { DirEntry } from '../app.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+
 import { ApiService } from '../api.service';
 
 @Component({
@@ -11,6 +13,9 @@ import { ApiService } from '../api.service';
   styleUrls: ['./file-upload-list.component.css']
 })
 export class FileUploadListComponent implements OnInit {
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   displayedColumns: string[] = [ 'name', 'size', 'modified', 'isDir' ];
   dataSource: MatTableDataSource<DirEntry> = new MatTableDataSource<DirEntry>();
 
@@ -25,10 +30,23 @@ export class FileUploadListComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    // Connect the table components
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  } 
+
   downloadUpload(filename: string) {
     var url = this.dataService.makeUploadLink(filename);
     // Not public, need authenticated http client
     this.apiService.downloadClientUpload(url);
   }
 
+    // Table filter
+    applyFilter(event: any) {
+      var filterValue: string = event.target.value;
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+      this.dataSource.filter = filterValue;
+    }
 }

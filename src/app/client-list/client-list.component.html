@@ -81,3 +81,14 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <mat-form-field fxFlex="30" fxFlexFill>
+        <input matInput type="text" (change)="applyFilter($event)" placeholder="Search table">
+    </mat-form-field>
+
+    <div fxFlex="70">
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+    </div>
+
+</div>
