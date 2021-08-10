@@ -36,7 +36,7 @@ export class AdminWebsocketService {
 
   private connectWs() {
     console.log("Connect WS");
-    var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/ws";
+    var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/adminws";
     this.socket$ = webSocket({
       url: newUrl,
       openObserver: {
