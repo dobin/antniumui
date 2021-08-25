@@ -65,7 +65,7 @@
             </md-input-container>
 
             <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-                    <mat-form-field fxFlex="80" fxFill>
+                    <mat-form-field fxFlex="74" fxFill>
                         <mat-label>commandline</mat-label>
                         <input matInput type="text" (keyup.enter)="sendPacketInteractiveCmdIssue()" [(ngModel)]="commandlineInteractive">
                     </mat-form-field>
@@ -73,7 +73,9 @@
                     <md-input-container fxFlex> 
                         <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(false)">Open</button>
                         &nbsp;
-                        <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">ForceOpen</button>
+                        <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">ReOpen</button>
+                        &nbsp;
+                        <button mat-raised-button (click)="sendPacketCmdClose()">Kill</button>
                 </md-input-container>
 
             </mat-container>
@@ -113,6 +115,15 @@
                 <mat-label>downloadUrl</mat-label>
                 <input matInput type="text" [(ngModel)]="downloadUrlFile">
             </mat-form-field>
+        </mat-container>
+
+    </mat-tab>
+
+    <mat-tab label="Other">
+        <br>
+        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button>
+            <button mat-raised-button (click)="sendPacketDownstreamStart()">DownstreamStart</button>
         </mat-container>
 
     </mat-tab>

@@ -133,6 +133,25 @@ export class PacketCreateComponent implements OnInit {
     );
   }
 
+  sendPacketShutdown() {
+    var packet: Packet = {
+      computerid: this.computerId, 
+      packetid: this.getRandomInt(),
+      packetType: 'shutdown',
+      arguments: {},
+      response: {},
+      downstreamId: this.downstreamId,
+    }
+    this.apiService.sendPacket(packet).subscribe(
+      (data: any) => { 
+        console.log("SendPacket successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendPacket failed")
+      },
+    );
+  }
+
   sendPacketInteractiveCmdOpen(force: boolean) {
     var packet: Packet = {
       computerid: this.computerId, 
@@ -166,6 +185,25 @@ export class PacketCreateComponent implements OnInit {
       downstreamId: this.downstreamId,
     }
 
+    this.apiService.sendPacket(packet).subscribe(
+      (data: any) => { 
+        console.log("SendPacket successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendPacket failed")
+      },
+    );
+  }
+
+  sendPacketCmdClose() {
+    var packet: Packet = {
+      computerid: this.computerId, 
+      packetid: this.getRandomInt(),
+      packetType: 'iClose',
+      arguments: { },
+      response: {},
+      downstreamId: this.downstreamId,
+    }
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
@@ -212,6 +250,26 @@ export class PacketCreateComponent implements OnInit {
       downstreamId: this.downstreamId,
     }
 
+    this.apiService.sendPacket(packet).subscribe(
+      (data: any) => { 
+        console.log("SendPacket successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendPacket failed")
+      },
+    );
+  }
+
+  sendPacketDownstreamStart() {
+    var packetId = this.getRandomInt();
+    var packet: Packet = {
+      computerid: this.computerId, 
+      packetid: packetId,
+      packetType: 'downstreamStart',
+      arguments: {},
+      response: {},
+      downstreamId: this.downstreamId,
+    }
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
