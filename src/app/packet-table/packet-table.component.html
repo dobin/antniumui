@@ -124,6 +124,10 @@
                     </label>
                 </div>
 
+                <div *ngSwitchCase="'dir'">
+                    (Click Me)
+                </div>
+
                 <div *ngSwitchDefault>
                     {{element.Packet.response | json }}
                 </div>

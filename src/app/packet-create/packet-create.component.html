@@ -125,6 +125,23 @@
 
     </mat-tab>
 
+    <mat-tab label="Browse">
+        <br>
+        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <button mat-raised-button (click)="sendPacketDir()">Dir</button>
+            <input matInput type="text" [(ngModel)]="browse">
+
+        </mat-container>
+
+        <ul>
+            <li *ngFor="let dirEntry of dirContent">{{ dirEntry.name }}</li>
+        </ul>
+        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+
+        </mat-container>
+        <br>
+    </mat-tab>
+
     <mat-tab label="Other">
         <br>
         <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">

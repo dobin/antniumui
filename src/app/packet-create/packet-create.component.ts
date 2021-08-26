@@ -41,6 +41,9 @@ export class PacketCreateComponent implements OnInit {
 
   downstreamId: string = "client"
 
+  dirContent: DirEntry[] = [];
+  browse: string = "./"
+
   downloadDestinationSelection = ""
   staticFiles: DirEntry[] = []
 
@@ -73,29 +76,51 @@ export class PacketCreateComponent implements OnInit {
       );
     }
 
-    // Get initial files
+    // Files
     this.staticFiles = this.dataService.statics;
     // Subscribe to updates 
     this.dataService.clientFilesUpdates.subscribe((data: String) => {
       this.staticFiles = this.dataService.statics;
     })
 
-    // Get initial Packet Data
+    // Shell, Dir
     this.updateInteractive(); // Init immediately
+    this.updateDir();
     // Update Packet data
     this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
       if (packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
         this.updateInteractive();
+        this.updateDir();
       }
     })
 
-    // Subscribe to downstream selection
+    // Downstream-Selection
     this.dataService.downstreamSelection.subscribe(downstreamId => {
       this.downstreamId = downstreamId;
       this.updateInteractive(); // Update the downstream immediately
     });
   }
+
+  updateDir() {
+    var data2 = this.dataService.packetInfos;
+    var newData = data2.filter(d => 
+      (d.Packet.computerid == this.computerId && d.Packet.packetType == "dir")
+    );
+
+    if (data2.length == 0) {
+      return;
+    }
+    var latestPacket = newData[newData.length - 1].Packet
+    if (! ("filelist" in latestPacket.response)) {
+      return;
+    }
+
+    var json = latestPacket.response["filelist"];
+    var data: DirEntry[] = JSON.parse(json); 
+    this.dirContent = data;
+  }
+
 
   updateInteractive() {
     var data2 = this.dataService.packetInfos;
@@ -292,7 +317,6 @@ export class PacketCreateComponent implements OnInit {
   }
 
   sendPacketDownload() {
-    console.log("A: " + this.downloadDestinationSelection);
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: this.apiService.getRandomInt(),
@@ -313,6 +337,33 @@ export class PacketCreateComponent implements OnInit {
         console.log("SendPacket failed")
       },
     );*/
+  }
+
+
+  sendPacketDir() {
+    var packetId = this.apiService.getRandomInt();
+    var packet: Packet = {
+      computerid: this.computerId, 
+      packetid: packetId,
+      packetType: 'dir',
+      arguments: { 
+        "path": this.browse,
+      },
+      response: {},
+      downstreamId: this.downstreamId,
+    }
+    this.apiService.sendPacket(packet).subscribe(
+      (data: any) => { 
+        console.log("SendPacket successful")
+
+        // Subscribe to new packets until ours is found
+
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendPacket failed")
+      },
+    );
+
   }
 
   // Utils:
