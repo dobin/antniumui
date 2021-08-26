@@ -87,16 +87,16 @@
     <mat-tab label="Upload">
         <br>
         <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="sendPacketUpload()">Send</button>
+            <button mat-raised-button (click)="sendPacketUpload()">Upload</button>
 
             <mat-form-field fxFlex="70">
-                <mat-label>Remote file path</mat-label>
+                <mat-label>Client file path</mat-label>
                 <input matInput type="text" [(ngModel)]="uploadSource">
             </mat-form-field>
-
-            <mat-form-field>
+            &RightArrow; &nbsp; &nbsp;
+            <mat-form-field fxFlex>
                 <mat-label>Upload URL</mat-label>
-                <input matInput type="text" [(ngModel)]="uploadUrlBase">
+                <input matInput type="text" [disabled]="true" [(ngModel)]="uploadUrlBase">
             </mat-form-field>
         </mat-container>
     </mat-tab>
@@ -104,17 +104,23 @@
     <mat-tab label="Download">
         <br>
         <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="sendPacketDownload()">Send</button>
+            <button mat-raised-button (click)="sendPacketDownload()">Download</button>
 
-            <mat-form-field fxFlex="60">
-                <mat-label>downloadDestination</mat-label>
+            <mat-form-field fxFlex>
+                <mat-label>Static File</mat-label>
+
+                <mat-select [(ngModel)]="downloadDestinationSelection" name="file">
+                    <mat-option *ngFor="let file of staticFiles" [value]="file.name">
+                      {{file.name}}
+                    </mat-option>
+                  </mat-select>
+            </mat-form-field>
+            &RightArrow; &nbsp; &nbsp;
+            <mat-form-field fxFlex="65">
+                <mat-label>Client file path</mat-label>
                 <input matInput type="text" [(ngModel)]="downloadDestination">
             </mat-form-field>
-            {{downloadUrlBase}}
-            <mat-form-field>
-                <mat-label>downloadUrl</mat-label>
-                <input matInput type="text" [(ngModel)]="downloadUrlFile">
-            </mat-form-field>
+            
         </mat-container>
 
     </mat-tab>
@@ -122,9 +128,10 @@
     <mat-tab label="Other">
         <br>
         <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button>
+            <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button> &nbsp; Exit current client/downstreamclient
         </mat-container>
 
+        <br>
     </mat-tab>
 
     <!--

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PacketInfo, Packet, Campaign } from '../app.model';
+import { PacketInfo, Packet, Campaign, DirEntry } from '../app.model';
 import { ApiService } from '../api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,7 +30,6 @@ export class PacketCreateComponent implements OnInit {
   uploadSource: string = ""
 
   downloadUrlBase: string = ""
-  downloadUrlFile: string = ""
   downloadDestination: string = ""
   interactiveStdout: string = ""
   
@@ -41,6 +40,9 @@ export class PacketCreateComponent implements OnInit {
   interval: any
 
   downstreamId: string = "client"
+
+  downloadDestinationSelection = ""
+  staticFiles: DirEntry[] = []
 
   constructor(
     private apiService: ApiService,
@@ -63,7 +65,6 @@ export class PacketCreateComponent implements OnInit {
           this.uploadSource = "README.md";
     
           this.downloadUrlBase = campaign.ServerUrl + campaign.FileDownloadPath;
-          this.downloadUrlFile = "test.txt";
           this.downloadDestination = "test.txt";
         },
         (err: HttpErrorResponse) => {
@@ -72,8 +73,15 @@ export class PacketCreateComponent implements OnInit {
       );
     }
 
+    // Get initial files
+    this.staticFiles = this.dataService.statics;
+    // Subscribe to updates 
+    this.dataService.clientFilesUpdates.subscribe((data: String) => {
+      this.staticFiles = this.dataService.statics;
+    })
+
     // Get initial Packet Data
-    this.updateInteractive();
+    this.updateInteractive(); // Init immediately
     // Update Packet data
     this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
@@ -85,7 +93,7 @@ export class PacketCreateComponent implements OnInit {
     // Subscribe to downstream selection
     this.dataService.downstreamSelection.subscribe(downstreamId => {
       this.downstreamId = downstreamId;
-      this.updateInteractive();
+      this.updateInteractive(); // Update the downstream immediately
     });
   }
 
@@ -284,18 +292,19 @@ export class PacketCreateComponent implements OnInit {
   }
 
   sendPacketDownload() {
+    console.log("A: " + this.downloadDestinationSelection);
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: this.apiService.getRandomInt(),
       packetType: 'filedownload',
       arguments: { 
-        "remoteurl": this.downloadUrlBase + this.downloadUrlFile,
+        "remoteurl": this.downloadUrlBase + this.downloadDestinationSelection,
         "destination": this.downloadDestination
       },
       response: {},
       downstreamId: this.downstreamId,
     }
-
+/*
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
@@ -303,7 +312,7 @@ export class PacketCreateComponent implements OnInit {
       (err: HttpErrorResponse) => {
         console.log("SendPacket failed")
       },
-    );
+    );*/
   }
 
   // Utils:
