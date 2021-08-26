@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
-import { AdminWebsocketService } from '../admin-websocket.service';
-import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
+import { Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-client-info',
@@ -88,4 +88,23 @@ export class ClientInfoComponent implements OnInit {
     this.apiService.downloadClientUpload(url);
   }
 
+  sendPacketDownstreamStart() {
+    var packetId = this.apiService.getRandomInt();
+    var packet: Packet = {
+      computerid: this.computerId, 
+      packetid: packetId,
+      packetType: 'downstreamStart',
+      arguments: {},
+      response: {},
+      downstreamId: "manager",
+    }
+    this.apiService.sendPacket(packet).subscribe(
+      (data: any) => { 
+        console.log("SendPacket successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendPacket failed")
+      },
+    );
+  }
 }

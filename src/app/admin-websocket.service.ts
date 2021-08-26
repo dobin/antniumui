@@ -60,7 +60,6 @@ export class AdminWebsocketService {
     // Send our authentication token
     this.socket$.next(this.configService.getAdminApiKey());
 
-    console.log("HM");
     // Function to listen for updates from WS
     this.socket$.subscribe((data: WebsocketData) => {
       console.log("<- WS", data.PacketInfo);

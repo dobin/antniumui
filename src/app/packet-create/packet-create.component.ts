@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
-import { PacketInfo, Packet, ClientInfo, Campaign } from '../app.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { PacketInfo, Packet, Campaign } from '../app.model';
 import { ApiService } from '../api.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AdminWebsocketService } from '../admin-websocket.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../data.service';
 
@@ -116,7 +115,7 @@ export class PacketCreateComponent implements OnInit {
   sendPacketTest() {
     var packet: Packet = {
       computerid: this.computerId, 
-      packetid: this.getRandomInt(),
+      packetid: this.apiService.getRandomInt(),
       packetType: 'test',
       arguments: { "test": "test" },
       response: {},
@@ -136,7 +135,7 @@ export class PacketCreateComponent implements OnInit {
   sendPacketShutdown() {
     var packet: Packet = {
       computerid: this.computerId, 
-      packetid: this.getRandomInt(),
+      packetid: this.apiService.getRandomInt(),
       packetType: 'shutdown',
       arguments: {},
       response: {},
@@ -155,7 +154,7 @@ export class PacketCreateComponent implements OnInit {
   sendPacketInteractiveCmdOpen(force: boolean) {
     var packet: Packet = {
       computerid: this.computerId, 
-      packetid: this.getRandomInt(),
+      packetid: this.apiService.getRandomInt(),
       packetType: 'iOpen',
       arguments: { },
       response: {},
@@ -178,7 +177,7 @@ export class PacketCreateComponent implements OnInit {
   sendPacketInteractiveCmdIssue() {
     var packet: Packet = {
       computerid: this.computerId, 
-      packetid: this.getRandomInt(),
+      packetid: this.apiService.getRandomInt(),
       packetType: 'iIssue',
       arguments: { 'commandline': this.commandlineInteractive },
       response: {},
@@ -198,7 +197,7 @@ export class PacketCreateComponent implements OnInit {
   sendPacketCmdClose() {
     var packet: Packet = {
       computerid: this.computerId, 
-      packetid: this.getRandomInt(),
+      packetid: this.apiService.getRandomInt(),
       packetType: 'iClose',
       arguments: { },
       response: {},
@@ -243,7 +242,7 @@ export class PacketCreateComponent implements OnInit {
 
     var packet: Packet = {
       computerid: this.computerId, 
-      packetid: this.getRandomInt(),
+      packetid: this.apiService.getRandomInt(),
       packetType: 'exec',
       arguments: params,
       response: {},
@@ -260,28 +259,9 @@ export class PacketCreateComponent implements OnInit {
     );
   }
 
-  sendPacketDownstreamStart() {
-    var packetId = this.getRandomInt();
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: packetId,
-      packetType: 'downstreamStart',
-      arguments: {},
-      response: {},
-      downstreamId: this.downstreamId,
-    }
-    this.apiService.sendPacket(packet).subscribe(
-      (data: any) => { 
-        console.log("SendPacket successful")
-      },
-      (err: HttpErrorResponse) => {
-        console.log("SendPacket failed")
-      },
-    );
-  }
 
   sendPacketUpload() {
-    var packetId = this.getRandomInt();
+    var packetId = this.apiService.getRandomInt();
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: packetId,
@@ -306,7 +286,7 @@ export class PacketCreateComponent implements OnInit {
   sendPacketDownload() {
     var packet: Packet = {
       computerid: this.computerId, 
-      packetid: this.getRandomInt(),
+      packetid: this.apiService.getRandomInt(),
       packetType: 'filedownload',
       arguments: { 
         "remoteurl": this.downloadUrlBase + this.downloadUrlFile,
@@ -333,9 +313,6 @@ export class PacketCreateComponent implements OnInit {
       duration: 3000
     });
   }
-  
-  getRandomInt(): string {
-    return Math.floor(Math.random() * 1000000).toString();
-  }
+ 
 
 }

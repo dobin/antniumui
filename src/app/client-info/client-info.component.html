@@ -4,6 +4,7 @@
         <li>{{client.ComputerId }}</li>
         <li>{{client.LastIp}}</li>
         <li>queried {{getClientRelativeLastSeen()}} ago</li>
+        <li><button mat-raised-button (click)="sendPacketDownstreamStart()">DownstreamStart</button></li>
     </ul>
 </mat-card>
 
