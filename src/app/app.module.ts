@@ -47,6 +47,7 @@ import { ClientInfoComponent } from './client-info/client-info.component';
 import { FileUploadListComponent } from './file-upload-list/file-upload-list.component';
 import { FileStaticListComponent } from './file-static-list/file-static-list.component';
 import { CmdExecComponent } from './cmd-exec/cmd-exec.component';
+import { CmdShellComponent } from './cmd-shell/cmd-shell.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { CmdExecComponent } from './cmd-exec/cmd-exec.component';
     FileUploadListComponent,
     FileStaticListComponent,
     CmdExecComponent,
+    CmdShellComponent,
   ],
   imports: [
     BrowserModule,

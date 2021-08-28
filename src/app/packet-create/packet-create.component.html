@@ -8,40 +8,7 @@
 
     <mat-tab label="Shell">
         <br>
-        <mat-container fxLayout="column"  fxLayoutGap="15px">
-            <md-input-container fxFlex="100" class="full-width" >
-                <!-- we check interactiveStdout on [scrollTop] to avoid a race condition, giving ugly warning. 
-                    https://stackoverflow.com/questions/35232731/angular-2-scroll-to-bottom-chat-style -->
-                <textarea 
-                    #textarea 
-                    [scrollTop]="interactiveStdout == '' ? 0 : textarea.scrollHeight" 
-                    rows="30"
-                    name="Output" 
-                    [(ngModel)]="interactiveStdout" 
-                    matInput
-                    class="shell"
-                >
-                </textarea>
-            </md-input-container>
-
-            <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-                    <mat-form-field fxFlex="74" fxFill>
-                        <mat-label>commandline</mat-label>
-                        <input matInput type="text" (keyup.enter)="sendPacketInteractiveCmdIssue()" [(ngModel)]="commandlineInteractive">
-                    </mat-form-field>
-
-                    <md-input-container fxFlex> 
-                        <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(false)">Open</button>
-                        &nbsp;
-                        <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">ReOpen</button>
-                        &nbsp;
-                        <button mat-raised-button (click)="sendPacketCmdClose()">Kill</button>
-                </md-input-container>
-
-            </mat-container>
-
-            <br>
-        </mat-container>
+        <app-cmd-shell [computerId]="computerId"  fxLayout="column"  fxLayoutGap="15px"></app-cmd-shell>
     </mat-tab>
     
     <mat-tab label="Upload">
