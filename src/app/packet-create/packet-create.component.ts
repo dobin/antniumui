@@ -108,7 +108,7 @@ export class PacketCreateComponent implements OnInit {
       (d.Packet.computerid == this.computerId && d.Packet.packetType == "dir")
     );
 
-    if (data2.length == 0) {
+    if (newData.length == 0) {
       return;
     }
     var latestPacket = newData[newData.length - 1].Packet
