@@ -13,4 +13,6 @@ td.mat-cell {
 
 pre {
     margin-top: 0;
+    max-width: 50em;
 }
+
