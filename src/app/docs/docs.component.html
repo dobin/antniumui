@@ -165,7 +165,39 @@ The only thing transported are packets. With empty packet.response when incoming
                  HTTP               Channel            Channels               Various
 </pre>
 
+
+
+<h2>Client: Upstream </h2>
+
+<p>The connection from the client to the server is done with Upstream.</p>
+
+<p>The client poll's the server regularly for new commands. If a websocket connection can be established, 
+   it is used by the server to notify the client of new packets (optional). 
+</p>
+
+<pre>
+   ┌──────────┐           ┌────────────┐           ┌──────────────────────┐               ┌──────────────┐
+   │          ├───────────┤            ├───────────┤                      │               │              │
+   │  Client  │           │  Upstream  │           │  WebsocketNotifier   │     WS Notify │    Server    │
+   │          │           │            │           │                      │◄──────────────┤              │
+   │          │           │            │           │                      │               │              │
+   │          │           │            │◄──────────┤                      │               │              │
+   │          │           │            │   Channel └──────────────────────┘               │              │
+   │          │           │            │                                                  │              │
+   │          │           │            │                                                  │              │
+   │          │           │            │ HTTP GET                                         │              │
+   │          │           │            ├─────────────────────────────────────────────────►│              │
+   │          │           │            │                                                  │              │
+   │          │           │            │◄─────────────────────────────────────────────────┤              │
+   │          │   Packet  │            │                                       HTTP Answer└──────────────┘
+   │          │◄──────────┤            │
+   └──────────┘   Channel └────────────┘
+</pre>
+
 <br>
 <br>
+
+
+
 
 </div>
