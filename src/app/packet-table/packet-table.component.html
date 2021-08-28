@@ -47,6 +47,7 @@
             <container-element [ngSwitch]="element.Packet.packetType">
                 
             <div *ngSwitchCase="'exec'" class="nowrap">
+                {{element.Packet.arguments["commandline"]}}
                 {{element.Packet.arguments["executable"]}} 
                 {{element.Packet.arguments["param0"]}} 
                 {{element.Packet.arguments["param1"]}}

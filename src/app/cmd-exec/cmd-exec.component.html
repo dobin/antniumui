@@ -1,13 +1,13 @@
 <button color="primary" mat-raised-button (click)="sendPacketExec()">Enter</button>
 
-<ng-container *ngIf="selectExecType == 'line'">
+<ng-container *ngIf="selectExecType != 'raw'">
     <mat-form-field fxFlex="80" fxFill appearance="outline">
         <mat-label>commandline</mat-label>
         <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="commandline">
     </mat-form-field>
 </ng-container>
 
-<ng-container *ngIf="selectExecType == 'array'">
+<ng-container *ngIf="selectExecType == 'raw'">
     <mat-form-field fxFlex>
         <mat-label>Executable</mat-label>
         <input matInput type="text" [(ngModel)]="executable">
@@ -27,13 +27,16 @@
 </ng-container>
 
 <mat-form-field appearance="fill">
-    <mat-label>Input</mat-label>
+    <mat-label>ShellType</mat-label>
     <mat-select [(value)]="selectExecType">
-        <mat-option value="line">
-            Line
+        <mat-option value="cmd">
+            cmd.exe /S /C [] 
         </mat-option>
-        <mat-option value="array">
-            Array
+        <mat-option value="powershell">
+            powershell.exe -ExecutionPolicy Bypass -C []
+        </mat-option>
+        <mat-option value="raw">
+            raw
         </mat-option>
     </mat-select>
 </mat-form-field>

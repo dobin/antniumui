@@ -17,8 +17,10 @@ export class CmdExecComponent implements OnInit {
   downstreamId: string = "client"
 
   // Local
-  commandline: string = "cmd /C hostname"
-  selectExecType: string = "line"
+  selectExecType: string = "cmd"
+
+  commandline: string = "hostname"
+  
   executable: string = ""
   param1: string = ""
   param2: string = ""
@@ -44,17 +46,11 @@ export class CmdExecComponent implements OnInit {
 
   
   sendPacketExec() {
-    var split = this.commandline.split(" ")
-    var executable: string = split[0];
-    var paramsArr = split.slice(1);
-
     var params:{ [id: string]: string } = {};
-    if (this.selectExecType == "line") {
-      params["executable"] = executable;
-      for(var n=0; n<paramsArr.length; n++) {
-        params["param" + n] = paramsArr[n];
-      }
-    } else if (this.selectExecType == "array") {
+    params["shelltype"] = this.selectExecType;
+    if (this.selectExecType == "cmd" || this.selectExecType == "powershell") {
+      params["commandline"] = this.commandline;
+    } else if (this.selectExecType == "raw") {
       params["executable"] = this.executable;
       if (this.param1 != "") {
         params["param0"] = this.param1;
