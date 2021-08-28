@@ -16,14 +16,7 @@ export class PacketCreateComponent implements OnInit {
 
 
   // UI
-  selectExecType: string = "line"
-
   serverurl: string = ""
-  executable: string = ""
-  param1: string = ""
-  param2: string = ""
-  param3: string = ""
-
   selectedTabIndex: number = 0
 
   uploadUrlBase: string = ""
@@ -36,7 +29,6 @@ export class PacketCreateComponent implements OnInit {
   commandlineInteractive: string = "hostname"
 
   commandselect: number = 0
-  commandline: string = "cmd /C hostname"
   interval: any
 
   downstreamId: string = "client"
@@ -58,10 +50,6 @@ export class PacketCreateComponent implements OnInit {
     if (true) {
       this.apiService.getCampaign().subscribe(
         (campaign: Campaign) => { 
-          this.executable = "cmd";
-          this.param1 = "/C"
-          this.param2 = "whoami"
-
           this.serverurl = campaign.ServerUrl;
     
           this.uploadUrlBase = campaign.ServerUrl + campaign.FileUploadPath;
@@ -245,53 +233,6 @@ export class PacketCreateComponent implements OnInit {
       },
     );
   }
-
-  sendPacketExec() {
-    var split = this.commandline.split(" ")
-    var executable: string = split[0];
-    var paramsArr = split.slice(1);
-
-    var params:{ [id: string]: string } = {};
-    if (this.selectExecType == "line") {
-      params["executable"] = executable;
-      for(var n=0; n<paramsArr.length; n++) {
-        params["param" + n] = paramsArr[n];
-      }
-    } else if (this.selectExecType == "array") {
-      params["executable"] = this.executable;
-      if (this.param1 != "") {
-        params["param0"] = this.param1;
-      }
-      if (this.param2 != "") {
-        params["param1"] = this.param2;
-      }
-      if (this.param3 != "") {
-        params["param2"] = this.param3;
-      }
-    } else {
-      console.log("Unknown: " + this.selectExecType);
-      return;
-    }
-
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'exec',
-      arguments: params,
-      response: {},
-      downstreamId: this.downstreamId,
-    }
-
-    this.apiService.sendPacket(packet).subscribe(
-      (data: any) => { 
-        console.log("SendPacket successful")
-      },
-      (err: HttpErrorResponse) => {
-        console.log("SendPacket failed")
-      },
-    );
-  }
-
 
   sendPacketUpload() {
     var packetId = this.apiService.getRandomInt();

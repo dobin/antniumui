@@ -92,6 +92,8 @@
                 <div *ngSwitchCase="'exec'">
                     {{element.Packet.response["error"]}}
                     <pre>{{element.Packet.response["stdout"]}}</pre>
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
+                    Pid: {{element.Packet.response["pid"]}} / ExitCode: {{element.Packet.response["exitCode"]}}
                     
                 </div>
             

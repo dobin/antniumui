@@ -46,6 +46,7 @@ import { PacketCreatePageComponent } from './packet-create-page/packet-create-pa
 import { ClientInfoComponent } from './client-info/client-info.component';
 import { FileUploadListComponent } from './file-upload-list/file-upload-list.component';
 import { FileStaticListComponent } from './file-static-list/file-static-list.component';
+import { CmdExecComponent } from './cmd-exec/cmd-exec.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { FileStaticListComponent } from './file-static-list/file-static-list.com
     ClientInfoComponent,
     FileUploadListComponent,
     FileStaticListComponent,
+    CmdExecComponent,
   ],
   imports: [
     BrowserModule,
