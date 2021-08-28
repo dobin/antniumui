@@ -1,0 +1,21 @@
+
+<mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+
+    <button mat-raised-button (click)="sendPacketDir()">Dir</button>
+
+    <ng-container>
+        <mat-form-field fxFlex fxFill appearance="outline">
+            <mat-label>commandline</mat-label>
+            <input matInput type="text" [(ngModel)]="browse">
+        </mat-form-field>
+    </ng-container>
+
+</mat-container>
+
+
+<md-input-container fxFlex="100" class="full-width" >
+    <ul>
+        <li *ngFor="let dirEntry of dirContent">{{ dirEntry.name }}</li>
+    </ul>
+</md-input-container>
+

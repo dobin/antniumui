@@ -1,0 +1,11 @@
+<button mat-raised-button (click)="sendPacketUpload()">Upload</button>
+
+<mat-form-field fxFlex="70">
+    <mat-label>Client file path</mat-label>
+    <input matInput type="text" [(ngModel)]="uploadSource">
+</mat-form-field>
+&RightArrow; &nbsp; &nbsp;
+<mat-form-field fxFlex>
+    <mat-label>Upload URL</mat-label>
+    <input matInput type="text" [disabled]="true" [(ngModel)]="uploadUrlBase">
+</mat-form-field>

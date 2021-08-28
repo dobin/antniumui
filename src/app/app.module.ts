@@ -48,6 +48,9 @@ import { FileUploadListComponent } from './file-upload-list/file-upload-list.com
 import { FileStaticListComponent } from './file-static-list/file-static-list.component';
 import { CmdExecComponent } from './cmd-exec/cmd-exec.component';
 import { CmdShellComponent } from './cmd-shell/cmd-shell.component';
+import { CmdUploadComponent } from './cmd-upload/cmd-upload.component';
+import { CmdDownloadComponent } from './cmd-download/cmd-download.component';
+import { CmdBrowseComponent } from './cmd-browse/cmd-browse.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +73,9 @@ import { CmdShellComponent } from './cmd-shell/cmd-shell.component';
     FileStaticListComponent,
     CmdExecComponent,
     CmdShellComponent,
+    CmdUploadComponent,
+    CmdDownloadComponent,
+    CmdBrowseComponent,
   ],
   imports: [
     BrowserModule,
