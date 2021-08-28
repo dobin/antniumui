@@ -12,15 +12,16 @@ import { DataService } from '../data.service';
 export class CmdShellComponent implements OnInit {
   // Input
   @Input() computerId = "";
+  downstreamId: string = "client"
+  interactiveStdout: string = ""
+
+  // UI
+  commandlineInteractive: string = "hostname"
 
   constructor(
     private apiService: ApiService,
     private dataService: DataService
   ) { }
-
-  downstreamId: string = "client"
-  commandlineInteractive: string = "hostname"
-  interactiveStdout: string = ""
 
   ngOnInit(): void {
     // Packet data

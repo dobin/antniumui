@@ -12,15 +12,11 @@ import { DataService } from '../data.service';
 export class CmdExecComponent implements OnInit {
   // Input
   @Input() computerId = "";
-
-  // Global
   downstreamId: string = "client"
 
-  // Local
+  // UI
   selectExecType: string = "cmd"
-
   commandline: string = "hostname"
-  
   executable: string = ""
   param1: string = ""
   param2: string = ""

@@ -11,18 +11,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./cmd-download.component.css']
 })
 export class CmdDownloadComponent implements OnInit {
-  // Data
+  // Input
   @Input() computerId = "";
+  downstreamId: string = "client"
+  staticFiles: DirEntry[] = []
 
+  // UI
   downloadUrlBase: string = ""
   downloadDestination: string = ""
   downloadDestinationSelection = ""
   serverurl: string = ""
-
-  staticFiles: DirEntry[] = []
-
-
-  downstreamId: string = "client"
 
   constructor(
     private apiService: ApiService,

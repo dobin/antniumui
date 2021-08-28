@@ -10,12 +10,12 @@ import { DataService } from '../data.service';
   styleUrls: ['./cmd-browse.component.css']
 })
 export class CmdBrowseComponent implements OnInit {
-  // Data
+  // Input
   @Input() computerId = "";
-
   downstreamId: string = "client"
-
   dirContent: DirEntry[] = [];
+
+  // UI
   browse: string = "./"
 
   constructor(

@@ -10,11 +10,11 @@ import { DataService } from '../data.service';
   styleUrls: ['./cmd-upload.component.css']
 })
 export class CmdUploadComponent implements OnInit {
-  // Data
+  // Input
   @Input() computerId = "";
-
   downstreamId: string = "client"
 
+  // UI
   uploadUrlBase: string = ""
   uploadSource: string = ""
 
