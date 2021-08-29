@@ -1,12 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { 
+    height: 100%; 
+    background-color: #fafafa;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-mat-card {
+/* MatCards: Some spaced between them */
+.mat-card {
     margin: 1em;
 }
 
+/* PacketCreate: Make tabs tight */
+.matsmall {
+    padding: 0px !important;
+}
+/* PacketCreate: provide some space the elements */
+.matbig {
+    margin-left: 1em !important;
+    margin-right: 1em !important;
+}
   
 .nowrap {
     white-space: nowrap;

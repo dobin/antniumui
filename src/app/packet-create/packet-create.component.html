@@ -1,48 +1,46 @@
-<mat-card >
+<mat-card class="lighto"  class="matsmall" >
 
-<mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start" color="accent" backgroundColor="primary">
-    <mat-tab label="Execute">
-        <br>
-        <app-cmd-exec [computerId]="computerId" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-exec>
-    </mat-tab>
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start" color="accent" backgroundColor="primary">
+        <mat-tab label="Execute">
+            <br>
+            <app-cmd-exec [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-exec>
+        </mat-tab>
 
-    <mat-tab label="Shell">
-        <br>
-        <app-cmd-shell [computerId]="computerId" fxLayout="column"  fxLayoutGap="15px"></app-cmd-shell>
-    </mat-tab>
-    
-    <mat-tab label="Upload">
-        <br>
-        <app-cmd-upload [computerId]="computerId" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"></app-cmd-upload>
-    </mat-tab>
+        <mat-tab label="Shell">
+            <br>
+            <app-cmd-shell [computerId]="computerId" class="matbig" fxLayout="column"  fxLayoutGap="15px"></app-cmd-shell>
+        </mat-tab>
+        
+        <mat-tab label="Upload">
+            <br>
+            <app-cmd-upload [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"></app-cmd-upload>
+        </mat-tab>
 
-    <mat-tab label="Download">
-        <br>
-        <app-cmd-download [computerId]="computerId" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"></app-cmd-download>
+        <mat-tab label="Download">
+            <br>
+            <app-cmd-download [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"></app-cmd-download>
+        </mat-tab>
 
-    </mat-tab>
+        <mat-tab label="Browse">
+            <br>
+            <app-cmd-browse [computerId]="computerId" class="matbig" fxLayout="column" fxLayoutGap="15px"></app-cmd-browse>
+        </mat-tab>
 
-    <mat-tab label="Browse">
-        <br>
-        <app-cmd-browse [computerId]="computerId" fxLayout="column" fxLayoutGap="15px"></app-cmd-browse>
-    </mat-tab>
+        <mat-tab label="Other">
+            <br>
+            <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button> &nbsp; Exit current client/downstreamclient
+            </mat-container>
+            <br>
+        </mat-tab>
 
-    <mat-tab label="Other">
-        <br>
-        <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-            <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button> &nbsp; Exit current client/downstreamclient
-        </mat-container>
-
-        <br>
-    </mat-tab>
-
-    <!--
-    <mat-tab label="Test">
-        <button mat-raised-button (click)="sendPacketTest()">TestPacket</button>
-        <br><br>
-    </mat-tab>
-    -->
-</mat-tab-group>
+        <!--
+        <mat-tab label="Test">
+            <button mat-raised-button (click)="sendPacketTest()">TestPacket</button>
+            <br><br>
+        </mat-tab>
+        -->
+    </mat-tab-group>
  
 </mat-card>
 
