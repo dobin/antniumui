@@ -7,27 +7,27 @@
 
         <mat-tab label="Shell">
             <br>
-            <app-cmd-shell [computerId]="computerId" class="matbig" fxLayout="column"  fxLayoutGap="15px"></app-cmd-shell>
+            <app-cmd-shell [computerId]="computerId" class="matbig" fxLayout="column"  fxLayoutGap="1em"></app-cmd-shell>
         </mat-tab>
         
         <mat-tab label="Upload">
             <br>
-            <app-cmd-upload [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"></app-cmd-upload>
+            <app-cmd-upload [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-upload>
         </mat-tab>
 
         <mat-tab label="Download">
             <br>
-            <app-cmd-download [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px"></app-cmd-download>
+            <app-cmd-download [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-download>
         </mat-tab>
 
         <mat-tab label="Browse">
             <br>
-            <app-cmd-browse [computerId]="computerId" class="matbig" fxLayout="column" fxLayoutGap="15px"></app-cmd-browse>
+            <app-cmd-browse [computerId]="computerId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-browse>
         </mat-tab>
 
         <mat-tab label="Other">
             <br>
-            <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
                 <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button> &nbsp; Exit current client/downstreamclient
             </mat-container>
             <br>
