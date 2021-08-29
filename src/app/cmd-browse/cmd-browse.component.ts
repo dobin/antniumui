@@ -1,8 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog } from "@angular/material/dialog";
 import { PacketInfo, Packet, Campaign, DirEntry } from '../app.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-cmd-browse',
@@ -17,6 +21,15 @@ export class CmdBrowseComponent implements OnInit {
 
   // UI
   browse: string = "./"
+
+  dataSource: MatTableDataSource<DirEntry> = new MatTableDataSource<DirEntry>();
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  displayedColumns: String[] = [
+    'actions', 'name',  'size', 'modified', 'isDir', ];
+  pageSizeOptions: Number[] = [3, 5, 10];
+
 
   constructor(
     private apiService: ApiService,
@@ -38,6 +51,18 @@ export class CmdBrowseComponent implements OnInit {
     });
   }
 
+  handleSelect(dirEntry: DirEntry): void {
+    if (! dirEntry.isDir) {
+      return;
+    }
+    this.sendPacketDir(this.browse + "/" + dirEntry.name)
+  }
+
+  ngAfterViewInit() {
+    // Connect the table components
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  } 
   
   updateDir() {
     var data2 = this.dataService.packetInfos;
@@ -56,18 +81,24 @@ export class CmdBrowseComponent implements OnInit {
     var json = latestPacket.response["filelist"];
     var data: DirEntry[] = JSON.parse(json); 
     this.dirContent = data;
+    this.dataSource.data = data;
+
+    this.browse = latestPacket.arguments["path"];
   }
 
 
+  send() {
+    this.sendPacketDir(this.browse);
+  }
 
-  sendPacketDir() {
+  sendPacketDir(path: string) {
     var packetId = this.apiService.getRandomInt();
     var packet: Packet = {
       computerid: this.computerId, 
       packetid: packetId,
       packetType: 'dir',
       arguments: { 
-        "path": this.browse,
+        "path": path,
       },
       response: {},
       downstreamId: this.downstreamId,
@@ -86,5 +117,11 @@ export class CmdBrowseComponent implements OnInit {
 
   }
 
-
+  // Table filter
+  applyFilter(event: any) {
+    var filterValue: string = event.target.value;
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }
