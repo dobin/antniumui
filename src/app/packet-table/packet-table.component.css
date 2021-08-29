@@ -16,3 +16,7 @@ pre {
     max-width: 50em;
 }
 
+/* Remove string "Items per page:"  */
+::ng-deep .mat-paginator-page-size-label{
+    display: none !important;
+}
