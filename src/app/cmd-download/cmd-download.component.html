@@ -1,6 +1,6 @@
 <button mat-raised-button (click)="sendPacketDownload()">Download</button>
 
-<mat-form-field fxFlex>
+<mat-form-field fxFlex appearance="outline">
     <mat-label>Static File</mat-label>
 
     <mat-select [(ngModel)]="downloadDestinationSelection" name="file">
@@ -10,7 +10,7 @@
       </mat-select>
 </mat-form-field>
 &RightArrow; &nbsp; &nbsp;
-<mat-form-field fxFlex="65">
+<mat-form-field fxFlex="65" appearance="outline">
     <mat-label>Client file path</mat-label>
     <input matInput type="text" [(ngModel)]="downloadDestination">
 </mat-form-field>

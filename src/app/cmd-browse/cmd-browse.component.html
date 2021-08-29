@@ -14,7 +14,7 @@
 
 
 <md-input-container fxFlex="100" class="full-width" >
-    <table fxFlex mat-table [dataSource]="dataSource" matSort>
+    <table fxFlex mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0" matSort>
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
