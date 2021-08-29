@@ -3,8 +3,8 @@
 <mat-card>
     <ul>
         <li>ComputerID: {{clientInfo.ComputerId }}</li>
-        <li>FirstSeen: {{clientInfo.FirstSeen | date:'short'}}</li>
-        <li>LastSeen: {{clientInfo.LastSeen | date:'short'}}</li>
+        <li>FirstSeen: {{clientInfo.FirstSeen | date:'HH:mm:ss dd.LL.YYYY' }}</li>
+        <li>LastSeen: {{clientInfo.LastSeen | date:'HH:mm:ss dd.LL.YYYY' }}</li>
         <li>LastIp: {{clientInfo.LastIp}}</li>
         <li>Hostname: {{clientInfo.Hostname}}</li>
         <li>Arch: {{clientInfo.Arch}}</li>

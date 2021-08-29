@@ -1,10 +1,12 @@
-<div class="bounds">
-	<div class="content" fxLayout="row" fxLayoutGap="20px" >
-		<div fxFlex="75" class="sec1">
-            <app-packetinfo-list></app-packetinfo-list>
-		</div>
-		<div fxFlex="25" class="sec2">
-            <app-client-list [short]="true"></app-client-list>
-		</div>
+<div class="content" fxLayout="row">
+	<div fxFlex="70">
+		<mat-card>
+			<app-packetinfo-list></app-packetinfo-list>
+		</mat-card>
+	</div>
+	<div fxFlex="30">
+		<mat-card>
+			<app-client-list [short]="true"></app-client-list>
+		</mat-card>
 	</div>
 </div>

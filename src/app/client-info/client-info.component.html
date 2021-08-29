@@ -1,5 +1,5 @@
 <mat-card>
-    <h3>Client:</h3>
+    <mat-card-title>Client</mat-card-title>
     <ul>
         <li>{{client.ComputerId }}</li>
         <li>{{client.LastIp}}</li>
@@ -9,7 +9,7 @@
 </mat-card>
 
 <mat-card *ngIf="downstreamList.length > 1">
-    <h3>Downstreams:</h3>
+    <mat-card-title>Downstreams</mat-card-title>
     <table style="width: 100%" mat-table [dataSource]="downstreamList" class="demo-table">
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -32,7 +32,7 @@
 </mat-card>
 
 <mat-card>
-    <h3>Static Files:</h3>
+    <mat-card-title>Static files</mat-card-title>
     <div *ngFor="let dirEntry of staticList">
         <button mat-icon-button (click)="downloadStatic(dirEntry.name)">
             <mat-icon>file_download</mat-icon>
@@ -42,7 +42,7 @@
 </mat-card>
 
 <mat-card *ngIf="uploadList.length > 0">
-    <h3>Uploaded Files:</h3>
+    <mat-card-title>Uploaded files</mat-card-title>
     <div *ngFor="let dirEntry of uploadList">
         <button mat-icon-button (click)="downloadUpload(dirEntry.name)">
             <mat-icon>file_download</mat-icon>
