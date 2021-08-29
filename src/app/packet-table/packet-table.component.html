@@ -95,8 +95,12 @@
                     {{element.Packet.response["error"]}}
                     <pre>{{element.Packet.response["stdout"]}}</pre>
                     <pre>{{element.Packet.response["stderr"]}}</pre>
-                    Pid: {{element.Packet.response["pid"]}} / ExitCode: {{element.Packet.response["exitCode"]}}
-                    
+                    <span *ngIf="element.Packet.response['pid'] != undefined">
+                        Pid: {{element.Packet.response["pid"]}} 
+                    </span>
+                    <span *ngIf="element.Packet.response['exitCode'] != undefined">
+                        ExitCode: {{element.Packet.response["exitCode"]}}
+                    </span>
                 </div>
             
                 <div *ngSwitchCase="'fileupload'">
