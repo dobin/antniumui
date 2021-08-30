@@ -4,6 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
 
+interface ShellDesc {
+  name: string
+  executable: string
+  args: string[]
+}
+
 @Component({
   selector: 'app-cmd-shell',
   templateUrl: './cmd-shell.component.html',
@@ -17,6 +23,26 @@ export class CmdShellComponent implements OnInit {
 
   // UI
   commandlineInteractive: string = "hostname"
+  shellDescriptions: ShellDesc[] = [
+    {
+      name: "cmd.exe",
+      executable: "cmd.exe",
+      args: [ '/a' ],
+    },
+
+    {
+      name: "powershell",
+      executable: "powershell.exe",
+      args: [ '-ExecutionPolicy Bypass' ],
+    },
+
+    {
+      name: "bash",
+      executable: "/bin/bash",
+      args: [ ],
+    },
+  ]
+  selectedShell = this.shellDescriptions[0];
 
   constructor(
     private apiService: ApiService,
@@ -69,10 +95,13 @@ export class CmdShellComponent implements OnInit {
       computerid: this.computerId, 
       packetid: this.apiService.getRandomInt(),
       packetType: 'iOpen',
-      arguments: { },
+      arguments: { 
+        'executable': this.selectedShell.executable,
+      },
       response: {},
       downstreamId: this.downstreamId,
     }
+    this.dataService.AddArrToArgs(packet, this.selectedShell.args);
     if (force) {
       packet.arguments['force'] = "force";
     }

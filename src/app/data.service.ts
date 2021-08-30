@@ -229,5 +229,9 @@ export class DataService {
 		return moment.duration(diff).humanize();
 	}
 
-
+  public AddArrToArgs(packet: Packet, arr: string[]) {
+    for(var n=0; n<arr.length; n++) {
+      packet.response["param" + n] = arr[n]
+    }
+  }
 }

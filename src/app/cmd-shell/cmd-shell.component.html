@@ -14,19 +14,29 @@
 </md-input-container>
 
 <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-        <mat-form-field fxFlex="74" fxFill>
-            <mat-label>commandline</mat-label>
-            <input matInput type="text" (keyup.enter)="sendPacketInteractiveCmdIssue()" [(ngModel)]="commandlineInteractive">
+    <mat-form-field fxFlex="74" fxFill>
+        <mat-label>commandline</mat-label>
+        <input matInput type="text" (keyup.enter)="sendPacketInteractiveCmdIssue()" [(ngModel)]="commandlineInteractive">
+    </mat-form-field>
+
+    <md-input-container fxFlex fxLayout="row"  fxLayoutAlign="start center" fxLayoutGap="1em"> 
+        
+        <mat-form-field fxFlex appearance="outline">
+            <mat-select [(ngModel)]="selectedShell" name="selectedShell">
+                <mat-option *ngFor="let shellDesc of shellDescriptions" [value]="shellDesc">
+                {{shellDesc.name}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
 
-        <md-input-container fxFlex> 
-            <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(false)">Open</button>
-            &nbsp;
-            <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">ReOpen</button>
-            &nbsp;
-            <button mat-raised-button (click)="sendPacketCmdClose()">Kill</button>
-    </md-input-container>
+        <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">Start</button>
+        &nbsp;
+        <!-- <button mat-raised-button (click)="sendPacketInteractiveCmdOpen(true)">ReOpen</button> 
+        &nbsp;-->
+        <button mat-raised-button (click)="sendPacketCmdClose()">Kill</button>
 
+
+    </md-input-container>
 </mat-container>
 
 <br>
