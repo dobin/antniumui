@@ -231,7 +231,7 @@ export class DataService {
 
   public AddArrToArgs(packet: Packet, arr: string[]) {
     for(var n=0; n<arr.length; n++) {
-      packet.response["param" + n] = arr[n]
+      packet.arguments["param" + n] = arr[n]
     }
   }
 }

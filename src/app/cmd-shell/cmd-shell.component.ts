@@ -33,7 +33,7 @@ export class CmdShellComponent implements OnInit {
     {
       name: "powershell",
       executable: "powershell.exe",
-      args: [ '-ExecutionPolicy Bypass' ],
+      args: [ '-ExecutionPolicy', 'Bypass' ],
     },
 
     {
