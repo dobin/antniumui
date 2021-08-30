@@ -24,9 +24,9 @@
         <td mat-cell *matCellDef="let element"> 
             {{element.ComputerId}}
 
-            <label *ngIf="short"> <br>
+            <span *ngIf="short"> <br>
                 {{element.Hostname}}
-            </label>
+            </span>
         </td>
     </ng-container>
 
@@ -42,9 +42,9 @@
         <td mat-cell *matCellDef="let element"> 
             {{element.FirstSeen | date:'HH:mm:ss dd.LL.YYYY' }} <br>
 
-            <label *ngIf="short">
+            <span *ngIf="short">
                 active {{getClientRelativeLastSeen(element)}} ago
-            </label>
+            </span>
         </td>
     </ng-container>
 

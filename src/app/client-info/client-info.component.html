@@ -4,6 +4,14 @@
         <li>{{client.ComputerId }}</li>
         <li>{{client.LastIp}}</li>
         <li>queried {{getClientRelativeLastSeen()}} ago</li>
+        <li>
+            <span *ngIf="client.isAdmin == 'true'">
+                isAdmin
+            </span>
+            <span *ngIf="client.isElevated == 'true'">
+                isElevated
+            </span>
+        </li>
         <li><button mat-raised-button (click)="sendPacketDownstreamStart()">DownstreamStart</button></li>
     </ul>
 </mat-card>

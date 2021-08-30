@@ -27,7 +27,8 @@ export interface ClientInfo {
   LocalIps: string[]
   Arch: string
   Processes: string[]
-  insecureTls: boolean
+  isElevated: string
+  isAdmin: string
 }
 
 export interface Campaign {
