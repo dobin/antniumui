@@ -11,6 +11,9 @@
             <span *ngIf="client.isElevated == 'true'">
                 isElevated
             </span>
+            <span *ngIf="client.isElevated != 'true' && client.isAdmin != 'true' ">
+                Non-admin
+            </span>
         </li>
     </ul>
 </mat-card>

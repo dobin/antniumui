@@ -1,7 +1,7 @@
 /**
 * Generated theme by Material Theme Generator
 * https://materialtheme.arcsine.dev
-* Fork at: https://materialtheme.arcsine.dev/?c=YHBhbGV0dGU$YHByaW1hcnk$YF48IzAwNGQ0MCIsIj9lcjwjMzk3OTZiIiwiO2VyPCMwMDI1MWF$LCIlPmBePCM0NTVhNjQiLCI~ZXI8IzcxODc5MiIsIjtlcjwjMWMzMTNhfiwid2Fybj5gXjwjZmYwMDAwIiwiP2VyPCNmZmIzYjMiLCI7ZXI8I2ZmMDAwMH4sIj9UZXh0PCMwMDAwMDAiLCI~PTwjZmFmYWZhIiwiO1RleHQ8I2ZmZmZmZiIsIjs9PCMyYzJjMmN$LCJmb250cz5bYEA8KC00fixgQDwoLTN$LGBAPCgtMn4sYEA8KC0xfixgQDxoZWFkbGluZX4sYEA8dGl0bGV$LGBAPHN1YiktMn4sYEA8c3ViKS0xfixgQDxib2R5LTJ$LGBAPGJvZHktMX4sYEA8YnV0dG9ufixgQDxjYXB0aW9ufixgQDxpbnB1dCIsInNpemU$bnVsbH1dLCJpY29uczxPdXRsaW5lZCIsIj9uZXNzPnRydWUsInZlcnNpb24$MTF9
+* Fork at: https://materialtheme.arcsine.dev/?c=YHBhbGV0dGU$YHByaW1hcnk$YF48IzAwNGQ0MCIsIj9lcjwjMzk3OTZiIiwiO2VyPCMwMDI1MWF$LCIlPmBePCNjZGRjMzkiLCI~ZXI8I2ZmZmY2ZSIsIjtlcjwjOTlhYTAwfiwid2Fybj5gXjwjZmYwMDAwIiwiP2VyPCNmZmIzYjMiLCI7ZXI8I2ZmMDAwMH4sIj9UZXh0PCMwMDAwMDAiLCI~PTwjZmFmYWZhIiwiO1RleHQ8I2ZmZmZmZiIsIjs9PCMyYzJjMmN$LCJmb250cz5bYEA8KC00fixgQDwoLTN$LGBAPCgtMn4sYEA8KC0xfixgQDxoZWFkbGluZX4sYEA8dGl0bGV$LGBAPHN1YiktMn4sYEA8c3ViKS0xfixgQDxib2R5LTJ$LGBAPGJvZHktMX4sYEA8YnV0dG9ufixgQDxjYXB0aW9ufixgQDxpbnB1dCIsInNpemU$bnVsbH1dLCJpY29uczxPdXRsaW5lZCIsIj9uZXNzPnRydWUsInZlcnNpb24$MTF9
 */
 @import 'https://fonts.googleapis.com/css?family=Material+Icons+Outlined';
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
@@ -550,12 +550,12 @@ body {
   --text-primary-darker-color: #ffffff; }
 
 body {
-  --accent-color: #455a64;
-  --accent-lighter-color: #718792;
-  --accent-darker-color: #1c313a;
-  --text-accent-color: #ffffff;
+  --accent-color: #cddc39;
+  --accent-lighter-color: #ffff6e;
+  --accent-darker-color: #99aa00;
+  --text-accent-color: rgba(0, 0, 0, 0.87);
   --text-accent-lighter-color: rgba(0, 0, 0, 0.87);
-  --text-accent-darker-color: #ffffff; }
+  --text-accent-darker-color: rgba(0, 0, 0, 0.87); }
 
 body {
   --warn-color: #ff0000;
@@ -584,7 +584,7 @@ body {
   color: #004d40; }
 
 .mat-accent .mat-option.mat-selected:not(.mat-option-disabled) {
-  color: #455a64; }
+  color: #cddc39; }
 
 .mat-warn .mat-option.mat-selected:not(.mat-option-disabled) {
   color: red; }
@@ -611,7 +611,7 @@ body {
 .mat-pseudo-checkbox-indeterminate,
 .mat-accent .mat-pseudo-checkbox-checked,
 .mat-accent .mat-pseudo-checkbox-indeterminate {
-  background: #455a64; }
+  background: #cddc39; }
 
 .mat-warn .mat-pseudo-checkbox-checked,
 .mat-warn .mat-pseudo-checkbox-indeterminate {
@@ -721,8 +721,8 @@ body {
     border-radius: 0; }
 
 .mat-badge-accent .mat-badge-content {
-  background: #455a64;
-  color: white; }
+  background: #cddc39;
+  color: rgba(0, 0, 0, 0.87); }
 
 .mat-badge-warn .mat-badge-content {
   color: white;
@@ -885,7 +885,7 @@ body {
   .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
     color: #004d40; }
   .mat-button.mat-accent, .mat-icon-button.mat-accent, .mat-stroked-button.mat-accent {
-    color: #455a64; }
+    color: #cddc39; }
   .mat-button.mat-warn, .mat-icon-button.mat-warn, .mat-stroked-button.mat-warn {
     color: red; }
   .mat-button.mat-primary.mat-button-disabled, .mat-button.mat-accent.mat-button-disabled, .mat-button.mat-warn.mat-button-disabled, .mat-button.mat-button-disabled.mat-button-disabled, .mat-icon-button.mat-primary.mat-button-disabled, .mat-icon-button.mat-accent.mat-button-disabled, .mat-icon-button.mat-warn.mat-button-disabled, .mat-icon-button.mat-button-disabled.mat-button-disabled, .mat-stroked-button.mat-primary.mat-button-disabled, .mat-stroked-button.mat-accent.mat-button-disabled, .mat-stroked-button.mat-warn.mat-button-disabled, .mat-stroked-button.mat-button-disabled.mat-button-disabled {
@@ -893,7 +893,7 @@ body {
   .mat-button.mat-primary .mat-button-focus-overlay, .mat-icon-button.mat-primary .mat-button-focus-overlay, .mat-stroked-button.mat-primary .mat-button-focus-overlay {
     background-color: #004d40; }
   .mat-button.mat-accent .mat-button-focus-overlay, .mat-icon-button.mat-accent .mat-button-focus-overlay, .mat-stroked-button.mat-accent .mat-button-focus-overlay {
-    background-color: #455a64; }
+    background-color: #cddc39; }
   .mat-button.mat-warn .mat-button-focus-overlay, .mat-icon-button.mat-warn .mat-button-focus-overlay, .mat-stroked-button.mat-warn .mat-button-focus-overlay {
     background-color: red; }
   .mat-button.mat-button-disabled .mat-button-focus-overlay, .mat-icon-button.mat-button-disabled .mat-button-focus-overlay, .mat-stroked-button.mat-button-disabled .mat-button-focus-overlay {
@@ -914,7 +914,7 @@ body {
   .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
     color: white; }
   .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
-    color: white; }
+    color: rgba(0, 0, 0, 0.87); }
   .mat-flat-button.mat-warn, .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn {
     color: white; }
   .mat-flat-button.mat-primary.mat-button-disabled, .mat-flat-button.mat-accent.mat-button-disabled, .mat-flat-button.mat-warn.mat-button-disabled, .mat-flat-button.mat-button-disabled.mat-button-disabled, .mat-raised-button.mat-primary.mat-button-disabled, .mat-raised-button.mat-accent.mat-button-disabled, .mat-raised-button.mat-warn.mat-button-disabled, .mat-raised-button.mat-button-disabled.mat-button-disabled, .mat-fab.mat-primary.mat-button-disabled, .mat-fab.mat-accent.mat-button-disabled, .mat-fab.mat-warn.mat-button-disabled, .mat-fab.mat-button-disabled.mat-button-disabled, .mat-mini-fab.mat-primary.mat-button-disabled, .mat-mini-fab.mat-accent.mat-button-disabled, .mat-mini-fab.mat-warn.mat-button-disabled, .mat-mini-fab.mat-button-disabled.mat-button-disabled {
@@ -922,7 +922,7 @@ body {
   .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
     background-color: #004d40; }
   .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
-    background-color: #455a64; }
+    background-color: #cddc39; }
   .mat-flat-button.mat-warn, .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn {
     background-color: red; }
   .mat-flat-button.mat-primary.mat-button-disabled, .mat-flat-button.mat-accent.mat-button-disabled, .mat-flat-button.mat-warn.mat-button-disabled, .mat-flat-button.mat-button-disabled.mat-button-disabled, .mat-raised-button.mat-primary.mat-button-disabled, .mat-raised-button.mat-accent.mat-button-disabled, .mat-raised-button.mat-warn.mat-button-disabled, .mat-raised-button.mat-button-disabled.mat-button-disabled, .mat-fab.mat-primary.mat-button-disabled, .mat-fab.mat-accent.mat-button-disabled, .mat-fab.mat-warn.mat-button-disabled, .mat-fab.mat-button-disabled.mat-button-disabled, .mat-mini-fab.mat-primary.mat-button-disabled, .mat-mini-fab.mat-accent.mat-button-disabled, .mat-mini-fab.mat-warn.mat-button-disabled, .mat-mini-fab.mat-button-disabled.mat-button-disabled {
@@ -930,7 +930,7 @@ body {
   .mat-flat-button.mat-primary .mat-ripple-element, .mat-raised-button.mat-primary .mat-ripple-element, .mat-fab.mat-primary .mat-ripple-element, .mat-mini-fab.mat-primary .mat-ripple-element {
     background-color: rgba(255, 255, 255, 0.1); }
   .mat-flat-button.mat-accent .mat-ripple-element, .mat-raised-button.mat-accent .mat-ripple-element, .mat-fab.mat-accent .mat-ripple-element, .mat-mini-fab.mat-accent .mat-ripple-element {
-    background-color: rgba(255, 255, 255, 0.1); }
+    background-color: rgba(0, 0, 0, 0.1); }
   .mat-flat-button.mat-warn .mat-ripple-element, .mat-raised-button.mat-warn .mat-ripple-element, .mat-fab.mat-warn .mat-ripple-element, .mat-mini-fab.mat-warn .mat-ripple-element {
     background-color: rgba(255, 255, 255, 0.1); }
 
@@ -1034,7 +1034,7 @@ body {
   background-color: #004d40; }
 
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-checkbox-indeterminate.mat-warn .mat-checkbox-background, .mat-checkbox-checked.mat-warn .mat-checkbox-background {
   background-color: red; }
@@ -1057,7 +1057,7 @@ body {
 
 .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
 .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
-  background: #455a64; }
+  background: #cddc39; }
 
 .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-warn .mat-ripple-element,
 .mat-checkbox:active:not(.mat-checkbox-disabled).mat-warn .mat-ripple-element {
@@ -1097,13 +1097,13 @@ body {
     background-color: rgba(255, 255, 255, 0.1); }
 
 .mat-chip.mat-standard-chip.mat-chip-selected.mat-accent {
-  background-color: #455a64;
-  color: white; }
+  background-color: #cddc39;
+  color: rgba(0, 0, 0, 0.87); }
   .mat-chip.mat-standard-chip.mat-chip-selected.mat-accent .mat-chip-remove {
-    color: white;
+    color: rgba(0, 0, 0, 0.87);
     opacity: 0.4; }
   .mat-chip.mat-standard-chip.mat-chip-selected.mat-accent .mat-ripple-element {
-    background-color: rgba(255, 255, 255, 0.1); }
+    background-color: rgba(0, 0, 0, 0.1); }
 
 .mat-table {
   background: white; }
@@ -1204,16 +1204,16 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background-color: white;
   color: rgba(0, 0, 0, 0.87); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-in-range::before {
-    background: rgba(69, 90, 100, 0.2); }
+    background: rgba(205, 220, 57, 0.2); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-comparison-identical,
 .mat-datepicker-content.mat-accent .mat-calendar-body-in-comparison-range::before {
     background: rgba(249, 171, 0, 0.2); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-comparison-bridge-start::before,
 .mat-datepicker-content.mat-accent [dir='rtl'] .mat-calendar-body-comparison-bridge-end::before {
-    background: linear-gradient(to right, rgba(69, 90, 100, 0.2) 50%, rgba(249, 171, 0, 0.2) 50%); }
+    background: linear-gradient(to right, rgba(205, 220, 57, 0.2) 50%, rgba(249, 171, 0, 0.2) 50%); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-comparison-bridge-end::before,
 .mat-datepicker-content.mat-accent [dir='rtl'] .mat-calendar-body-comparison-bridge-start::before {
-    background: linear-gradient(to left, rgba(69, 90, 100, 0.2) 50%, rgba(249, 171, 0, 0.2) 50%); }
+    background: linear-gradient(to left, rgba(205, 220, 57, 0.2) 50%, rgba(249, 171, 0, 0.2) 50%); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-in-range > .mat-calendar-body-comparison-identical,
 .mat-datepicker-content.mat-accent .mat-calendar-body-in-comparison-range.mat-calendar-body-in-range::after {
     background: #a8dab5; }
@@ -1221,16 +1221,16 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 .mat-datepicker-content.mat-accent .mat-calendar-body-in-comparison-range > .mat-calendar-body-selected {
     background: #46a35e; }
   .mat-datepicker-content.mat-accent .mat-calendar-body-selected {
-    background-color: #455a64;
-    color: white; }
+    background-color: #cddc39;
+    color: rgba(0, 0, 0, 0.87); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-disabled > .mat-calendar-body-selected {
-    background-color: rgba(69, 90, 100, 0.4); }
+    background-color: rgba(205, 220, 57, 0.4); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-today.mat-calendar-body-selected {
-    box-shadow: inset 0 0 0 1px white; }
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.87); }
   .mat-datepicker-content.mat-accent .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
 .mat-datepicker-content.mat-accent .cdk-keyboard-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
 .mat-datepicker-content.mat-accent .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
-    background-color: rgba(69, 90, 100, 0.3); }
+    background-color: rgba(205, 220, 57, 0.3); }
   .mat-datepicker-content.mat-warn .mat-calendar-body-in-range::before {
     background: rgba(255, 0, 0, 0.2); }
   .mat-datepicker-content.mat-warn .mat-calendar-body-comparison-identical,
@@ -1266,7 +1266,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 .mat-datepicker-toggle-active {
   color: #004d40; }
   .mat-datepicker-toggle-active.mat-accent {
-    color: #455a64; }
+    color: #cddc39; }
   .mat-datepicker-toggle-active.mat-warn {
     color: red; }
 
@@ -1328,12 +1328,12 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 .mat-form-field.mat-focused .mat-form-field-label {
   color: #004d40; }
   .mat-form-field.mat-focused .mat-form-field-label.mat-accent {
-    color: #455a64; }
+    color: #cddc39; }
   .mat-form-field.mat-focused .mat-form-field-label.mat-warn {
     color: red; }
 
 .mat-focused .mat-form-field-required-marker {
-  color: #455a64; }
+  color: #cddc39; }
 
 .mat-form-field-ripple {
   background-color: rgba(0, 0, 0, 0.87); }
@@ -1341,7 +1341,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 .mat-form-field.mat-focused .mat-form-field-ripple {
   background-color: #004d40; }
   .mat-form-field.mat-focused .mat-form-field-ripple.mat-accent {
-    background-color: #455a64; }
+    background-color: #cddc39; }
   .mat-form-field.mat-focused .mat-form-field-ripple.mat-warn {
     background-color: red; }
 
@@ -1349,7 +1349,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: #004d40; }
 
 .mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-accent .mat-form-field-infix::after {
-  color: #455a64; }
+  color: #cddc39; }
 
 .mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-warn .mat-form-field-infix::after {
   color: red; }
@@ -1414,7 +1414,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: #004d40; }
 
 .mat-form-field-appearance-outline.mat-focused.mat-accent .mat-form-field-outline-thick {
-  color: #455a64; }
+  color: #cddc39; }
 
 .mat-form-field-appearance-outline.mat-focused.mat-warn .mat-form-field-outline-thick {
   color: red; }
@@ -1432,7 +1432,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: #004d40; }
 
 .mat-icon.mat-accent {
-  color: #455a64; }
+  color: #cddc39; }
 
 .mat-icon.mat-warn {
   color: red; }
@@ -1456,7 +1456,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
     color: rgba(0, 0, 0, 0.42); }
 
 .mat-form-field.mat-accent .mat-input-element {
-  caret-color: #455a64; }
+  caret-color: #cddc39; }
 
 .mat-form-field.mat-warn .mat-input-element,
 .mat-form-field-invalid .mat-input-element {
@@ -1544,13 +1544,13 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background-color: #004d40; }
 
 .mat-progress-bar.mat-accent .mat-progress-bar-background {
-  fill: #718792; }
+  fill: #ffff6e; }
 
 .mat-progress-bar.mat-accent .mat-progress-bar-buffer {
-  background-color: #718792; }
+  background-color: #ffff6e; }
 
 .mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-progress-bar.mat-warn .mat-progress-bar-background {
   fill: #ffb3b3; }
@@ -1565,7 +1565,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   stroke: #004d40; }
 
 .mat-progress-spinner.mat-accent circle, .mat-spinner.mat-accent circle {
-  stroke: #455a64; }
+  stroke: #cddc39; }
 
 .mat-progress-spinner.mat-warn circle, .mat-spinner.mat-warn circle {
   stroke: red; }
@@ -1581,11 +1581,11 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background-color: #004d40; }
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #455a64; }
+  border-color: #cddc39; }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle,
 .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-radio-button.mat-warn.mat-radio-checked .mat-radio-outer-circle {
   border-color: red; }
@@ -1631,7 +1631,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: #004d40; }
 
 .mat-form-field.mat-focused.mat-accent .mat-select-arrow {
-  color: #455a64; }
+  color: #cddc39; }
 
 .mat-form-field.mat-focused.mat-warn .mat-select-arrow {
   color: red; }
@@ -1671,13 +1671,13 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   background-color: rgba(0, 0, 0, 0.6); }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: rgba(69, 90, 100, 0.54); }
+  background-color: rgba(205, 220, 57, 0.54); }
 
 .mat-slide-toggle.mat-checked .mat-ripple-element {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb {
   background-color: #004d40; }
@@ -1724,13 +1724,13 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 .mat-accent .mat-slider-track-fill,
 .mat-accent .mat-slider-thumb,
 .mat-accent .mat-slider-thumb-label {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-accent .mat-slider-thumb-label-text {
-  color: white; }
+  color: rgba(0, 0, 0, 0.87); }
 
 .mat-accent .mat-slider-focus-ring {
-  background-color: rgba(69, 90, 100, 0.2); }
+  background-color: rgba(205, 220, 57, 0.2); }
 
 .mat-warn .mat-slider-track-fill,
 .mat-warn .mat-slider-thumb,
@@ -1808,13 +1808,13 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   color: white; }
 
 .mat-step-header.mat-accent .mat-step-icon {
-  color: white; }
+  color: rgba(0, 0, 0, 0.87); }
 
 .mat-step-header.mat-accent .mat-step-icon-selected,
 .mat-step-header.mat-accent .mat-step-icon-state-done,
 .mat-step-header.mat-accent .mat-step-icon-state-edit {
-  background-color: #455a64;
-  color: white; }
+  background-color: #cddc39;
+  color: rgba(0, 0, 0, 0.87); }
 
 .mat-step-header.mat-warn .mat-step-icon {
   color: white; }
@@ -1909,13 +1909,13 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 .mat-tab-group.mat-accent .mat-tab-link.cdk-program-focused:not(.mat-tab-disabled), .mat-tab-nav-bar.mat-accent .mat-tab-label.cdk-keyboard-focused:not(.mat-tab-disabled), .mat-tab-nav-bar.mat-accent .mat-tab-label.cdk-program-focused:not(.mat-tab-disabled),
 .mat-tab-nav-bar.mat-accent .mat-tab-link.cdk-keyboard-focused:not(.mat-tab-disabled),
 .mat-tab-nav-bar.mat-accent .mat-tab-link.cdk-program-focused:not(.mat-tab-disabled) {
-  background-color: rgba(113, 135, 146, 0.3); }
+  background-color: rgba(255, 255, 110, 0.3); }
 
 .mat-tab-group.mat-accent .mat-ink-bar, .mat-tab-nav-bar.mat-accent .mat-ink-bar {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-tab-group.mat-accent.mat-background-accent > .mat-tab-header .mat-ink-bar, .mat-tab-group.mat-accent.mat-background-accent > .mat-tab-link-container .mat-ink-bar, .mat-tab-nav-bar.mat-accent.mat-background-accent > .mat-tab-header .mat-ink-bar, .mat-tab-nav-bar.mat-accent.mat-background-accent > .mat-tab-link-container .mat-ink-bar {
-  background-color: white; }
+  background-color: rgba(0, 0, 0, 0.87); }
 
 .mat-tab-group.mat-warn .mat-tab-label.cdk-keyboard-focused:not(.mat-tab-disabled), .mat-tab-group.mat-warn .mat-tab-label.cdk-program-focused:not(.mat-tab-disabled),
 .mat-tab-group.mat-warn .mat-tab-link.cdk-keyboard-focused:not(.mat-tab-disabled),
@@ -1965,30 +1965,30 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 .mat-tab-group.mat-background-accent .mat-tab-link.cdk-program-focused:not(.mat-tab-disabled), .mat-tab-nav-bar.mat-background-accent .mat-tab-label.cdk-keyboard-focused:not(.mat-tab-disabled), .mat-tab-nav-bar.mat-background-accent .mat-tab-label.cdk-program-focused:not(.mat-tab-disabled),
 .mat-tab-nav-bar.mat-background-accent .mat-tab-link.cdk-keyboard-focused:not(.mat-tab-disabled),
 .mat-tab-nav-bar.mat-background-accent .mat-tab-link.cdk-program-focused:not(.mat-tab-disabled) {
-  background-color: rgba(113, 135, 146, 0.3); }
+  background-color: rgba(255, 255, 110, 0.3); }
 
 .mat-tab-group.mat-background-accent > .mat-tab-header, .mat-tab-group.mat-background-accent > .mat-tab-link-container, .mat-tab-group.mat-background-accent > .mat-tab-header-pagination, .mat-tab-nav-bar.mat-background-accent > .mat-tab-header, .mat-tab-nav-bar.mat-background-accent > .mat-tab-link-container, .mat-tab-nav-bar.mat-background-accent > .mat-tab-header-pagination {
-  background-color: #455a64; }
+  background-color: #cddc39; }
 
 .mat-tab-group.mat-background-accent > .mat-tab-header .mat-tab-label, .mat-tab-group.mat-background-accent > .mat-tab-link-container .mat-tab-link, .mat-tab-nav-bar.mat-background-accent > .mat-tab-header .mat-tab-label, .mat-tab-nav-bar.mat-background-accent > .mat-tab-link-container .mat-tab-link {
-  color: white; }
+  color: rgba(0, 0, 0, 0.87); }
   .mat-tab-group.mat-background-accent > .mat-tab-header .mat-tab-label.mat-tab-disabled, .mat-tab-group.mat-background-accent > .mat-tab-link-container .mat-tab-link.mat-tab-disabled, .mat-tab-nav-bar.mat-background-accent > .mat-tab-header .mat-tab-label.mat-tab-disabled, .mat-tab-nav-bar.mat-background-accent > .mat-tab-link-container .mat-tab-link.mat-tab-disabled {
-    color: rgba(255, 255, 255, 0.4); }
+    color: rgba(0, 0, 0, 0.4); }
 
 .mat-tab-group.mat-background-accent > .mat-tab-header-pagination .mat-tab-header-pagination-chevron,
 .mat-tab-group.mat-background-accent > .mat-tab-links .mat-focus-indicator::before,
 .mat-tab-group.mat-background-accent > .mat-tab-header .mat-focus-indicator::before, .mat-tab-nav-bar.mat-background-accent > .mat-tab-header-pagination .mat-tab-header-pagination-chevron,
 .mat-tab-nav-bar.mat-background-accent > .mat-tab-links .mat-focus-indicator::before,
 .mat-tab-nav-bar.mat-background-accent > .mat-tab-header .mat-focus-indicator::before {
-  border-color: white; }
+  border-color: rgba(0, 0, 0, 0.87); }
 
 .mat-tab-group.mat-background-accent > .mat-tab-header-pagination-disabled .mat-tab-header-pagination-chevron, .mat-tab-nav-bar.mat-background-accent > .mat-tab-header-pagination-disabled .mat-tab-header-pagination-chevron {
-  border-color: rgba(255, 255, 255, 0.4); }
+  border-color: rgba(0, 0, 0, 0.4); }
 
 .mat-tab-group.mat-background-accent > .mat-tab-header .mat-ripple-element,
 .mat-tab-group.mat-background-accent > .mat-tab-link-container .mat-ripple-element, .mat-tab-nav-bar.mat-background-accent > .mat-tab-header .mat-ripple-element,
 .mat-tab-nav-bar.mat-background-accent > .mat-tab-link-container .mat-ripple-element {
-  background-color: rgba(255, 255, 255, 0.12); }
+  background-color: rgba(0, 0, 0, 0.12); }
 
 .mat-tab-group.mat-background-warn .mat-tab-label.cdk-keyboard-focused:not(.mat-tab-disabled), .mat-tab-group.mat-background-warn .mat-tab-label.cdk-program-focused:not(.mat-tab-disabled),
 .mat-tab-group.mat-background-warn .mat-tab-link.cdk-keyboard-focused:not(.mat-tab-disabled),
@@ -2027,8 +2027,8 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
     background: #004d40;
     color: white; }
   .mat-toolbar.mat-accent {
-    background: #455a64;
-    color: white; }
+    background: #cddc39;
+    color: rgba(0, 0, 0, 0.87); }
   .mat-toolbar.mat-warn {
     background: red;
     color: white; }
@@ -2076,7 +2076,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12); }
 
 .mat-simple-snackbar-action {
-  color: #455a64; }
+  color: #cddc39; }
 
 .mat-raised-button, .mat-stroked-button, .mat-flat-button {
   padding: 0 1.15em;

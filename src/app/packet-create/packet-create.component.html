@@ -1,5 +1,5 @@
 <mat-card class="lighto"  class="matsmall" >
-    <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start" color="accent" backgroundColor="primary">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start" [color]="'accent'" [backgroundColor]="'primary'">
         <mat-tab label="Execute">
             <br>
             <app-cmd-exec [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-exec>
