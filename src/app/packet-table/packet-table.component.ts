@@ -55,22 +55,7 @@ export class PacketTableComponent implements OnInit {
       this.pageSizeOptions = [6, 12, 24, 48];
     }
 
-    // FIX: JS Warning Race Condition
-    timer(0)
-    .pipe(take(1))
-    .subscribe(() => {
-      this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
-    });
-
-    this.apiService.getPacketsClient(this.computerId).subscribe(
-      (data2: PacketInfo[]) => {
-        this.dataSource.data = data2;
-      },
-      (err: HttpErrorResponse) => {
-        console.log("HTTP Error: " + err);
-      },
-    );
-
+    // Get initial data
     this.updatePacketInfos();
     // Get and update data
     this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
@@ -91,9 +76,9 @@ export class PacketTableComponent implements OnInit {
     var data2 = this.dataService.packetInfos;
 
     if (this.computerId == '') {
-      this.dataSource.data = data2;
+      this.dataSource.data = data2.reverse();
     } else {
-      var newData = data2.filter(d => d.Packet.computerid == this.computerId ||d.Packet.computerid == "0");
+      var newData = data2.filter(d => d.Packet.computerid == this.computerId ||d.Packet.computerid == "0").reverse();
       this.dataSource.data = newData;
     }
   }
