@@ -76,10 +76,21 @@ export class PacketTableComponent implements OnInit {
     var data2 = this.dataService.packetInfos;
 
     if (this.computerId == '') {
-      this.dataSource.data = data2.reverse();
+      var reversedData = Array.from(data2).reverse();
+      this.dataSource.data = reversedData;
     } else {
-      var newData = data2.filter(d => d.Packet.computerid == this.computerId ||d.Packet.computerid == "0").reverse();
-      this.dataSource.data = newData;
+      var newData = data2.filter(d => d.Packet.computerid == this.computerId ||d.Packet.computerid == "0");
+      var reversedData = newData.reverse();
+      this.dataSource.data = reversedData;
+    }
+  }
+
+  lastseenByComputerId(computerId: string) {
+    var clientInfo = this.dataService.getClientBy(computerId);
+    if (clientInfo == undefined) {
+      return "";
+    } else {
+      return clientInfo.Hostname;
     }
   }
 

@@ -30,6 +30,7 @@ export class DataService {
 
   // Loaded: Periodically
   public clients: ClientInfo[] = [];
+  public clientsDict: { [id: string]: ClientInfo } = {};
   public downstreams: { [id: string]: DownstreamInfo[] } = {};
   public uploads: DirEntry[] = [];
   public statics: DirEntry[] = [];
@@ -83,6 +84,12 @@ export class DataService {
     this.apiService.getClients().subscribe(
       (data: ClientInfo[]) => { 
           this.clients = data;
+
+          this.clientsDict = {};
+          for(var n=0; n<data.length; n++) {
+            this.clientsDict[data[n].ComputerId] = data[n];
+          }
+
           this.clientsEvent.emit(data);
         },
       (err: HttpErrorResponse) => {
@@ -177,7 +184,8 @@ export class DataService {
   }
 
   public getClientBy(computerId: string): ClientInfo {
-    return this.clients.find(c => c.ComputerId == computerId)!;
+    return this.clientsDict[computerId];
+    //return this.clients.find(c => c.ComputerId == computerId)!;
   }
 
   /** Data translation **/
