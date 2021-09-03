@@ -29,6 +29,7 @@ export class PacketCreateComponent implements OnInit {
 
   ngOnInit(): void {
     // Downstream-Selection
+    this.dataService.downstreamSelectionReset();
     this.dataService.downstreamSelection.subscribe(downstreamId => {
       this.downstreamId = downstreamId;
     });

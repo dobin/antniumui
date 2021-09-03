@@ -165,6 +165,10 @@ export class DataService {
     this.downstreamsEvent.emit("");
   }
 
+  public downstreamSelectionReset() {
+    this.downstreamSelection.next("client");
+  }
+
 
   /** Some special getters **/
 
