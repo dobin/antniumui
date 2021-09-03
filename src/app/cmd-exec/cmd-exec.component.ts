@@ -44,7 +44,7 @@ export class CmdExecComponent implements OnInit {
   sendPacketExec() {
     var params:{ [id: string]: string } = {};
     params["shelltype"] = this.selectExecType;
-    if (this.selectExecType == "cmd" || this.selectExecType == "powershell") {
+    if (this.selectExecType == "cmd" || this.selectExecType == "powershell" || this.selectExecType == "bash") {
       params["commandline"] = this.commandline;
     } else if (this.selectExecType == "raw") {
       params["executable"] = this.executable;

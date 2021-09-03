@@ -69,7 +69,10 @@
             </div>
 
             <div *ngSwitchCase="'iOpen'">
-                {{element.Packet.arguments | json}}
+                {{element.Packet.arguments["executable"]}}
+                {{element.Packet.arguments["param1"]}}
+                {{element.Packet.arguments["param2"]}}
+                {{element.Packet.arguments["param3"]}}
             </div>
 
             <div *ngSwitchCase="'iIssue'">
