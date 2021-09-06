@@ -41,8 +41,16 @@ export class CmdShellComponent implements OnInit {
       executable: "/bin/bash",
       args: [ ],
     },
-  ]
+
+    {
+      name: "zsh",
+      executable: "/bin/zsh",
+      args: [ ],
+    },
+  ];
+  
   selectedShell = this.shellDescriptions[0];
+
 
   constructor(
     private apiService: ApiService,
@@ -59,6 +67,19 @@ export class CmdShellComponent implements OnInit {
         this.updateInteractive();
       }
     })
+
+    var client = this.dataService.getClientBy(this.computerId);
+    if (client != undefined) {
+      var arch = client.Arch;
+      if (arch == "darwin") {
+        this.selectedShell = this.shellDescriptions[3];
+      } else if (arch == "linux") {
+        this.selectedShell = this.shellDescriptions[2];
+      }
+    } else {
+      console.log("Arch UNDEFINED");
+    }
+  
 
     // Downstream-Selection
     this.dataService.downstreamSelection.subscribe(downstreamId => {

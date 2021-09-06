@@ -34,6 +34,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Hostname </th>
         <td mat-cell *matCellDef="let element"> 
             {{ element.Hostname }}
+            <br>
+            OS: {{ element.Arch }}
         </td>
     </ng-container>
 

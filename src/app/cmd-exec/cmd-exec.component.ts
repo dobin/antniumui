@@ -32,7 +32,19 @@ export class CmdExecComponent implements OnInit {
       this.executable = "cmd";
       this.param1 = "/C"
       this.param2 = "whoami"
-    }    
+    }
+
+    var client = this.dataService.getClientBy(this.computerId);
+    if (client != undefined) {
+      var arch = client.Arch;
+      if (arch == "darwin") {
+        this.selectExecType = "zsh";
+      } else if (arch == "linux") {
+        this.selectExecType = "bash";
+      }
+    } else {
+      console.log("Arch UNDEFINED");
+    }
 
     // Downstream-Selection
     this.dataService.downstreamSelection.subscribe(downstreamId => {
@@ -44,7 +56,7 @@ export class CmdExecComponent implements OnInit {
   sendPacketExec() {
     var params:{ [id: string]: string } = {};
     params["shelltype"] = this.selectExecType;
-    if (this.selectExecType == "cmd" || this.selectExecType == "powershell" || this.selectExecType == "bash") {
+    if (this.selectExecType == "cmd" || this.selectExecType == "powershell" || this.selectExecType == "bash" || this.selectExecType == "zsh") {
       params["commandline"] = this.commandline;
     } else if (this.selectExecType == "raw") {
       params["executable"] = this.executable;
