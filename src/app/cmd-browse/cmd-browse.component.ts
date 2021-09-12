@@ -20,14 +20,14 @@ export class CmdBrowseComponent implements OnInit {
   dirContent: DirEntry[] = [];
 
   // UI
-  browse: string = "./"
+  browse: string = "."
 
   dataSource: MatTableDataSource<DirEntry> = new MatTableDataSource<DirEntry>();
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: String[] = [
-    'actions', 'name',  'size', 'modified', 'isDir', ];
+    'isDir', 'name',  'size', 'modified', ];
   pageSizeOptions: Number[] = [3, 5, 10];
 
 

@@ -15,10 +15,14 @@
 
 <md-input-container fxFlex="100" class="full-width" >
     <table fxFlex mat-table [dataSource]="dataSource" *ngIf="dataSource.data.length > 0" matSort>
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef></th>
+        <ng-container matColumnDef="isDir">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Dir </th>
             <td mat-cell *matCellDef="let element">
-
+                <ng-container *ngIf="element.isDir">
+                    <button mat-icon-button>
+                        <mat-icon>folder</mat-icon>
+                    </button>
+                </ng-container>
             </td>
         </ng-container>
 
@@ -43,16 +47,6 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="isDir">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Dir </th>
-            <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="element.isDir">
-                    <button mat-icon-button>
-                        <mat-icon>folder</mat-icon>
-                    </button>
-                </ng-container>
-            </td>
-        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="handleSelect(row)"></tr>
