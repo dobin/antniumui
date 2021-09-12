@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, Output, EventEmitter, Input } from '@angular/core';
-import { Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from '../app.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { Packet, ClientInfo, DownstreamInfo, DirEntry } from '../app.model';
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
 
@@ -14,8 +14,6 @@ export class ClientInfoComponent implements OnInit {
   client: ClientInfo = {} as ClientInfo// fake clientinfo so page-reload works
   downstreamList: DownstreamInfo[] = [];
   uploadList: DirEntry[] = [];
-  staticList: DirEntry[] = [];
-
 
   displayedColumns: string[] = [ 'Name', 'Info' ];
   dataSource = [];
@@ -60,7 +58,6 @@ export class ClientInfoComponent implements OnInit {
 
     // Subscribe to clientfileupdates
     this.dataService.clientFilesUpdates.subscribe(nothing => {
-      this.staticList = this.dataService.statics;
       var uploadList = this.dataService.uploads;
       this.uploadList = uploadList.filter(f => f.name.startsWith(this.computerId))
     });

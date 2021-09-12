@@ -1,4 +1,6 @@
 <mat-card>
+<h3>Uploads</h3>
+
 <table style="width: 100%" mat-table [dataSource]="dataSource"  matSort class="demo-table">
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Filename </th>
@@ -26,14 +28,16 @@
         <td mat-cell *matCellDef="let element">{{element.isDir}}</td>
       </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <ng-container  *ngIf="!short">
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    </ng-container>
     <tr
         mat-row
         *matRowDef="let row; columns: displayedColumns;"
     ></tr>
 </table>
 
-<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"  *ngIf="!short">
   &nbsp;&nbsp;&nbsp;&nbsp;
   <mat-form-field fxFlex="30" fxFlexFill>
       <input matInput type="text" (change)="applyFilter($event)" placeholder="Search">

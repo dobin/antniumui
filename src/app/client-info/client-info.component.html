@@ -41,16 +41,6 @@
     </table>
 </mat-card>
 
-<mat-card>
-    <mat-card-title>Static files</mat-card-title>
-    <div *ngFor="let dirEntry of staticList">
-        <button mat-icon-button (click)="downloadStatic(dirEntry.name)">
-            <mat-icon>file_download</mat-icon>
-        </button>
-        {{ dirEntry.name }}
-    </div>
-</mat-card>
-
 <mat-card *ngIf="uploadList.length > 0">
     <mat-card-title>Uploaded files</mat-card-title>
     <div *ngFor="let dirEntry of uploadList">

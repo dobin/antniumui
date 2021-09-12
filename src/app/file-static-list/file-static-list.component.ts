@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { DataService } from '../data.service';
 import { DirEntry } from '../app.model';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,9 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./file-static-list.component.css']
 })
 export class FileStaticListComponent implements OnInit {
-  displayedColumns: string[] = [ 'name', 'size', 'modified', 'isDir' ];
+  @Input() short = false;
+
+  displayedColumns: string[] = [];
   dataSource: MatTableDataSource<DirEntry> = new MatTableDataSource<DirEntry>();
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -23,6 +25,12 @@ export class FileStaticListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.short) {
+      this.displayedColumns = [ 'name', 'size' ];
+    } else {
+      this.displayedColumns =  [ 'name', 'size', 'modified', 'isDir' ];
+    }
+
     this.dataService.clientFilesUpdates.subscribe(nothing => {
       this.dataSource.data = this.dataService.statics;
     });
