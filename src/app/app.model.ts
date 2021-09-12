@@ -46,6 +46,13 @@ export interface Campaign {
   FileDownloadPath: string
 }
 
+export const PacketState = {
+	RECORDED: 0,
+	SENT: 1,
+	ANSWERED: 2,
+	CLIENT: 3,
+}
+
 /* Client defined, Not defined on server */
 
 export interface DownstreamInfo {

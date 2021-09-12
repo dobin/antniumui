@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
 
-import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry } from './app.model';
+import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry, PacketState } from './app.model';
 
 
 @Injectable({
@@ -149,9 +149,10 @@ export class DataService {
       // Update downstreams data structure based on response
       if (packetInfo.Packet.packetType == "downstreams") {
         this.updateDownstreams(packetInfo)
-      }
-      if (packetInfo.Packet.packetType == "clientinfo") {
+      } else if (packetInfo.Packet.packetType == "clientinfo") {
         this.downloadPeriodics() // Only need clients actually
+      } else if (packetInfo.Packet.packetType == "fileupload" && packetInfo.State == PacketState.ANSWERED) {
+        this.downloadPeriodics() // Only need files actually
       }
     }
   }
