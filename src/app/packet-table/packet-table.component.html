@@ -82,6 +82,9 @@
             <div *ngSwitchCase="'downstreams'">
             </div>
 
+            <div *ngSwitchCase="'clientinfo'">
+            </div>
+            
             <div *ngSwitchDefault>
                 {{element.Packet.arguments | json }}
             </div>
@@ -137,6 +140,9 @@
 
                 <div *ngSwitchCase="'dir'">
                     (Click Me)
+                </div>
+
+                <div *ngSwitchCase="'clientinfo'">
                 </div>
 
                 <div *ngSwitchDefault>

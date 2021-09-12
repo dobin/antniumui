@@ -150,6 +150,9 @@ export class DataService {
       if (packetInfo.Packet.packetType == "downstreams") {
         this.updateDownstreams(packetInfo)
       }
+      if (packetInfo.Packet.packetType == "clientinfo") {
+        this.downloadPeriodics() // Only need clients actually
+      }
     }
   }
 
