@@ -13,12 +13,11 @@ import { PacketCreateComponent } from '../packet-create/packet-create.component'
   styleUrls: ['./packet-create-modal.component.css']
 })
 export class PacketCreateModalComponent implements OnInit {
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) public computerId: string
+    @Inject(MAT_DIALOG_DATA) public packetInfo: PacketInfo
   ) { }
 
   ngOnInit(): void {
-   
+    
   }
 }

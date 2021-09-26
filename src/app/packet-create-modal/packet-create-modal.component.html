@@ -1,10 +1,3 @@
-<div class="bounds">
-	<div class="content" fxLayout="row" fxLayoutGap="20px" >
-		<div fxFlex="75" class="sec1">
-            <app-packet-create [computerId]="computerId"></app-packet-create>
-		</div>
-		<div fxFlex="25" class="sec2">
-			<app-client-info [computerId]="computerId"></app-client-info>
-		</div>
-	</div>
-</div>
+<pre>
+{{ packetInfo | json }}
+</pre>

@@ -70,7 +70,15 @@ export class PacketTableComponent implements OnInit {
     // Connect the table components
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  } 
+  }
+
+  showPacketModal(packetInfo: PacketInfo) {
+    const dialogRef = this.dialog.open(PacketCreateModalComponent, {
+      width: '80em',
+      height: '55em',
+      data: packetInfo,
+    });
+  }
 
   updatePacketInfos() {
     var data2 = this.dataService.packetInfos;
@@ -94,14 +102,6 @@ export class PacketTableComponent implements OnInit {
     }
   }
 
-
-  showModalPacketCreate(computerId: string) {
-    const dialogRef = this.dialog.open(PacketCreateModalComponent, {
-      width: '80em',
-      height: '55em',
-      data: computerId,
-    });
-  }
 
   openUploadFile(packet: Packet){
     var campaign = this.dataService.campaign;
