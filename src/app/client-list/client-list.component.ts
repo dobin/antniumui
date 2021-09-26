@@ -49,9 +49,8 @@ export class ClientListComponent implements OnInit {
     });
 
     // Get and update data
-    this.dataSource.data = this.dataService.clients;
-    this.dataService.clientsEvent.subscribe(data => {
-      this.dataSource.data = this.dataService.clients;
+    this.dataService.clients.subscribe(data => {
+      this.dataSource.data = data;
     })
   }
 

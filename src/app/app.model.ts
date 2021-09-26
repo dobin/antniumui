@@ -29,6 +29,7 @@ export interface ClientInfo {
   Processes: string[]
   isElevated: string
   isAdmin: string
+  WorkingDir: string
 }
 
 export interface Campaign {

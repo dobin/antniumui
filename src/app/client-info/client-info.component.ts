@@ -11,7 +11,7 @@ import { DataService } from '../data.service';
 export class ClientInfoComponent implements OnInit {
   @Input() computerId = "";
 
-  client: ClientInfo = {} as ClientInfo// fake clientinfo so page-reload works
+  client: ClientInfo = {} as ClientInfo // fake clientinfo so page-reload works
   downstreamList: DownstreamInfo[] = [];
   uploadList: DirEntry[] = [];
 
@@ -25,14 +25,11 @@ export class ClientInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // On page reload, it may not be immediately available
-    var client = this.dataService.getClientBy(this.computerId);
-    if (client != undefined) {
-      this.client = client;
-    }
-    // Also update client info (e.g. last seen)
-    this.dataService.clientsEvent.subscribe((clientInfo: ClientInfo) => {
-      this.client = this.dataService.getClientBy(this.computerId);
+    this.dataService.clients.subscribe((clientInfos: ClientInfo[]) => {
+      var client = clientInfos.find(ci => ci.ComputerId == this.computerId);
+      if (client != undefined) {
+        this.client = client;
+      }
     });
 
     this.downstreamList = this.dataService.getDownstreamListFor(this.computerId); // useless, as often empty

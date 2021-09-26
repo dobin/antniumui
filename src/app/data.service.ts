@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { ApiService } from './api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
 
@@ -16,7 +16,9 @@ export class DataService {
   public packetInfosEvent: EventEmitter<any> = new EventEmitter();
 
   // When: updated (periodically)
-  public clientsEvent: EventEmitter<any> = new EventEmitter();
+  private _clients: BehaviorSubject<ClientInfo[]> = new BehaviorSubject<ClientInfo[]>([] as ClientInfo[]);
+  public readonly clients: Observable<ClientInfo[]> = this._clients.asObservable();
+
   public downstreamsEvent: EventEmitter<any> = new EventEmitter();
   public clientFilesUpdates: BehaviorSubject<string> = new BehaviorSubject<string>("client");
 
@@ -29,7 +31,7 @@ export class DataService {
   public packetInfos: PacketInfo[] = [];
 
   // Loaded: Periodically
-  public clients: ClientInfo[] = [];
+  //public clients: ClientInfo[] = [];
   public clientsDict: { [id: string]: ClientInfo } = {};
   public downstreams: { [id: string]: DownstreamInfo[] } = {};
   public uploads: DirEntry[] = [];
@@ -41,15 +43,15 @@ export class DataService {
 
   constructor(
     private apiService: ApiService,
-  ) { 
+  ) {
     this.init()
   }
 
   // Load all initial data
   private init() {
+    this.downloadPeriodics();
     this.downloadCampaign();
     this.downloadPackets();
-    this.downloadPeriodics();
   }
 
   /** Downloads **/
@@ -82,15 +84,14 @@ export class DataService {
 
   private downloadPeriodics() {
     this.apiService.getClients().subscribe(
-      (data: ClientInfo[]) => { 
-          this.clients = data;
+      (data: ClientInfo[]) => {
+          this._clients.next(data);
 
+          // Copy into dict
           this.clientsDict = {};
           for(var n=0; n<data.length; n++) {
             this.clientsDict[data[n].ComputerId] = data[n];
           }
-
-          this.clientsEvent.emit(data);
         },
       (err: HttpErrorResponse) => {
         console.log("HTTP Error: " + err);

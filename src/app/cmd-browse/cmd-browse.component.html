@@ -1,11 +1,12 @@
 
 <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
 
-    <button mat-raised-button (click)="send()">Dir</button>
+    <button mat-raised-button (click)="browseDir()">Dir</button>
+    <button mat-raised-button (click)="browseUp()">Up</button>
 
     <ng-container>
       <mat-form-field fxFlex fxFill appearance="outline">
-            <mat-label>Working directory</mat-label>
+            <mat-label>Directory</mat-label>
             <input matInput type="text" [(ngModel)]="browse">
         </mat-form-field>
     </ng-container>

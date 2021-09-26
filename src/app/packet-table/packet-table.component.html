@@ -123,7 +123,6 @@
                     {{element.Packet.response["error"]}}
                     <pre>{{element.Packet.response["stdout"]}}</pre>
                     <pre>{{element.Packet.response["stderr"]}}</pre>
-                    
                 </div>
 
                 <div *ngSwitchCase="'iIssue'">
@@ -139,7 +138,7 @@
                 </div>
 
                 <div *ngSwitchCase="'dir'">
-                    (Click Me)
+                    (Click Me) {{element.Packet.response["error"]}}
                 </div>
 
                 <div *ngSwitchCase="'clientinfo'">
