@@ -3,6 +3,7 @@ export interface PacketInfo {
   Packet: Packet
   State: number
   ClientIp: string
+  User: string
   TimeRecorded: string
   TimeSent: string
   TimeAnswered: string

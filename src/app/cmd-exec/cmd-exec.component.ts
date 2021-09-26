@@ -74,15 +74,12 @@ export class CmdExecComponent implements OnInit {
       return;
     }
 
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'exec',
-      arguments: params,
-      response: {},
-      downstreamId: this.downstreamId,
-    }
-
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'exec',
+      params,
+      this.downstreamId
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")

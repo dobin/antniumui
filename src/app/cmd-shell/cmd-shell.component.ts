@@ -112,16 +112,15 @@ export class CmdShellComponent implements OnInit {
   }
   
   sendPacketInteractiveCmdOpen(force: boolean) {
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'iOpen',
-      arguments: { 
-        'executable': this.selectedShell.executable,
-      },
-      response: {},
-      downstreamId: this.downstreamId,
-    }
+    var args = { 
+      'executable': this.selectedShell.executable,
+    };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'iOpen',
+      args,
+      this.downstreamId
+    );
     this.dataService.AddArrToArgs(packet, this.selectedShell.args);
     if (force) {
       packet.arguments['force'] = "force";
@@ -138,15 +137,15 @@ export class CmdShellComponent implements OnInit {
   }
 
   sendPacketInteractiveCmdIssue() {
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'iIssue',
-      arguments: { 'commandline': this.commandlineInteractive },
-      response: {},
-      downstreamId: this.downstreamId,
-    }
-
+    var args = { 
+      'commandline': this.commandlineInteractive,
+    };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'iIssue',
+      args,
+      this.downstreamId
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
@@ -158,14 +157,13 @@ export class CmdShellComponent implements OnInit {
   }
 
   sendPacketCmdClose() {
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'iClose',
-      arguments: { },
-      response: {},
-      downstreamId: this.downstreamId,
-    }
+    var args = {};
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'iClose',
+      args,
+      this.downstreamId
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")

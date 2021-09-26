@@ -45,18 +45,18 @@ export class CmdUploadComponent implements OnInit {
 
   
   sendPacketUpload() {
-    var packetId = this.apiService.getRandomInt();
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: packetId,
-      packetType: 'fileupload',
-      arguments: { 
-        "remoteurl": this.uploadUrlBase + packetId,
-        "source": this.uploadSource
-      },
-      response: {},
-      downstreamId: this.downstreamId,
-    }
+    var args = { 
+      "remoteurl": this.uploadUrlBase, // + packetId,
+      "source": this.uploadSource,
+    };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'fileupload',
+      args,
+      this.downstreamId
+    );
+    packet.arguments["remoteurl"] += packet.packetid;
+
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")

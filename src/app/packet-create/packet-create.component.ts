@@ -36,15 +36,15 @@ export class PacketCreateComponent implements OnInit {
   }
 
   sendPacketTest() {
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'test',
-      arguments: { "test": "test" },
-      response: {},
-      downstreamId: this.downstreamId,
-    }
-
+    var args = { 
+      "test": "test",
+    };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'test',
+      args,
+      this.downstreamId
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
@@ -56,14 +56,13 @@ export class PacketCreateComponent implements OnInit {
   }
 
   sendPacketShutdown() {
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'shutdown',
-      arguments: {},
-      response: {},
-      downstreamId: this.downstreamId,
-    }
+    var args = { };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'shutdown',
+      args,
+      this.downstreamId
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")

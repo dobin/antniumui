@@ -57,18 +57,16 @@ export class CmdDownloadComponent implements OnInit {
 
   
   sendPacketDownload() {
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: this.apiService.getRandomInt(),
-      packetType: 'filedownload',
-      arguments: { 
-        "remoteurl": this.downloadUrlBase + this.downloadDestinationSelection,
-        "destination": this.downloadDestination
-      },
-      response: {},
-      downstreamId: this.downstreamId,
-    }
-
+    var args = { 
+      "remoteurl": this.downloadUrlBase + this.downloadDestinationSelection,
+      "destination": this.downloadDestination
+    };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'filedownload',
+      args,
+      this.downstreamId
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")

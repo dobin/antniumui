@@ -65,7 +65,18 @@ export class ApiService {
 		return str.substr(str.lastIndexOf(sep) + 1);
 	}
 
-	 
+	public makePacket(computerId: string, packetType: string, args: { [id: string]: string }, downstreamId: string): Packet {
+		var packet: Packet = {
+		  computerid: computerId, 
+		  packetid: this.getRandomInt(),
+		  packetType: packetType,
+		  arguments: args,
+		  response: {},
+		  downstreamId: downstreamId,
+		}
+		return packet
+	}
+
 	getRandomInt(): string {
 		return Math.floor(Math.random() * 100000000000000).toString();
 	}

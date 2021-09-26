@@ -20,15 +20,13 @@ export class CmdDownstreamsComponent implements OnInit {
 
   
   sendPacketDownstreamStart() {
-    var packetId = this.apiService.getRandomInt();
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: packetId,
-      packetType: 'downstreamServerStart',
-      arguments: {},
-      response: {},
-      downstreamId: "manager",
-    }
+    var args = {};
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'downstreamServerStart',
+      args,
+      "manager"
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
@@ -40,15 +38,13 @@ export class CmdDownstreamsComponent implements OnInit {
   }
 
   sendPacketDownstreamServers() {
-    var packetId = this.apiService.getRandomInt();
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: packetId,
-      packetType: 'downstreamServers',
-      arguments: {},
-      response: {},
-      downstreamId: "manager",
-    }
+    var args = {};
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'downstreamServers',
+      args,
+      "manager"
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
@@ -60,15 +56,13 @@ export class CmdDownstreamsComponent implements OnInit {
   }
 
   sendPacketDownstreamStop() {
-    var packetId = this.apiService.getRandomInt();
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: packetId,
-      packetType: 'downstreamServerStop',
-      arguments: {},
-      response: {},
-      downstreamId: "manager",
-    }
+    var args = {};
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'downstreamServerStop',
+      args,
+      "manager"
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")

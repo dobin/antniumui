@@ -135,17 +135,15 @@ export class CmdBrowseComponent implements OnInit {
   }
 
   sendPacketDir(path: string) {
-    var packetId = this.apiService.getRandomInt();
-    var packet: Packet = {
-      computerid: this.computerId, 
-      packetid: packetId,
-      packetType: 'dir',
-      arguments: { 
-        "path": path,
-      },
-      response: {},
-      downstreamId: this.downstreamId,
-    }
+    var args = { 
+      "path": path,
+    };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'dir',
+      args,
+      this.downstreamId
+    );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
         console.log("SendPacket successful")
