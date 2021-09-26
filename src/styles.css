@@ -12,6 +12,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 0.8em !important;
 }
 
+.mat-cell {
+    padding-left: 0.5em !important;
+}
+.mat-header-cell {
+    padding-left: 0.5em !important;
+}
+
+
 /* PacketCreate: Make tabs tight */
 .matsmall {
     padding: 0px !important;
