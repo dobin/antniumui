@@ -51,7 +51,7 @@ export class PacketTableComponent implements OnInit {
         this.pageSizeOptions = [3, 5, 10];
     } else {
       this.displayedColumns = [
-        'actions', 'TimeRecorded', 'ClientIp', 'packetType', 'arguments', 'response', 'State'];
+        'actions', 'TimeRecorded', 'packetType', 'arguments', 'response', 'State'];
       this.pageSizeOptions = [6, 12, 24, 48];
     }
 
