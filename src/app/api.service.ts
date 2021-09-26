@@ -39,7 +39,7 @@ export class ApiService {
 	}
 
 	public sendPacket(packet: Packet) {
-		return this.httpClient.post(this.SERVER_URL + "/admin/addPacket", JSON.stringify(packet));
+		return this.httpClient.post(this.SERVER_URL + "/admin/addPacket/" + this.configService.getUser(), JSON.stringify(packet));
 	}
 
 	public getUploads(): Observable<DirEntry[]> {

@@ -13,6 +13,7 @@ export class ConfigModalComponent implements OnInit {
   serverIp = "";
   websocketStatus = "";
   restStatus = "";
+  user = "";
 
   constructor(
     private configService: ConfigService,
@@ -33,6 +34,10 @@ export class ConfigModalComponent implements OnInit {
 
   setServerIp() {
     this.configService.setServerIp(this.serverIp);
+  }
+
+  setUser() {
+    this.configService.setUser(this.user);
   }
 
   reconnect() {

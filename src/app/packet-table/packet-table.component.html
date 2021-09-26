@@ -3,15 +3,15 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Packets </th>
         <td mat-cell *matCellDef="let element">
+            <div class="nowrap">
+                <button mat-icon-button [routerLink]="[ '/packetcreate/', element.Packet.computerid ]">
+                    <mat-icon>slideshow</mat-icon>
+                </button>
 
-
-            <button mat-icon-button [routerLink]="[ '/packetcreate/', element.Packet.computerid ]">
-                <mat-icon>slideshow</mat-icon>
-            </button>
-
-            <button mat-icon-button (click)="showPacketModal(element)">
-                <mat-icon>info</mat-icon>
-            </button>
+                <button mat-icon-button (click)="showPacketModal(element)">
+                    <mat-icon>info</mat-icon>
+                </button>
+            </div>
         </td>
     </ng-container>
 
@@ -36,6 +36,10 @@
             {{element.Packet.packetType }}
             <ng-container *ngIf="element.Packet.downstreamId != 'client'">
                 @{{element.Packet.downstreamId}}
+            </ng-container>
+            <ng-container *ngIf="element.User != ''">
+                <br>
+                by {{element.User}}
             </ng-container>
          </td>
     </ng-container>

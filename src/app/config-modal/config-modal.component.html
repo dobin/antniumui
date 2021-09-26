@@ -19,3 +19,12 @@
     WebSocket: {{ websocketStatus }}
     REST: {{ restStatus }}
 </mat-card>
+
+
+<mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+    <mat-form-field>
+        <mat-label>User</mat-label>
+        <input matInput type="text"[(ngModel)]="user">
+    </mat-form-field>
+    <button mat-raised-button (click)="setUser()">Apply</button>
+</mat-card>

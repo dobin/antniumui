@@ -7,6 +7,7 @@ export class ConfigService {
 
   private adminApiKey = "";
   private serverIp = "";
+  private user = "";
 
   constructor() { 
     var adminApiKey = localStorage.getItem("adminApiKey");
@@ -25,6 +26,10 @@ export class ConfigService {
 
   }
 
+  getUser(): string {
+    return this.user;
+  }
+
   getAdminApiKey(): string {
     return this.adminApiKey;
   }
@@ -41,5 +46,10 @@ export class ConfigService {
   setServerIp(serverIp: string) {
     localStorage.setItem("serverIp", serverIp);
     this.serverIp = serverIp;
+  }
+
+  setUser(user: string) {
+    localStorage.setItem("user", user);
+    this.user = user;
   }
 }
