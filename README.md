@@ -20,8 +20,9 @@ cp -R dist/antniumui/* ../antnium/webui
 
 ## Overview
 
-
+Home
 ![Home](https://github.com/dobin/antniumui/blob/main/doc/antnium-home.png?raw=true)
 
-![Cmd](https://github.com/dobin/antniumui/blob/main/doc/antnium-home.png?raw=true)
+Cmd
+![Cmd](https://github.com/dobin/antniumui/blob/main/doc/antnium-cmd.png?raw=true)
 
