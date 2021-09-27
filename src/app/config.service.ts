@@ -4,52 +4,50 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ConfigService {
-
-  private adminApiKey = "";
-  private serverIp = "";
-  private user = "";
-
   constructor() { 
     var adminApiKey = localStorage.getItem("adminApiKey");
     if (adminApiKey == null) {
-      this.adminApiKey = "Secret-AdminApi-Key";
+      this.setAdminApiKey("Secret-AdminApi-Key");
     } else {
-      this.adminApiKey = adminApiKey;
+      this.setAdminApiKey(adminApiKey);
     }
 
     var serverIp = localStorage.getItem("serverIp");
     if (serverIp == null) {
-      this.serverIp = "http://127.0.0.1:8080";
+      this.setServerIp("http://127.0.0.1:8080");
     } else {
-      this.serverIp = serverIp;
+      this.setServerIp(serverIp);
     }
 
   }
 
   getUser(): string {
-    return this.user;
+    return localStorage.getItem("user") || "";
+  }
+  setUser(user: string) {
+    localStorage.setItem("user", user);
   }
 
   getAdminApiKey(): string {
-    return this.adminApiKey;
+    return localStorage.getItem("adminApiKey") || "";
   }
-
   setAdminApiKey(adminApiKey: string) {
     localStorage.setItem("adminApiKey", adminApiKey);
-    this.adminApiKey = adminApiKey;
   }
 
   getServerIp(): string {
-    return this.serverIp;
+    return localStorage.getItem("serverIp") || "";
   }
-
   setServerIp(serverIp: string) {
     localStorage.setItem("serverIp", serverIp);
-    this.serverIp = serverIp;
   }
 
-  setUser(user: string) {
-    localStorage.setItem("user", user);
-    this.user = user;
+  getPacketDbFilter(): string {
+    return localStorage.getItem("packetDbFilter") || "";
   }
+  setPacketDbFilter(packetDbFilter: string){
+    localStorage.setItem("packetDbFilter", packetDbFilter);
+  }
+
+
 }

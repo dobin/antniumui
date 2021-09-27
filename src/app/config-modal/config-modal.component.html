@@ -4,7 +4,7 @@
     
     <mat-form-field>
         <mat-label>AdminApiKey</mat-label>
-        <input matInput type="text"[(ngModel)]="adminApiKey">
+        <input matInput type="text" [(ngModel)]="adminApiKey">
     </mat-form-field>
     <button mat-raised-button (click)="setAdminApiKey()">Apply</button>
 </mat-card>
@@ -13,7 +13,7 @@
 <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
     <mat-form-field>
         <mat-label>Server IP</mat-label>
-        <input matInput type="text"[(ngModel)]="serverIp">
+        <input matInput type="text" [(ngModel)]="serverIp">
     </mat-form-field>
     <button mat-raised-button (click)="setServerIp()">Apply</button>
     WebSocket: {{ websocketStatus }}
@@ -24,7 +24,7 @@
 <mat-card fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
     <mat-form-field>
         <mat-label>User</mat-label>
-        <input matInput type="text"[(ngModel)]="user">
+        <input matInput type="text" [(ngModel)]="user">
     </mat-form-field>
     <button mat-raised-button (click)="setUser()">Apply</button>
 </mat-card>
