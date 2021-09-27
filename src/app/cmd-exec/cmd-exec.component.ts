@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PacketInfo, Packet, Campaign, DirEntry } from '../app.model';
+import { PacketInfo, Packet, Campaign, DirEntry, ClientInfo } from '../app.model';
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
+import { first, take, skipWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cmd-exec',
@@ -34,17 +35,19 @@ export class CmdExecComponent implements OnInit {
       this.param2 = "whoami"
     }
 
-    var client = this.dataService.getClientBy(this.computerId);
-    if (client != undefined) {
-      var arch = client.Arch;
-      if (arch == "darwin") {
-        this.selectExecType = "zsh";
-      } else if (arch == "linux") {
-        this.selectExecType = "bash";
+    // Only consume one valid, to have the truth
+    // Skip empty array, and take 1
+    this.dataService.clients.pipe(skipWhile(v => v.length == 0), take(1)).subscribe((clientInfos: ClientInfo[]) => {
+      var client = clientInfos.find(ci => ci.ComputerId == this.computerId);
+      if (client != undefined) {
+        var arch = client.Arch;
+        if (arch == "darwin") {
+          this.selectExecType = "zsh";
+        } else if (arch == "linux") {
+          this.selectExecType = "bash";
+        }
       }
-    } else {
-      console.log("Arch UNDEFINED");
-    }
+    });
 
     // Downstream-Selection
     this.dataService.downstreamSelection.subscribe(downstreamId => {

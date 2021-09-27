@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PacketInfo, Packet, Campaign, DirEntry } from '../app.model';
+import { PacketInfo, Packet, Campaign, DirEntry, ClientInfo } from '../app.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
+import { first, take, skipWhile } from 'rxjs/operators';
 
 interface ShellDesc {
   name: string
@@ -68,18 +69,19 @@ export class CmdShellComponent implements OnInit {
       }
     })
 
-    var client = this.dataService.getClientBy(this.computerId);
-    if (client != undefined) {
-      var arch = client.Arch;
-      if (arch == "darwin") {
-        this.selectedShell = this.shellDescriptions[3];
-      } else if (arch == "linux") {
-        this.selectedShell = this.shellDescriptions[2];
+    // Only consume one valid, to have the truth
+    // Skip empty array, and take 1
+    this.dataService.clients.pipe(skipWhile(v => v.length == 0), take(1)).subscribe((clientInfos: ClientInfo[]) => {
+      var client = clientInfos.find(ci => ci.ComputerId == this.computerId);
+      if (client != undefined) {
+        var arch = client.Arch;
+        if (arch == "darwin") {
+          this.selectedShell = this.shellDescriptions[3];
+        } else if (arch == "linux") {
+          this.selectedShell = this.shellDescriptions[2];
+        }
       }
-    } else {
-      console.log("Arch UNDEFINED");
-    }
-  
+    });
 
     // Downstream-Selection
     this.dataService.downstreamSelection.subscribe(downstreamId => {
