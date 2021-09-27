@@ -26,6 +26,7 @@ export class PacketTableComponent implements OnInit {
 
   displayedColumns: string[] = [];
   pageSizeOptions: number[] = [5];
+  searchFilter: string = "u1";
 
 
   constructor(
@@ -35,12 +36,20 @@ export class PacketTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // FIX: JS Warning Race Condition
+    timer(0)
+    .pipe(take(1))
+    .subscribe(() => {
+      this.sort.sort({ id: 'TimeRecorded', start: 'desc', disableClear: true });
+    });
+
     // For table filter
     this.dataSource.filterPredicate = 
       (data: PacketInfo, filter: string) => !filter || filter == "" || (
         data.Packet.packetType.includes(filter)
         || data.Packet.computerid.includes(filter)
         || data.Packet.packetid.includes(filter)
+        || data.User.includes(filter)
         || (Object.values(data.Packet.arguments).filter(s => s.includes(filter))).length > 0
         || (Object.values(data.Packet.response).filter(s => s.includes(filter))).length > 0
       );
@@ -84,12 +93,10 @@ export class PacketTableComponent implements OnInit {
     var data2 = this.dataService.packetInfos;
 
     if (this.computerId == '') {
-      var reversedData = Array.from(data2).reverse();
-      this.dataSource.data = reversedData;
+      this.dataSource.data = data2;
     } else {
       var newData = data2.filter(d => d.Packet.computerid == this.computerId ||d.Packet.computerid == "0");
-      var reversedData = newData.reverse();
-      this.dataSource.data = reversedData;
+      this.dataSource.data = newData;
     }
   }
 
