@@ -22,9 +22,12 @@ export class ConfigService {
   }
 
   getUser(): string {
-    return localStorage.getItem("user") || "";
+    return localStorage.getItem("user") || "anon";
   }
   setUser(user: string) {
+    if (user == "") {
+      user = "anon";
+    }
     localStorage.setItem("user", user);
   }
 

@@ -10,6 +10,7 @@ import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
 import { DataService } from '../data.service';
+import { ConfigService } from '../config.service';
 
 
 @Component({
@@ -26,13 +27,14 @@ export class PacketTableComponent implements OnInit {
 
   displayedColumns: string[] = [];
   pageSizeOptions: number[] = [5];
-  searchFilter: string = "u1";
 
+  onlyMe: boolean = false;
 
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
-    private dataService: DataService
+    private dataService: DataService,
+    private configService: ConfigService,
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class PacketTableComponent implements OnInit {
     this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
       if (this.computerId == '' || packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
-        this.updatePacketInfos();
+          this.updatePacketInfos();
       }
     })
   }
@@ -90,13 +92,29 @@ export class PacketTableComponent implements OnInit {
   }
 
   updatePacketInfos() {
+    console.log("update");
     var data2 = this.dataService.packetInfos;
+    var user = this.configService.getUser();
 
     if (this.computerId == '') {
-      this.dataSource.data = data2;
+      if (this.onlyMe) {
+        // All packets of this user
+        var newData = data2.filter(d => d.User == user);
+        this.dataSource.data = newData;
+      } else {
+        // All data
+        this.dataSource.data = data2;
+      }
     } else {
-      var newData = data2.filter(d => d.Packet.computerid == this.computerId ||d.Packet.computerid == "0");
-      this.dataSource.data = newData;
+      if (this.onlyMe) {
+        // This computerid, this user
+        var newData = data2.filter(d => d.User == user && (d.Packet.computerid == this.computerId || d.Packet.computerid == "0"));
+        this.dataSource.data = newData;
+      } else {
+        // this computerid
+        var newData = data2.filter(d => d.Packet.computerid == this.computerId || d.Packet.computerid == "0");
+        this.dataSource.data = newData;
+      }
     }
   }
 

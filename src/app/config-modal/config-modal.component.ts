@@ -25,6 +25,7 @@ export class ConfigModalComponent implements OnInit {
     this.serverIp = this.configService.getServerIp();
     this.websocketStatus = this.adminWesocketService.websocketStatus;
     this.restStatus = this.adminWesocketService.restStatus;
+    this.user = this.configService.getUser();
   }
 
   setAdminApiKey() {

@@ -29,7 +29,7 @@
             <ng-container *ngIf="element.Packet.downstreamId != 'client'">
                 @{{element.Packet.downstreamId}}
             </ng-container>
-            <ng-container *ngIf="element.User != ''">
+            <ng-container *ngIf="element.User != 'anon'">
                 <br>
                 by {{element.User}}
             </ng-container>
@@ -177,6 +177,11 @@
         <mat-form-field *ngIf="dataSource.data.length > 6" fxFlexFill> 
             <input matInput type="text" (change)="applyFilter($event)" placeholder="Search">
         </mat-form-field>
+    </div>
+    <div fxFlex>
+            <mat-checkbox [(ngModel)]="onlyMe" (change)="updatePacketInfos()" >
+                OnlyMe
+            </mat-checkbox>
     </div>
 
     <div fxFlex="70"> 
