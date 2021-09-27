@@ -52,5 +52,21 @@ export class ConfigService {
     localStorage.setItem("packetDbFilter", packetDbFilter);
   }
 
+  
+  getOnlyMe(): boolean {
+    var o = localStorage.getItem("onlyMe");
+    if (o == "true") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  setOnlyMe(onlyMe: boolean){
+    if (onlyMe) {
+      localStorage.setItem("onlyMe", "true");  
+    } else {
+      localStorage.setItem("onlyMe", "false");
+    }
+  }
 
 }

@@ -38,6 +38,8 @@ export class PacketTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.onlyMe = this.configService.getOnlyMe();
+
     // FIX: JS Warning Race Condition
     timer(0)
     .pipe(take(1))
@@ -91,8 +93,12 @@ export class PacketTableComponent implements OnInit {
     });
   }
 
+  toggleOnlyMe() {
+    this.configService.setOnlyMe(this.onlyMe);
+    this.updatePacketInfos();
+  }
+
   updatePacketInfos() {
-    console.log("update");
     var data2 = this.dataService.packetInfos;
     var user = this.configService.getUser();
 
