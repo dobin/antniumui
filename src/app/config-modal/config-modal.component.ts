@@ -12,14 +12,11 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
   styleUrls: ['./config-modal.component.css']
 })
 export class ConfigModalComponent implements OnInit {
+  connectionTestResult= "";
 
   adminApiKey = "";
   serverIp = "";
-  websocketStatus = "";
-  restStatus = "";
   user = "";
-
-  connectionTestResult= "";
 
   constructor(
     private configService: ConfigService,
@@ -38,9 +35,11 @@ export class ConfigModalComponent implements OnInit {
     this.connectionTestResult = "";
     this.save();
 
+    // Grab campaign as test
     this.apiService.getCampaign().subscribe(
       (campaign: Campaign) => { 
         this.connectionTestResult = "connected";
+        this.adminWebsocketService.connectWs();
         this.configService.setIsVirgin(false);
       },
       (err: HttpErrorResponse) => {
@@ -48,8 +47,6 @@ export class ConfigModalComponent implements OnInit {
         console.log(err);
       },
     );
-
-    this.adminWebsocketService.connectWs();
   }
 
   actionClose() {
@@ -60,11 +57,6 @@ export class ConfigModalComponent implements OnInit {
     this.configService.setAdminApiKey(this.adminApiKey)
     this.configService.setServerIp(this.serverIp);
     this.configService.setUser(this.user);
-  }
-
-  reconnect() {
-  //  this.adminWebService.connect();
-  //  this.configService.connect();
   }
 
 }
