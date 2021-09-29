@@ -10,8 +10,6 @@ import { ConfigService } from './config.service';
 	providedIn: 'root'  
 })  
 export class ApiService {
-	private SERVER_URL = "";
-
     constructor(
 		private httpClient: HttpClient,
 		private configService: ConfigService,
@@ -19,38 +17,51 @@ export class ApiService {
 		if (isDevMode()) {
 			//this.SERVER_URL = "http://localhost:4444";
 		}
-		this.SERVER_URL = configService.getServerIp();
+		
 	}
 
 	public getCampaign(): Observable<Campaign> {
-		return this.httpClient.get<Campaign>(this.SERVER_URL + "/admin/campaign");
+		var SERVER_URL = this.configService.getServerIp();
+		return this.httpClient.get<Campaign>(SERVER_URL + "/admin/campaign");
 	}
 
 	public getPackets(): Observable<PacketInfo[]> {
-		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/packets");
+		var SERVER_URL = this.configService.getServerIp();
+
+		return this.httpClient.get<PacketInfo[]>(SERVER_URL + "/admin/packets");
 	}
 
 	public getPacketsClient(computerId: string): Observable<PacketInfo[]> {
-		return this.httpClient.get<PacketInfo[]>(this.SERVER_URL + "/admin/packets/" + computerId);
+		var SERVER_URL = this.configService.getServerIp();
+
+		return this.httpClient.get<PacketInfo[]>(SERVER_URL + "/admin/packets/" + computerId);
 	}
 
 	public getClients(): Observable<ClientInfo[]> {
-		return this.httpClient.get<ClientInfo[]>(this.SERVER_URL + "/admin/clients");
+		var SERVER_URL = this.configService.getServerIp();
+
+		return this.httpClient.get<ClientInfo[]>(SERVER_URL + "/admin/clients");
 	}
 
 	public sendPacket(packet: Packet) {
+		var SERVER_URL = this.configService.getServerIp();
+
 		var user = this.configService.getUser();
 		if (user == "") {
 			user = "anon";
 		}
-		return this.httpClient.post(this.SERVER_URL + "/admin/addPacket/" + user, JSON.stringify(packet));
+		return this.httpClient.post(SERVER_URL + "/admin/addPacket/" + user, JSON.stringify(packet));
 	}
 
 	public getUploads(): Observable<DirEntry[]> {
-		return this.httpClient.get<DirEntry[]>(this.SERVER_URL + "/admin/uploads");
+		var SERVER_URL = this.configService.getServerIp();
+
+		return this.httpClient.get<DirEntry[]>(SERVER_URL + "/admin/uploads");
 	}
 	public getStatics(): Observable<DirEntry[]> {
-		return this.httpClient.get<DirEntry[]>(this.SERVER_URL + "/admin/statics");
+		var SERVER_URL = this.configService.getServerIp();
+
+		return this.httpClient.get<DirEntry[]>(SERVER_URL + "/admin/statics");
 	}
 
 	public downloadClientUpload(url: string) {

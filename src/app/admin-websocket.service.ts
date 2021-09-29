@@ -25,7 +25,7 @@ export class AdminWebsocketService {
     private configService: ConfigService,
     private dataService: DataService,
   ) {
-    this.setupRefresher();
+    //this.setupRefresher();
     this.connectWs();
   }
 
@@ -34,26 +34,21 @@ export class AdminWebsocketService {
     this.subscription = source.subscribe(val => this.dataService.periodicRefresh());
   }
 
-  private connectWs() {
-    console.log("Connect WS");
+  public connectWs() {
+    console.log("[WebSocket]: Try connect WS");
     var newUrl = this.configService.getServerIp().replace('http', 'ws') + "/adminws";
     this.socket$ = webSocket({
       url: newUrl,
       openObserver: {
         next: () => {
-          console.log("Websocket open");
+          console.log("[WebSocket]: Websocket open");
           this.websocketStatus = "Open";
         },
       },
       closeObserver: {
         next: () => {
           this.websocketStatus = "Closed";
-          console.log('[WebSocket]: connection closed, retrying');
-          /*timer(0)
-          .pipe(take(1))
-          .subscribe(() => {
-            this.connect();
-          });*/
+          console.log('[WebSocket]: connection closed');
         }
       },
     });

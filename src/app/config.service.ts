@@ -15,10 +15,26 @@ export class ConfigService {
     var serverIp = localStorage.getItem("serverIp");
     if (serverIp == null) {
       this.setServerIp("http://127.0.0.1:8080");
+      //this.setServerIp("");
     } else {
       this.setServerIp(serverIp);
     }
+  }
 
+  getIsVirgin(): boolean {
+    var o = localStorage.getItem("isVirgin");
+    if (o == "false") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  setIsVirgin(isVirgin: boolean) {
+    if (isVirgin) {
+      localStorage.setItem("isVirgin", "true")
+    } else {
+      localStorage.setItem("isVirgin", "false")
+    }
   }
 
   getUser(): string {
