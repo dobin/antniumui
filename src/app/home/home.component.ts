@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ConfigModalComponent } from '../config-modal/config-modal.component';
 import { ConfigService } from '../config.service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

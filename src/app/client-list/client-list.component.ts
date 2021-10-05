@@ -10,7 +10,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ClientInfo } from '../app.model';
 import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
 import { ClientViewModalComponent } from '../client-view-modal/client-view-modal.component';
-import { AdminWebsocketService } from '../admin-websocket.service';
 import { DataService } from '../data.service';
 
 @Component({

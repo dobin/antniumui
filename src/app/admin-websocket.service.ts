@@ -1,9 +1,9 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { interval, Subscription } from 'rxjs';
+import { catchError, tap, switchAll } from 'rxjs/operators';
+import { EMPTY, Observable, Subject } from 'rxjs';
 
 import { PacketInfo } from './app.model';
-import { DataService } from './data.service';
 import { ConfigService } from './config.service';
 
 interface WebsocketData {
@@ -19,19 +19,13 @@ export class AdminWebsocketService {
   public restStatus = "";
 
   private socket$!: WebSocketSubject<any>;
-  private subscription!: Subscription;
+  private messagesSubject$: Subject<PacketInfo> = new Subject();
+  public messages$: Observable<PacketInfo> = this.messagesSubject$.pipe();
 
   constructor(		
     private configService: ConfigService,
-    private dataService: DataService,
   ) {
-    //this.setupRefresher();
     this.connectWs();
-  }
-
-  private setupRefresher() {
-    const source = interval(10000); // 10s
-    this.subscription = source.subscribe(val => this.dataService.periodicRefresh());
   }
 
   public connectWs() {
@@ -58,7 +52,7 @@ export class AdminWebsocketService {
     // Function to listen for updates from WS
     this.socket$.subscribe((data: WebsocketData) => {
       console.log("<- WS", data.PacketInfo);
-      this.dataService.addUpdatePacket(data.PacketInfo);
+      this.messagesSubject$.next(data.PacketInfo);
      });
   }
 

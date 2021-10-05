@@ -6,12 +6,11 @@ import { Packet, PacketInfo } from '../app.model';
 import { ApiService } from '../api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
-import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { PacketCreateModalComponent } from '../packet-create-modal/packet-create-modal.component';
 import { DataService } from '../data.service';
 import { ConfigService } from '../config.service';
-
+import { EMPTY, Observable, Subject, timer } from 'rxjs';
 
 @Component({
   selector: 'app-packet-table',
@@ -77,6 +76,14 @@ export class PacketTableComponent implements OnInit {
           this.updatePacketInfos();
       }
     })
+
+    // Get messages directly from websocket
+    /*this.adminWebsocketService.messages$.subscribe((packetInfo: PacketInfo) => {
+      // Check if it concerns us
+      if (this.computerId == '' || packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
+          this.updatePacketInfos();
+      }
+    })*/
   }
 
   ngAfterViewInit() {

@@ -3,8 +3,10 @@ import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
+import { webSocket, WebSocketSubject } from "rxjs/webSocket";
 
 import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry, PacketState } from './app.model';
+import { AdminWebsocketService } from './admin-websocket.service';
 
 
 @Injectable({
@@ -27,9 +29,6 @@ export class DataService {
   
 
   /* Data */
-  // Loaded: once on start, then updated via websocket messages
-  public packetInfos: PacketInfo[] = [];
-
   // Loaded: Periodically
   //public clients: ClientInfo[] = [];
   public clientsDict: { [id: string]: ClientInfo } = {};
@@ -40,34 +39,21 @@ export class DataService {
   // Loaded: Once (no notify)
   public campaign: Campaign = {} as Campaign;
 
+  public packetInfos: PacketInfo[] = [];
 
   constructor(
     private apiService: ApiService,
+    private adminWebsocketService: AdminWebsocketService,
   ) {
-    this.init()
-  }
-
-  // Load all initial data
-  private init() {
     this.downloadPeriodics();
     this.downloadCampaign();
-    this.downloadPackets();
-  }
 
-  /** Downloads **/
-
-  downloadPackets() {
-    // Packets
-    this.apiService.getPackets().subscribe(
-        (packetInfos: PacketInfo[]) => {
-          this.packetPipeline(packetInfos);
-          this.packetInfos = packetInfos;
-          this.packetInfosEvent.emit(undefined); // undefined is broadcast all
-        },
-        (err: HttpErrorResponse) => {
-          console.error(err);
-        },
-    );
+    /** Downloads **/
+    this.adminWebsocketService.messages$.subscribe(
+      (packetInfo: PacketInfo) => {
+        this.addUpdatePacket(packetInfo);
+      },
+    )
   }
 
   downloadCampaign() {
@@ -119,8 +105,6 @@ export class DataService {
   }
 
 
-  /** Called externally, via AdminWebsocketService **/
-  
   public periodicRefresh() {
     this.downloadPeriodics()
   }

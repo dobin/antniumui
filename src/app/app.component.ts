@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfigModalComponent } from './config-modal/config-modal.component';
 import { MatDialog } from "@angular/material/dialog";
-import { AdminWebsocketService } from './admin-websocket.service';
 import { environment } from '../environments/environment';
 import { ConfigService } from './config.service';
 
@@ -13,15 +12,13 @@ import { ConfigService } from './config.service';
 export class AppComponent {
   title = 'antniumui';
   isProd: boolean = false;
-
   serverIp: string = "";
 
   constructor(
-    private adminWebsocketService: AdminWebsocketService, // This connects the WS via init()
     private dialog: MatDialog,
     private configService: ConfigService,
   ) {
-    this.serverIp = configService.getServerIp();
+    this.serverIp = this.configService.getServerIp();
     if (environment.production) {
       this.isProd = true;
     } else {
