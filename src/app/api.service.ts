@@ -74,6 +74,15 @@ export class ApiService {
 		)
 	}
 
+	uploadFile(fileToUpload: File) {
+		var SERVER_URL = this.configService.getServerIp();
+		var url = SERVER_URL + "/admin/uploadFile";
+
+		const formData: FormData = new FormData();
+		formData.append('fileKey', fileToUpload, fileToUpload.name);
+		return this.httpClient.post(url, formData);
+	}
+
 	// https://stackoverflow.com/questions/3820381/need-a-basename-function-in-javascript
 	basename(str: string) {
 		var sep = "/";

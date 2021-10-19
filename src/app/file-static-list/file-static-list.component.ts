@@ -55,4 +55,17 @@ export class FileStaticListComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+  
+  handleFileInput(event: any) {
+    var file = event.target.files.item(0);
+    this.uploadFileToActivity(file);
+  }
+
+  uploadFileToActivity(file: File) {
+    this.apiService.uploadFile(file).subscribe(data => {
+        console.log("Success file upload")
+      }, error => {
+        console.log(error);
+      });
+  }
 }
