@@ -74,7 +74,7 @@ export class ApiService {
 		)
 	}
 
-	uploadFile(fileToUpload: File) {
+	uploadFile(fileToUpload: File): Observable<any> {
 		var SERVER_URL = this.configService.getServerIp();
 		var url = SERVER_URL + "/admin/uploadFile";
 

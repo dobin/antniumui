@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from '../api.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-file-static-list',
@@ -22,6 +24,7 @@ export class FileStaticListComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private apiService: ApiService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -62,10 +65,24 @@ export class FileStaticListComponent implements OnInit {
   }
 
   uploadFileToActivity(file: File) {
-    this.apiService.uploadFile(file).subscribe(data => {
-        console.log("Success file upload")
-      }, error => {
-        console.log(error);
+    this.apiService.uploadFile(file).subscribe(
+      (data: any) => {
+        console.log("Success file upload");
+        this.openSnackBar("success", "Ignore");
+        this.dataService.downloadPeriodics();
+      }, 
+      (err: HttpErrorResponse) => {
+        this.openSnackBar("Error uploading file", "Ignore");
+        console.log("Fail file upload");
+        console.log(err);
+        this.dataService.downloadPeriodics();
       });
+  }
+
+  
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000
+    });
   }
 }

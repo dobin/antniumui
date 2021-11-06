@@ -1,10 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { ApiService } from './api.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
 import { webSocket, WebSocketSubject } from "rxjs/webSocket";
-
+import { BehaviorSubject, Observable, timer, Subscription, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { switchMap, tap, share, retry, takeUntil } from 'rxjs/operators';
 import { PacketInfo, Packet, ClientInfo, Campaign, DownstreamInfo, DirEntry, PacketState } from './app.model';
 import { AdminWebsocketService } from './admin-websocket.service';
 
@@ -16,6 +17,7 @@ export class DataService {
   /* Notifiers */
   // When: New packet arrived via websocket
   public packetInfosEvent: EventEmitter<any> = new EventEmitter();
+  public packetInfos: PacketInfo[] = [];
 
   // When: updated (periodically)
   private _clients: BehaviorSubject<ClientInfo[]> = new BehaviorSubject<ClientInfo[]>([] as ClientInfo[]);
@@ -39,7 +41,6 @@ export class DataService {
   // Loaded: Once (no notify)
   public campaign: Campaign = {} as Campaign;
 
-  public packetInfos: PacketInfo[] = [];
 
   constructor(
     private apiService: ApiService,
@@ -68,7 +69,7 @@ export class DataService {
     );
   }
 
-  private downloadPeriodics() {
+  public downloadPeriodics() {
     this.apiService.getClients().subscribe(
       (data: ClientInfo[]) => {
           this._clients.next(data);
