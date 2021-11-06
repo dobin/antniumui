@@ -35,6 +35,28 @@ export class PacketCreateComponent implements OnInit {
     });
   }
 
+  sendPacketWingmanExplorer() {
+    var args = { 
+      "shelltype": "raw",
+      "executable": "explorer.exe",
+      "param0": "C:\\users\\dobin\\Repositories\\antnium\\wingman.exe",
+    };
+    var packet = this.apiService.makePacket(
+      this.computerId,
+      'exec',
+      args,
+      this.downstreamId
+    );
+    this.apiService.sendPacket(packet).subscribe(
+      (data: any) => { 
+        console.log("SendPacket successful")
+      },
+      (err: HttpErrorResponse) => {
+        console.log("SendPacket failed")
+      },
+    );
+  }
+
   sendPacketTest() {
     var args = { 
       "test": "test",
