@@ -77,7 +77,7 @@ export class DataService {
           // Copy into dict
           this.clientsDict = {};
           for(var n=0; n<data.length; n++) {
-            this.clientsDict[data[n].ComputerId] = data[n];
+            this.clientsDict[data[n].ClientId] = data[n];
           }
         },
       (err: HttpErrorResponse) => {
@@ -149,7 +149,7 @@ export class DataService {
     }
 
     // Update downstreams list of client
-    this.downstreams[packetInfo.Packet.computerid] = this.downstreamPacketResponseToData(packetInfo);
+    this.downstreams[packetInfo.Packet.clientid] = this.downstreamPacketResponseToData(packetInfo);
 
     // Notify
     this.downstreamsEvent.emit("");
@@ -162,8 +162,8 @@ export class DataService {
 
   /** Some special getters **/
 
-  public getDownstreamListFor(computerId: string): DownstreamInfo[] {
-    var data = this.downstreams[computerId]
+  public getDownstreamListFor(clientId: string): DownstreamInfo[] {
+    var data = this.downstreams[clientId]
 
     // If no downstream packet has yet been received, just return fake default one
     if (data == undefined || data.length == 0) {
@@ -177,9 +177,9 @@ export class DataService {
     return data;
   }
 
-  public getClientBy(computerId: string): ClientInfo {
-    return this.clientsDict[computerId];
-    //return this.clients.find(c => c.ComputerId == computerId)!;
+  public getClientBy(clientId: string): ClientInfo {
+    return this.clientsDict[clientId];
+    //return this.clients.find(c => c.ClientId == clientId)!;
   }
 
   /** Data translation **/

@@ -7,7 +7,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./packet-create-page.component.css']
 })
 export class PacketCreatePageComponent implements OnInit {
-  computerId: string = "";
+  clientId: string = "";
 
   constructor(
     private route: ActivatedRoute
@@ -15,7 +15,7 @@ export class PacketCreatePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe( params => this.computerId = params["computerId"] );
+    this.route.params.subscribe( params => this.clientId = params["clientId"] );
   }
 
 }

@@ -18,7 +18,7 @@ interface ShellDesc {
 })
 export class CmdShellComponent implements OnInit {
   // Input
-  @Input() computerId = "";
+  @Input() clientId = "";
   downstreamId: string = "client"
   interactiveStdout: string = ""
 
@@ -64,7 +64,7 @@ export class CmdShellComponent implements OnInit {
     // Update Packet data
     this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
+      if (packetInfo == undefined || packetInfo.Packet.clientid == this.clientId) {
         this.updateInteractive();
       }
     })
@@ -72,7 +72,7 @@ export class CmdShellComponent implements OnInit {
     // Only consume one valid, to have the truth
     // Skip empty array, and take 1
     this.dataService.clients.pipe(skipWhile(v => v.length == 0), take(1)).subscribe((clientInfos: ClientInfo[]) => {
-      var client = clientInfos.find(ci => ci.ComputerId == this.computerId);
+      var client = clientInfos.find(ci => ci.ClientId == this.clientId);
       if (client != undefined) {
         var arch = client.Arch;
         if (arch == "darwin") {
@@ -93,7 +93,7 @@ export class CmdShellComponent implements OnInit {
   updateInteractive() {
     var data2 = this.dataService.packetInfos;
     var newData = data2.filter(d => 
-      (d.Packet.computerid == this.computerId || d.Packet.computerid == "0") 
+      (d.Packet.clientid == this.clientId || d.Packet.clientid == "0") 
       && (d.Packet.packetType == "iIssue" || d.Packet.packetType == "iOpen")
       && (d.Packet.downstreamId == "" || d.Packet.downstreamId == this.downstreamId)
     );
@@ -118,7 +118,7 @@ export class CmdShellComponent implements OnInit {
       'executable': this.selectedShell.executable,
     };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'iOpen',
       args,
       this.downstreamId
@@ -143,7 +143,7 @@ export class CmdShellComponent implements OnInit {
       'commandline': this.commandlineInteractive,
     };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'iIssue',
       args,
       this.downstreamId
@@ -161,7 +161,7 @@ export class CmdShellComponent implements OnInit {
   sendPacketCmdClose() {
     var args = {};
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'iClose',
       args,
       this.downstreamId

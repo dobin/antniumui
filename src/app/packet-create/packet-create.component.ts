@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PacketCreateComponent implements OnInit {
   // Data
-  @Input() computerId = "";
+  @Input() clientId = "";
 
   // UI
   selectedTabIndex: number = 0
@@ -42,7 +42,7 @@ export class PacketCreateComponent implements OnInit {
       "param0": "C:\\users\\dobin\\Repositories\\antnium\\wingman.exe",
     };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'exec',
       args,
       this.downstreamId
@@ -62,7 +62,7 @@ export class PacketCreateComponent implements OnInit {
       "test": "test",
     };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'test',
       args,
       this.downstreamId
@@ -80,7 +80,7 @@ export class PacketCreateComponent implements OnInit {
   sendPacketShutdown() {
     var args = { };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'shutdown',
       args,
       this.downstreamId

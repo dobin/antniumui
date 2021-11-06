@@ -11,7 +11,7 @@ import { DataService } from '../data.service';
 })
 export class CmdUploadComponent implements OnInit {
   // Input
-  @Input() computerId = "";
+  @Input() clientId = "";
   downstreamId: string = "client"
 
   // UI
@@ -50,7 +50,7 @@ export class CmdUploadComponent implements OnInit {
       "source": this.uploadSource,
     };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'fileupload',
       args,
       this.downstreamId

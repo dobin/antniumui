@@ -11,13 +11,13 @@
    PacketInfo is the data structure the server uses to track additional information
    of the packet, like the source IP of the client. 
 </p><p>
-   It is available via "admin/packets" and "admin/packets/[computerId]" REST interfaces, 
+   It is available via "admin/packets" and "admin/packets/[clientId]" REST interfaces, 
    and also pushed via "/ws" websocket, which is used by the UI. 
 </p>
 
 <pre>
 export interface Packet &#123;
-      computerid:   string
+      clientid:   string
       packetid:     string
       packetType:   string
       arguments:    &#123; [id: string]: string &#125;
@@ -38,7 +38,7 @@ export interface PacketInfo &#123;
 <p>A Packet may look like this:</p>
 <pre>
 &#123;
-      "computerid":   "c429d02sdke53b4hlth0",
+      "clientid":   "c429d02sdke53b4hlth0",
       "packetid":     "400306",
       "packetType":   "exec",
       "arguments": &#123;
@@ -66,7 +66,7 @@ export interface PacketInfo &#123;
 <pre>
 export interface ClientInfo &#123;
       // Data gathered by the server
-      ComputerId: string
+      ClientId: string
       LastSeen:   string
       FirstSeen:  string
       LastIp:     string
@@ -115,7 +115,7 @@ export interface Campaign &#123;
 │    Client    │               │   Server   │ Clients       │   UI   │
 │              │               │            ├──────────────►│        │
 │              │       Packet  │            │ Packets       │        │
-│ [ComputerId] │◄──────────────┤ /get       ├──────────────►│        │
+│ [ClientId] │◄──────────────┤ /get       ├──────────────►│        │
 │  [ClientIp]  │               │            │ WS Notify     │        │
 │              │ Answer        │            ├──────────────►│        │
 │              ├──────────────►│ /send      │    New Packet │        │

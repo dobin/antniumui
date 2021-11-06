@@ -35,9 +35,9 @@ export class ClientListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.short) {
-      this.displayedColumns = [ 'actions', 'FirstSeen', 'ComputerId'];
+      this.displayedColumns = [ 'actions', 'FirstSeen', 'ClientId'];
     } else {
-      this.displayedColumns = [ 'actions', 'ComputerId',  'Hostname', 'FirstSeen', 'LastSeen', 'LastIp','LocalIps' ];
+      this.displayedColumns = [ 'actions', 'ClientId',  'Hostname', 'FirstSeen', 'LastSeen', 'LastIp','LocalIps' ];
     }
 
     // FIX: JS Warning Race Condition
@@ -59,10 +59,10 @@ export class ClientListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  showModalPacketCreate(computerId: string) {
+  showModalPacketCreate(clientId: string) {
     const dialogRef = this.dialog.open(PacketCreateModalComponent, {
       width: '80em',
-      data: computerId,
+      data: clientId,
     });
   }
 

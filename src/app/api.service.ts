@@ -31,10 +31,10 @@ export class ApiService {
 		return this.httpClient.get<PacketInfo[]>(SERVER_URL + "/admin/packets");
 	}
 
-	public getPacketsClient(computerId: string): Observable<PacketInfo[]> {
+	public getPacketsClient(clientId: string): Observable<PacketInfo[]> {
 		var SERVER_URL = this.configService.getServerIp();
 
-		return this.httpClient.get<PacketInfo[]>(SERVER_URL + "/admin/packets/" + computerId);
+		return this.httpClient.get<PacketInfo[]>(SERVER_URL + "/admin/packets/" + clientId);
 	}
 
 	public getClients(): Observable<ClientInfo[]> {
@@ -89,9 +89,9 @@ export class ApiService {
 		return str.substr(str.lastIndexOf(sep) + 1);
 	}
 
-	public makePacket(computerId: string, packetType: string, args: { [id: string]: string }, downstreamId: string): Packet {
+	public makePacket(clientId: string, packetType: string, args: { [id: string]: string }, downstreamId: string): Packet {
 		var packet: Packet = {
-		  computerid: computerId, 
+		  clientid: clientId, 
 		  packetid: this.getRandomInt(),
 		  packetType: packetType,
 		  arguments: args,

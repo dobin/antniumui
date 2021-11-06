@@ -9,7 +9,7 @@ import { DataService } from '../data.service';
   styleUrls: ['./client-info.component.css']
 })
 export class ClientInfoComponent implements OnInit {
-  @Input() computerId = "";
+  @Input() clientId = "";
 
   client: ClientInfo = {} as ClientInfo // fake clientinfo so page-reload works
   downstreamList: DownstreamInfo[] = [];
@@ -26,19 +26,19 @@ export class ClientInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.clients.subscribe((clientInfos: ClientInfo[]) => {
-      var client = clientInfos.find(ci => ci.ComputerId == this.computerId);
+      var client = clientInfos.find(ci => ci.ClientId == this.clientId);
       if (client != undefined) {
         this.client = client;
       }
     });
 
-    this.downstreamList = this.dataService.getDownstreamListFor(this.computerId); // useless, as often empty
+    this.downstreamList = this.dataService.getDownstreamListFor(this.clientId); // useless, as often empty
     if (this.downstreamList != undefined) {
       this.clickedRow = this.downstreamList[0]; 
     }
 
     this.dataService.downstreamsEvent.subscribe((data: any) => {
-      var downstreamList = this.dataService.getDownstreamListFor(this.computerId);
+      var downstreamList = this.dataService.getDownstreamListFor(this.clientId);
 
       if (this.downstreamList == undefined) {
         // Select first element upon initializing
@@ -56,7 +56,7 @@ export class ClientInfoComponent implements OnInit {
     // Subscribe to clientfileupdates
     this.dataService.clientFilesUpdates.subscribe(nothing => {
       var uploadList = this.dataService.uploads;
-      this.uploadList = uploadList.filter(f => f.name.startsWith(this.computerId))
+      this.uploadList = uploadList.filter(f => f.name.startsWith(this.clientId))
     });
   }
 

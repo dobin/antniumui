@@ -9,7 +9,7 @@ export interface PacketInfo {
 }
 
 export interface Packet {
-  computerid: string
+  clientid: string
   packetid: string
   packetType: string
   arguments: { [id: string]: string }
@@ -18,7 +18,7 @@ export interface Packet {
 }
 
 export interface ClientInfo {
-  ComputerId: string
+  ClientId: string
   LastSeen: string
   FirstSeen: string
   LastIp: string

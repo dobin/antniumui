@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CmdDownloadComponent implements OnInit {
   // Input
-  @Input() computerId = "";
+  @Input() clientId = "";
   downstreamId: string = "client"
   staticFiles: DirEntry[] = []
 
@@ -62,7 +62,7 @@ export class CmdDownloadComponent implements OnInit {
       "destination": this.downloadDestination
     };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'filedownload',
       args,
       this.downstreamId

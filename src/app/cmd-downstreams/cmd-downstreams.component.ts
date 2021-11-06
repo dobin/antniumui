@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./cmd-downstreams.component.css']
 })
 export class CmdDownstreamsComponent implements OnInit {
-  @Input() computerId = "";
+  @Input() clientId = "";
 
   constructor(
     private apiService: ApiService,
@@ -22,7 +22,7 @@ export class CmdDownstreamsComponent implements OnInit {
   sendPacketDownstreamStart() {
     var args = {};
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'downstreamServerStart',
       args,
       "manager"
@@ -40,7 +40,7 @@ export class CmdDownstreamsComponent implements OnInit {
   sendPacketDownstreamServers() {
     var args = {};
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'downstreamServers',
       args,
       "manager"
@@ -58,7 +58,7 @@ export class CmdDownstreamsComponent implements OnInit {
   sendPacketDownstreamStop() {
     var args = {};
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'downstreamServerStop',
       args,
       "manager"

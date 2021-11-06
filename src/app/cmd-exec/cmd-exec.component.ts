@@ -12,7 +12,7 @@ import { first, take, skipWhile } from 'rxjs/operators';
 })
 export class CmdExecComponent implements OnInit {
   // Input
-  @Input() computerId = "";
+  @Input() clientId = "";
   downstreamId: string = "client"
 
   // UI
@@ -38,7 +38,7 @@ export class CmdExecComponent implements OnInit {
     // Only consume one valid, to have the truth
     // Skip empty array, and take 1
     this.dataService.clients.pipe(skipWhile(v => v.length == 0), take(1)).subscribe((clientInfos: ClientInfo[]) => {
-      var client = clientInfos.find(ci => ci.ComputerId == this.computerId);
+      var client = clientInfos.find(ci => ci.ClientId == this.clientId);
       if (client != undefined) {
         var arch = client.Arch;
         if (arch == "darwin") {
@@ -78,7 +78,7 @@ export class CmdExecComponent implements OnInit {
     }
 
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'exec',
       params,
       this.downstreamId

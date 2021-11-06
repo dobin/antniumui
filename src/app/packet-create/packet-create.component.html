@@ -2,32 +2,32 @@
     <mat-tab-group [(selectedIndex)]="selectedTabIndex" mat-align-tabs="start" [color]="'accent'" [backgroundColor]="'primary'">
         <mat-tab label="Execute">
             <br>
-            <app-cmd-exec [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-exec>
+            <app-cmd-exec [clientId]="clientId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-exec>
         </mat-tab>
 
         <mat-tab label="Shell">
             <br>
-            <app-cmd-shell [computerId]="computerId" class="matbig" fxLayout="column"  fxLayoutGap="1em"></app-cmd-shell>
+            <app-cmd-shell [clientId]="clientId" class="matbig" fxLayout="column"  fxLayoutGap="1em"></app-cmd-shell>
         </mat-tab>
         
         <mat-tab label="Upload">
             <br>
-            <app-cmd-upload [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-upload>
+            <app-cmd-upload [clientId]="clientId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-upload>
         </mat-tab>
 
         <mat-tab label="Download">
             <br>
-            <app-cmd-download [computerId]="computerId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-download>
+            <app-cmd-download [clientId]="clientId" class="matbig" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em"></app-cmd-download>
         </mat-tab>
 
         <mat-tab label="Browse">
             <br>
-            <app-cmd-browse [computerId]="computerId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-browse>
+            <app-cmd-browse [clientId]="clientId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-browse>
         </mat-tab>
 
         <mat-tab label="Downstream">
             <br>
-            <app-cmd-downstreams [computerId]="computerId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-downstreams>
+            <app-cmd-downstreams [clientId]="clientId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-downstreams>
             <br>
         </mat-tab>
 
@@ -56,5 +56,5 @@
 
 <!-- <mat-card *ngIf="selectedTabIndex != 1"  > -->
 <mat-card>
-    <app-packet-table [computerId]="computerId"></app-packet-table>
+    <app-packet-table [clientId]="clientId"></app-packet-table>
 </mat-card>

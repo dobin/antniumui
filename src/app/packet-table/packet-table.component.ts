@@ -18,7 +18,7 @@ import { EMPTY, Observable, Subject, timer } from 'rxjs';
   styleUrls: ['./packet-table.component.css']
 })
 export class PacketTableComponent implements OnInit {
-  @Input() computerId = '';
+  @Input() clientId = '';
 
   dataSource: MatTableDataSource<PacketInfo> = new MatTableDataSource<PacketInfo>();
   @ViewChild(MatSort) sort!: MatSort;
@@ -50,14 +50,14 @@ export class PacketTableComponent implements OnInit {
     this.dataSource.filterPredicate = 
       (data: PacketInfo, filter: string) => !filter || filter == "" || (
         data.Packet.packetType.includes(filter)
-        || data.Packet.computerid.includes(filter)
+        || data.Packet.clientid.includes(filter)
         || data.Packet.packetid.includes(filter)
         || data.User.includes(filter)
         || (Object.values(data.Packet.arguments).filter(s => s.includes(filter))).length > 0
         || (Object.values(data.Packet.response).filter(s => s.includes(filter))).length > 0
       );
 
-    if (this.computerId != "") {
+    if (this.clientId != "") {
       this.displayedColumns = [
         'TimeRecorded', 'packetType', 'arguments', 'response'];
         this.pageSizeOptions = [3, 5, 10];
@@ -72,7 +72,7 @@ export class PacketTableComponent implements OnInit {
     // Get and update data
     this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (this.computerId == '' || packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
+      if (this.clientId == '' || packetInfo == undefined || packetInfo.Packet.clientid == this.clientId) {
           this.updatePacketInfos();
       }
     })
@@ -80,7 +80,7 @@ export class PacketTableComponent implements OnInit {
     // Get messages directly from websocket
     /*this.adminWebsocketService.messages$.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (this.computerId == '' || packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
+      if (this.clientId == '' || packetInfo == undefined || packetInfo.Packet.clientid == this.clientId) {
           this.updatePacketInfos();
       }
     })*/
@@ -109,7 +109,7 @@ export class PacketTableComponent implements OnInit {
     var data2 = this.dataService.packetInfos;
     var user = this.configService.getUser();
 
-    if (this.computerId == '') {
+    if (this.clientId == '') {
       if (this.onlyMe) {
         // All packets of this user
         var newData = data2.filter(d => d.User == user);
@@ -120,19 +120,19 @@ export class PacketTableComponent implements OnInit {
       }
     } else {
       if (this.onlyMe) {
-        // This computerid, this user
-        var newData = data2.filter(d => d.User == user && (d.Packet.computerid == this.computerId || d.Packet.computerid == "0"));
+        // This clientid, this user
+        var newData = data2.filter(d => d.User == user && (d.Packet.clientid == this.clientId || d.Packet.clientid == "0"));
         this.dataSource.data = newData;
       } else {
-        // this computerid
-        var newData = data2.filter(d => d.Packet.computerid == this.computerId || d.Packet.computerid == "0");
+        // this clientid
+        var newData = data2.filter(d => d.Packet.clientid == this.clientId || d.Packet.clientid == "0");
         this.dataSource.data = newData;
       }
     }
   }
 
-  lastseenByComputerId(computerId: string) {
-    var clientInfo = this.dataService.getClientBy(computerId);
+  lastseenByClientId(clientId: string) {
+    var clientInfo = this.dataService.getClientBy(clientId);
     if (clientInfo == undefined) {
       return "";
     } else {
@@ -144,7 +144,7 @@ export class PacketTableComponent implements OnInit {
   openUploadFile(packet: Packet){
     var campaign = this.dataService.campaign;
     var filename = this.apiService.basename(packet.arguments["source"]);
-    var url = campaign.ServerUrl + "/admin/upload/" + packet.computerid + "." + packet.packetid + "." + filename;
+    var url = campaign.ServerUrl + "/admin/upload/" + packet.clientid + "." + packet.packetid + "." + filename;
 
     this.apiService.downloadClientUpload(url);
   }

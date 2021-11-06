@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'docs', component: DocsComponent },
   { path: 'campaign', component: CampaignViewComponent },
   { path: 'clients', component: ClientsPageComponent },
-  { path: 'packetcreate/:computerId', component: PacketCreatePageComponent },
+  { path: 'packetcreate/:clientId', component: PacketCreatePageComponent },
   { path: 'uploads', component: FileUploadListComponent },
   { path: 'static', component: FileStaticListComponent },
 

@@ -17,7 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class CmdBrowseComponent implements OnInit {
   // Input
-  @Input() computerId = "";
+  @Input() clientId = "";
   downstreamId: string = "client";
   dirContent: DirEntry[] = [];
 
@@ -45,7 +45,7 @@ export class CmdBrowseComponent implements OnInit {
     // Only consume one valid, to have the truth
     // Skip empty array, and take 1
     this.dataService.clients.pipe(skipWhile(v => v.length == 0), take(1)).subscribe((clientInfos: ClientInfo[]) => {
-      var client = clientInfos.find(ci => ci.ComputerId == this.computerId);
+      var client = clientInfos.find(ci => ci.ClientId == this.clientId);
       if (client != undefined) {
         this.client = client;
         this.browse = this.client.WorkingDir;
@@ -60,7 +60,7 @@ export class CmdBrowseComponent implements OnInit {
     this.updateDir();
     this.dataService.packetInfosEvent.subscribe((packetInfo: PacketInfo) => {
       // Check if it concerns us
-      if (packetInfo == undefined || packetInfo.Packet.computerid == this.computerId) {
+      if (packetInfo == undefined || packetInfo.Packet.clientid == this.clientId) {
         this.updateDir();
       }
     })
@@ -93,7 +93,7 @@ export class CmdBrowseComponent implements OnInit {
   updateDir() {
     var data2 = this.dataService.packetInfos;
     var newData = data2.filter(d => 
-      (d.Packet.computerid == this.computerId && d.Packet.packetType == "dir")
+      (d.Packet.clientid == this.clientId && d.Packet.packetType == "dir")
     );
 
     if (newData.length == 0) {
@@ -139,7 +139,7 @@ export class CmdBrowseComponent implements OnInit {
       "path": path,
     };
     var packet = this.apiService.makePacket(
-      this.computerId,
+      this.clientId,
       'dir',
       args,
       this.downstreamId
