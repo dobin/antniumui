@@ -29,7 +29,7 @@
             <ng-container *ngIf="element.Packet.downstreamId != 'client'">
                 @{{element.Packet.downstreamId}}
             </ng-container>
-            <ng-container *ngIf="element.User != 'anon'">
+            <ng-container *ngIf="element.User != 'anon' && element.User != ''">
                 <br>
                 by {{element.User}}
             </ng-container>
