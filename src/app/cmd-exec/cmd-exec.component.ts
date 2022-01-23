@@ -18,10 +18,11 @@ export class CmdExecComponent implements OnInit {
   // UI
   selectExecType: string = "cmd"
   commandline: string = "hostname"
-  executable: string = ""
-  param1: string = ""
-  param2: string = ""
+  executable: string = "c:\\windows\\system32\\net.exe"
+  param1: string = "user"
+  param2: string = "dobin"
   param3: string = ""
+  destination: string = "C:\\temp\\server.exe"
 
   constructor(
     private apiService: ApiService,
@@ -29,12 +30,6 @@ export class CmdExecComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (true) {
-      this.executable = "cmd";
-      this.param1 = "/C"
-      this.param2 = "whoami"
-    }
-
     // Only consume one valid, to have the truth
     // Skip empty array, and take 1
     this.dataService.clients.pipe(skipWhile(v => v.length == 0), take(1)).subscribe((clientInfos: ClientInfo[]) => {
@@ -63,6 +58,18 @@ export class CmdExecComponent implements OnInit {
       params["commandline"] = this.commandline;
     } else if (this.selectExecType == "raw") {
       params["executable"] = this.executable;
+      if (this.param1 != "") {
+        params["param0"] = this.param1;
+      }
+      if (this.param2 != "") {
+        params["param1"] = this.param2;
+      }
+      if (this.param3 != "") {
+        params["param2"] = this.param3;
+      }
+    } else if (this.selectExecType == "rawCopyFirst") {
+      params["executable"] = this.executable;
+      params["destination"] = this.destination;
       if (this.param1 != "") {
         params["param0"] = this.param1;
       }
