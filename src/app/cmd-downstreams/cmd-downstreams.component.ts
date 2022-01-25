@@ -20,7 +20,10 @@ export class CmdDownstreamsComponent implements OnInit {
 
   
   sendPacketDownstreamStart() {
-    var args = {};
+    var args:{ [id: string]: string } = {};
+    args['tcp'] = 'localhost:50000';
+    args['directory'] = 'c:\\temp\\';
+
     var packet = this.apiService.makePacket(
       this.clientId,
       'downstreamServerStart',
@@ -38,7 +41,7 @@ export class CmdDownstreamsComponent implements OnInit {
   }
 
   sendPacketDownstreamServers() {
-    var args = {};
+    var args:{ [id: string]: string } = {};
     var packet = this.apiService.makePacket(
       this.clientId,
       'downstreamServers',
@@ -56,7 +59,7 @@ export class CmdDownstreamsComponent implements OnInit {
   }
 
   sendPacketDownstreamStop() {
-    var args = {};
+    var args:{ [id: string]: string } = {};
     var packet = this.apiService.makePacket(
       this.clientId,
       'downstreamServerStop',

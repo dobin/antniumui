@@ -88,7 +88,7 @@ export class CmdExecComponent implements OnInit {
       this.clientId,
       'exec',
       params,
-      this.downstreamId
+      this.downstreamId,
     );
     this.apiService.sendPacket(packet).subscribe(
       (data: any) => { 
