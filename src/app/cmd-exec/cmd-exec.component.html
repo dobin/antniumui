@@ -1,6 +1,6 @@
 <button color="primary" mat-raised-button (click)="sendPacketExec()">Enter</button>
 
-<ng-container *ngIf="selectExecType != 'raw' && selectExecType != 'rawCopyFirst'">
+<ng-container *ngIf="selectExecType != 'raw'">
     <mat-form-field fxFlex="80" fxFill appearance="outline">
         <mat-label>commandline</mat-label>
         <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="commandline">
@@ -26,29 +26,6 @@
     </mat-form-field>
 </ng-container>
 
-<ng-container *ngIf="selectExecType == 'rawCopyFirst'">
-    <mat-form-field fxFlex>
-        <mat-label>Executable full path</mat-label>
-        <input matInput type="text" [(ngModel)]="executable">
-    </mat-form-field>
-    <mat-form-field fxFlex>
-        <mat-label>Parameter 1</mat-label>
-        <input matInput type="text" [(ngModel)]="param1">
-    </mat-form-field>
-    <mat-form-field fxFlex>
-        <mat-label>Parameter 2</mat-label>
-        <input matInput type="text" [(ngModel)]="param2">
-    </mat-form-field>
-    <mat-form-field fxFlex>
-        <mat-label>Parameter 3</mat-label>
-        <input matInput type="text" [(ngModel)]="param3">
-    </mat-form-field>
-    <mat-form-field fxFlex>
-        <mat-label>Destination path</mat-label>
-        <input matInput type="text" [(ngModel)]="destination">
-    </mat-form-field>
-</ng-container>
-
 <mat-form-field appearance="fill">
     <mat-label>ShellType</mat-label>
     <mat-select [(value)]="selectExecType">
@@ -69,6 +46,21 @@
         </mat-option>
         <mat-option value="rawCopyFirst">
             raw copyFirst
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+    <mat-label>SpawnType</mat-label>
+    <mat-select [(value)]="selectSpawnType">
+        <mat-option value="standard">
+            Direct execution
+        </mat-option>
+        <mat-option value="hollow">
+            Process hollowing
+        </mat-option>
+        <mat-option value="copyFirst">
+            Copy First
         </mat-option>
     </mat-select>
 </mat-form-field>

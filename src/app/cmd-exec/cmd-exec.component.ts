@@ -17,6 +17,8 @@ export class CmdExecComponent implements OnInit {
 
   // UI
   selectExecType: string = "cmd"
+  selectSpawnType: string = "standard"
+
   commandline: string = "hostname"
   executable: string = "c:\\windows\\system32\\net.exe"
   param1: string = "user"
@@ -67,22 +69,22 @@ export class CmdExecComponent implements OnInit {
       if (this.param3 != "") {
         params["param2"] = this.param3;
       }
-    } else if (this.selectExecType == "rawCopyFirst") {
-      params["executable"] = this.executable;
-      params["destination"] = this.destination;
-      if (this.param1 != "") {
-        params["param0"] = this.param1;
-      }
-      if (this.param2 != "") {
-        params["param1"] = this.param2;
-      }
-      if (this.param3 != "") {
-        params["param2"] = this.param3;
-      }
     } else {
       console.log("Unknown: " + this.selectExecType);
       return;
     }
+    params["spawnType"] = this.selectSpawnType;
+
+    switch(this.selectSpawnType) {
+      case "hollow":
+        params["spawnData"] = "c:\\windows\\system32\\hostname.exe";
+        break;
+      case "copyFirst":
+        params["spawnData"] = "C:\\temp\\server.exe";
+        break;
+    }
+    
+
 
     var packet = this.apiService.makePacket(
       this.clientId,

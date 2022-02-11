@@ -50,6 +50,11 @@
                 {{element.Packet.arguments["param1"]}}
                 {{element.Packet.arguments["param2"]}}
                 {{element.Packet.arguments["param3"]}}
+                <span *ngIf="element.Packet.arguments['spawnType'] != undefined">
+                    <br>
+                    {{element.Packet.arguments["spawnType"]}}
+                    {{element.Packet.arguments["spawnData"]}}
+                </span>
                 <span *ngIf="element.Packet.arguments['destination'] != undefined">
                     <br>
                     via {{element.Packet.arguments["destination"]}} 
