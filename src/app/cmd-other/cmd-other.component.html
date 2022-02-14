@@ -1,0 +1,22 @@
+
+<mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+    All Downstream Servers: &nbsp;
+    <button mat-raised-button (click)="sendPacketDownstreamStart()">Start</button> 
+    <button mat-raised-button (click)="sendPacketDownstreamServers()">List</button>
+    <button mat-raised-button (click)="sendPacketDownstreamStop()">Shutdown</button>
+</mat-container>
+
+
+
+<mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+    <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+        <button mat-raised-button (click)="sendPacketWingmanExplorer()">Wingman Exlorer.exe</button> &nbsp; Start wingman under explorer.exe
+    </mat-container>
+</mat-container>
+
+
+<mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+    <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+        <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button> &nbsp; Exit current client/downstreamclient
+    </mat-container>
+</mat-container>

@@ -28,72 +28,10 @@ export class PacketCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Downstream-Selection
-    this.dataService.downstreamSelectionReset();
-    this.dataService.downstreamSelection.subscribe(downstreamId => {
-      this.downstreamId = downstreamId;
-    });
+
   }
 
-  sendPacketWingmanExplorer() {
-    var args = { 
-      "shelltype": "raw",
-      "executable": "explorer.exe",
-      "param0": "C:\\users\\dobin\\Repositories\\antnium\\wingman.exe",
-    };
-    var packet = this.apiService.makePacket(
-      this.clientId,
-      'exec',
-      args,
-      this.downstreamId
-    );
-    this.apiService.sendPacket(packet).subscribe(
-      (data: any) => { 
-        console.log("SendPacket successful")
-      },
-      (err: HttpErrorResponse) => {
-        console.log("SendPacket failed")
-      },
-    );
-  }
 
-  sendPacketTest() {
-    var args = { 
-      "test": "test",
-    };
-    var packet = this.apiService.makePacket(
-      this.clientId,
-      'test',
-      args,
-      this.downstreamId
-    );
-    this.apiService.sendPacket(packet).subscribe(
-      (data: any) => { 
-        console.log("SendPacket successful")
-      },
-      (err: HttpErrorResponse) => {
-        console.log("SendPacket failed")
-      },
-    );
-  }
-
-  sendPacketShutdown() {
-    var args = { };
-    var packet = this.apiService.makePacket(
-      this.clientId,
-      'shutdown',
-      args,
-      this.downstreamId
-    );
-    this.apiService.sendPacket(packet).subscribe(
-      (data: any) => { 
-        console.log("SendPacket successful")
-      },
-      (err: HttpErrorResponse) => {
-        console.log("SendPacket failed")
-      },
-    );
-  }
 
 
   // Utils:

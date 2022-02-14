@@ -25,23 +25,9 @@
             <app-cmd-browse [clientId]="clientId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-browse>
         </mat-tab>
 
-        <mat-tab label="Downstream">
-            <br>
-            <app-cmd-downstreams [clientId]="clientId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-downstreams>
-            <br>
-        </mat-tab>
-
         <mat-tab label="Other">
             <br>
-            <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-                <button mat-raised-button (click)="sendPacketShutdown()">Shutdown</button> &nbsp; Exit current client/downstreamclient
-            </mat-container>
-            <br>
-
-            <mat-container fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-                <button mat-raised-button (click)="sendPacketWingmanExplorer()">Wingman Exlorer.exe</button> &nbsp; Start wingman under explorer.exe
-            </mat-container>
-
+            <app-cmd-other [clientId]="clientId" class="matbig" fxLayout="column" fxLayoutGap="1em"></app-cmd-other>
             <br>
         </mat-tab>
 

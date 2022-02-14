@@ -51,7 +51,7 @@ import { CmdShellComponent } from './cmd-shell/cmd-shell.component';
 import { CmdUploadComponent } from './cmd-upload/cmd-upload.component';
 import { CmdDownloadComponent } from './cmd-download/cmd-download.component';
 import { CmdBrowseComponent } from './cmd-browse/cmd-browse.component';
-import { CmdDownstreamsComponent } from './cmd-downstreams/cmd-downstreams.component';
+import { CmdOtherComponent } from './cmd-other/cmd-other.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +77,7 @@ import { CmdDownstreamsComponent } from './cmd-downstreams/cmd-downstreams.compo
     CmdUploadComponent,
     CmdDownloadComponent,
     CmdBrowseComponent,
-    CmdDownstreamsComponent,
+    CmdOtherComponent,
   ],
   imports: [
     BrowserModule,
