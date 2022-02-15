@@ -85,4 +85,19 @@ export class ConfigService {
     }
   }
 
+
+  getSpawnData(): string[] {
+    var json = localStorage.getItem("spawnData") || "";
+    if (json == "") {
+      return ['C:\\temp\\server.exe', 'c:\\windows\\system32\\net.exe' ];
+    } else {
+      return JSON.parse(json);
+    }
+  }
+  setSpawnData(spawnData: string[]) {
+    localStorage.setItem("spawnData", JSON.stringify(spawnData));
+  }
+
+
+
 }

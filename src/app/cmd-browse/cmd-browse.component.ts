@@ -31,7 +31,7 @@ export class CmdBrowseComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: String[] = [
+  displayedColumns: string[] = [
     'isDir', 'name',  'size', 'modified', ];
   pageSizeOptions: Number[] = [3, 5, 10];
 

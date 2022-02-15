@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +27,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -85,6 +86,7 @@ import { CmdOtherComponent } from './cmd-other/cmd-other.component';
     NoopAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
 
     MatToolbarModule,
     MatIconModule,
@@ -108,7 +110,7 @@ import { CmdOtherComponent } from './cmd-other/cmd-other.component';
     MatCheckboxModule,
     MatTooltipModule,
     MatSnackBarModule,
-
+    MatAutocompleteModule,
     FlexLayoutModule,
   ],
   providers: [

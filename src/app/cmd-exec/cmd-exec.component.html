@@ -1,66 +1,91 @@
-<button color="primary" mat-raised-button (click)="sendPacketExec()">Enter</button>
+<mat-container fxLayout="column" fxFill fxLayoutAlign="start center" fxLayoutGap="1em">
 
-<ng-container *ngIf="selectExecType != 'raw'">
-    <mat-form-field fxFlex="80" fxFill appearance="outline">
-        <mat-label>commandline</mat-label>
-        <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="commandline">
-    </mat-form-field>
-</ng-container>
+    <mat-container fxLayout="row" fxFill fxLayoutAlign="start center" fxLayoutGap="1em">
+        <ng-container fxFlex>
+            <button color="primary" mat-raised-button (click)="sendPacketExec()">Enter</button>
+        </ng-container>
 
-<ng-container *ngIf="selectExecType == 'raw'">
-    <mat-form-field fxFlex>
-        <mat-label>Executable</mat-label>
-        <input matInput type="text" [(ngModel)]="executable">
-    </mat-form-field>
-    <mat-form-field fxFlex>
-        <mat-label>Parameter 1</mat-label>
-        <input matInput type="text" [(ngModel)]="param1">
-    </mat-form-field>
-    <mat-form-field fxFlex>
-        <mat-label>Parameter 2</mat-label>
-        <input matInput type="text" [(ngModel)]="param2">
-    </mat-form-field>
-    <mat-form-field fxFlex>
-        <mat-label>Parameter 3</mat-label>
-        <input matInput type="text" [(ngModel)]="param3">
-    </mat-form-field>
-</ng-container>
+        <ng-container *ngIf="selectExecType != 'raw'">
+            <mat-form-field fxFlex appearance="outline">
+                <mat-label>commandline</mat-label>
+                <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="commandline">
+            </mat-form-field>
+        </ng-container>
 
-<mat-form-field appearance="fill">
-    <mat-label>ShellType</mat-label>
-    <mat-select [(value)]="selectExecType">
-        <mat-option value="cmd">
-            cmd.exe /S /C [] 
-        </mat-option>
-        <mat-option value="powershell">
-            powershell.exe -ExecutionPolicy Bypass -C []
-        </mat-option>
-        <mat-option value="bash">
-            bash -c []
-        </mat-option>
-        <mat-option value="zsh">
-            zsh
-        </mat-option>
-        <mat-option value="raw">
-            raw
-        </mat-option>
-        <mat-option value="rawCopyFirst">
-            raw copyFirst
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+        <ng-container *ngIf="selectSpawnType == 'hollow' || selectSpawnType == 'copyFirst'">
+            <mat-form-field fxFlex class="example-full-width" appearance="fill">
+                <mat-label>Destination</mat-label>
+                <input 
+                    type="text" 
+                    matInput [formControl]="destinationFormControl" 
+                    [matAutocomplete]="auto"
+                    [(ngModel)]="destination"
+                    >
+    
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of destinationFilteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+        </ng-container>
 
-<mat-form-field appearance="fill">
-    <mat-label>SpawnType</mat-label>
-    <mat-select [(value)]="selectSpawnType">
-        <mat-option value="standard">
-            Direct execution
-        </mat-option>
-        <mat-option value="hollow">
-            Process hollowing
-        </mat-option>
-        <mat-option value="copyFirst">
-            Copy First
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+        <ng-container *ngIf="selectExecType == 'raw'">
+            <mat-container fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+                <mat-form-field fxFlex>
+                    <mat-label>Executable</mat-label>
+                    <input matInput type="text" [(ngModel)]="executable">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <mat-label>Parameter 1</mat-label>
+                    <input matInput type="text" [(ngModel)]="param1">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <mat-label>Parameter 2</mat-label>
+                    <input matInput type="text" [(ngModel)]="param2">
+                </mat-form-field>
+            </mat-container>
+        </ng-container>
+
+        <mat-form-field appearance="fill" fxFlex=20>
+            <mat-label>ShellType</mat-label>
+            <mat-select [(value)]="selectExecType">
+                <mat-option value="cmd">
+                    cmd.exe /S /C [] 
+                </mat-option>
+                <mat-option value="powershell">
+                    powershell.exe -ExecutionPolicy Bypass -C []
+                </mat-option>
+                <mat-option value="bash">
+                    bash -c []
+                </mat-option>
+                <mat-option value="zsh">
+                    zsh
+                </mat-option>
+                <mat-option value="raw">
+                    raw
+                </mat-option>
+                <mat-option value="rawCopyFirst">
+                    raw copyFirst
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex=20>
+            <mat-label>SpawnType</mat-label>
+            <mat-select [(value)]="selectSpawnType">
+                <mat-option value="standard">
+                    Direct execution
+                </mat-option>
+                <mat-option value="hollow">
+                    Process hollowing
+                </mat-option>
+                <mat-option value="copyFirst">
+                    Copy First
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-container>
+
+</mat-container>
+

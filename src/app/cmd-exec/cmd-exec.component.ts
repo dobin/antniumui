@@ -4,6 +4,14 @@ import { PacketInfo, Packet, Campaign, DirEntry, ClientInfo } from '../app.model
 import { ApiService } from '../api.service';
 import { DataService } from '../data.service';
 import { first, take, skipWhile } from 'rxjs/operators';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { ConfigService } from '../config.service';
+
+export interface User {
+  name: string;
+}
 
 @Component({
   selector: 'app-cmd-exec',
@@ -28,10 +36,30 @@ export class CmdExecComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private dataService: DataService
+    private dataService: DataService,
+    private configService: ConfigService,
   ) { }
 
+  destinationFormControl = new FormControl();
+  destinationOptions: string[] = [];
+  destinationFilteredOptions: Observable<string[]>;
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.destinationOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  displayFn(s: string): string {
+    return s;
+  }
+
   ngOnInit(): void {
+    this.destinationOptions = this.configService.getSpawnData();
+    this.destinationFilteredOptions = this.destinationFormControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
+
     // Only consume one valid, to have the truth
     // Skip empty array, and take 1
     this.dataService.clients.pipe(skipWhile(v => v.length == 0), take(1)).subscribe((clientInfos: ClientInfo[]) => {
@@ -74,17 +102,7 @@ export class CmdExecComponent implements OnInit {
       return;
     }
     params["spawnType"] = this.selectSpawnType;
-
-    switch(this.selectSpawnType) {
-      case "hollow":
-        params["spawnData"] = "c:\\windows\\system32\\hostname.exe";
-        break;
-      case "copyFirst":
-        params["spawnData"] = "C:\\temp\\server.exe";
-        break;
-    }
-    
-
+    params["spawnData"] = this.destination;
 
     var packet = this.apiService.makePacket(
       this.clientId,
@@ -100,6 +118,11 @@ export class CmdExecComponent implements OnInit {
         console.log("SendPacket failed")
       },
     );
+
+    if (! this.destinationOptions.includes(this.destination)) {
+      this.destinationOptions.push(this.destination);
+    }
+    this.configService.setSpawnData(this.destinationOptions);
   }
 
 

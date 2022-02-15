@@ -45,7 +45,7 @@ export class CmdDownloadComponent implements OnInit {
     // Files
     this.staticFiles = this.dataService.statics;
     // Subscribe to updates 
-    this.dataService.clientFilesUpdates.subscribe((data: String) => {
+    this.dataService.clientFilesUpdates.subscribe((data: string) => {
       this.staticFiles = this.dataService.statics;
     })
     
