@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "~12.1.2",
     "@angular/router": "~12.1.2",
     "@material/layout-grid": "^11.0.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "rxjs": "~6.6.0",
     "rxjs-websockets": "^9.0.0",
     "tslib": "^2.2.0",
