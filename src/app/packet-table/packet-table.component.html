@@ -42,23 +42,26 @@
         <td mat-cell *matCellDef="let element"> 
             <container-element [ngSwitch]="element.Packet.packetType">
                 
-            <div *ngSwitchCase="'exec'" class="nowrap">
+            <div *ngSwitchCase="'execShell'" class="nowrap">
                 Shell: {{element.Packet.arguments["shelltype"]}} <br>
                 {{element.Packet.arguments["commandline"]}}
-                {{element.Packet.arguments["executable"]}} 
-                {{element.Packet.arguments["param0"]}} 
-                {{element.Packet.arguments["param1"]}}
-                {{element.Packet.arguments["param2"]}}
-                {{element.Packet.arguments["param3"]}}
+            </div>
+
+            <div *ngSwitchCase="'execLol'" class="nowrap">
+                {{element.Packet.arguments["executable"]}} <br>
+                {{element.Packet.arguments["argline"]}} <br>
+
                 <span *ngIf="element.Packet.arguments['spawnType'] != undefined">
-                    <br>
-                    {{element.Packet.arguments["spawnType"]}}
-                    {{element.Packet.arguments["spawnData"]}}
+                    {{element.Packet.arguments["spawnType"]}} {{element.Packet.arguments["spawnData"]}} <br>
                 </span>
-                <span *ngIf="element.Packet.arguments['destination'] != undefined">
-                    <br>
-                    via {{element.Packet.arguments["destination"]}} 
-                </span>
+
+            </div>
+
+            <div *ngSwitchCase="'execRemote'" class="nowrap">
+                {{element.Packet.arguments["filename"]}} <br>
+                {{element.Packet.arguments["argline"]}} <br>
+                -> {{element.Packet.arguments["injectInto"]}} <br>
+                {{element.Packet.arguments["type"]}} <br>
             </div>
 
             <div *ngSwitchCase="'fileupload'">
@@ -102,7 +105,29 @@
         <th mat-header-cell *matHeaderCellDef> Response </th>
         <td mat-cell *matCellDef="let element"> 
             <container-element [ngSwitch]="element.Packet.packetType">
-                <div *ngSwitchCase="'exec'">
+                <div *ngSwitchCase="'execShell'">
+                    {{element.Packet.response["error"]}}
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
+                    <span *ngIf="element.Packet.response['pid'] != undefined">
+                        Pid: {{element.Packet.response["pid"]}} 
+                    </span>
+                    <span *ngIf="element.Packet.response['exitCode'] != undefined">
+                        ExitCode: {{element.Packet.response["exitCode"]}}
+                    </span>
+                </div>
+                <div *ngSwitchCase="'execLol'">
+                    {{element.Packet.response["error"]}}
+                    <pre>{{element.Packet.response["stdout"]}}</pre>
+                    <pre>{{element.Packet.response["stderr"]}}</pre>
+                    <span *ngIf="element.Packet.response['pid'] != undefined">
+                        Pid: {{element.Packet.response["pid"]}} 
+                    </span>
+                    <span *ngIf="element.Packet.response['exitCode'] != undefined">
+                        ExitCode: {{element.Packet.response["exitCode"]}}
+                    </span>
+                </div>
+                <div *ngSwitchCase="'execRemote'">
                     {{element.Packet.response["error"]}}
                     <pre>{{element.Packet.response["stdout"]}}</pre>
                     <pre>{{element.Packet.response["stderr"]}}</pre>
