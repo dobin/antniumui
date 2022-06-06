@@ -30,21 +30,19 @@
             </mat-form-field>
         </ng-container>
 
-        <ng-container *ngIf="selectExecType == 'direct' || selectExecType == 'remote'">
+
+        <ng-container *ngIf="selectExecType == 'direct'">
             <mat-form-field fxFlex appearance="outline">
                 <mat-label>executable</mat-label>
                 <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="executable">
             </mat-form-field>
-        </ng-container>
 
-        <ng-container *ngIf="selectExecType == 'direct' || selectExecType == 'remote'">
             <mat-form-field fxFlex appearance="outline">
                 <mat-label>argline</mat-label>
                 <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="argline">
             </mat-form-field>
         </ng-container>
-
-        <ng-container *ngIf="(selectExecType == 'direct' && selectSpawnType != 'standard') || selectExecType == 'remote'">
+        <ng-container *ngIf="(selectExecType == 'direct' && selectSpawnType != 'standard')">
             <mat-form-field fxFlex class="example-full-width" appearance="fill">
                 <mat-label>Destination</mat-label>
                 <input 
@@ -61,7 +59,6 @@
                 </mat-autocomplete>
               </mat-form-field>
         </ng-container>
-
         <ng-container *ngIf="selectExecType == 'direct'">
             <mat-form-field appearance="fill" fxFlex=15>
                 <mat-label>SpawnType</mat-label>
@@ -78,6 +75,24 @@
                 </mat-select>
             </mat-form-field>
         </ng-container>
+
+        <ng-container *ngIf="selectExecType == 'remote'">
+            <mat-form-field fxFlex appearance="outline">
+                <mat-label>static file</mat-label>
+                <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="remote_file">
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="outline">
+                <mat-label>argline</mat-label>
+                <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="remote_argline">
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="fill">
+                <mat-label>injectInto</mat-label>
+                <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="remote_injectInto">
+            </mat-form-field>
+        </ng-container>
+
 
     </mat-container>
 

