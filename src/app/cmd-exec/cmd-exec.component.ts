@@ -25,13 +25,17 @@ export class CmdExecComponent implements OnInit {
 
   // UI
   selectExecType: string = "cmd"
-  selectSpawnType: string = "standard"
-
+  
+  // cmd, powershell
   commandline: string = "hostname"
+  
+  // direct
   executable: string = "c:\\windows\\system32\\net.exe"
-  param1: string = "user"
-  param2: string = "dobin"
-  param3: string = ""
+
+  // direct, remote
+  argline: string = ""
+  
+  selectSpawnType: string = "standard"
   destination: string = "C:\\temp\\server.exe"
 
   constructor(
@@ -83,20 +87,30 @@ export class CmdExecComponent implements OnInit {
   
   sendPacketExec() {
     var params:{ [id: string]: string } = {};
-    params["shelltype"] = this.selectExecType;
-    if (this.selectExecType == "cmd" || this.selectExecType == "powershell" || this.selectExecType == "bash" || this.selectExecType == "zsh") {
+    var packetType: string;
+    
+
+    if (this.selectExecType == "cmd" || this.selectExecType == "powershell") {
+      packetType = "execShell";
+      params["shelltype"] = this.selectExecType;
       params["commandline"] = this.commandline;
-    } else if (this.selectExecType == "raw") {
+
+    } else if (this.selectExecType == "direct") {
+      packetType = "execLol";
       params["executable"] = this.executable;
-      if (this.param1 != "") {
-        params["param0"] = this.param1;
-      }
-      if (this.param2 != "") {
-        params["param1"] = this.param2;
-      }
-      if (this.param3 != "") {
-        params["param2"] = this.param3;
-      }
+      params["argline"] = this.argline;
+
+      params["spawnType"] = this.selectSpawnType;
+      params["spawnData"] = this.destination;
+
+    } else if (this.selectExecType == "remote") {
+      packetType = "execRemote";
+
+      params["filename"] = this.executable;
+      params["argline"] = this.argline;
+      params["type"] = "";
+      params["injectInto"] = this.destination;
+
     } else {
       console.log("Unknown: " + this.selectExecType);
       return;
@@ -106,7 +120,7 @@ export class CmdExecComponent implements OnInit {
 
     var packet = this.apiService.makePacket(
       this.clientId,
-      'exec',
+      packetType,
       params,
       this.downstreamId,
     );

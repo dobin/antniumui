@@ -5,14 +5,46 @@
             <button color="primary" mat-raised-button (click)="sendPacketExec()">Enter</button>
         </ng-container>
 
-        <ng-container *ngIf="selectExecType != 'raw'">
+        <mat-form-field appearance="fill" fxFlex=15>
+            <mat-label>ShellType</mat-label>
+            <mat-select [(value)]="selectExecType">
+                <mat-option value="cmd">
+                    cmd.exe /S /C [] 
+                </mat-option>
+                <mat-option value="powershell">
+                    powershell.exe -ExecutionPolicy Bypass -C []
+                </mat-option>
+                <mat-option value="direct">
+                    direct
+                </mat-option>
+                <mat-option value="remote">
+                    remote
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngIf="selectExecType == 'cmd' || selectExecType == 'powershell'">
             <mat-form-field fxFlex appearance="outline">
                 <mat-label>commandline</mat-label>
                 <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="commandline">
             </mat-form-field>
         </ng-container>
 
-        <ng-container *ngIf="selectSpawnType == 'hollow' || selectSpawnType == 'copyFirst'">
+        <ng-container *ngIf="selectExecType == 'direct' || selectExecType == 'remote'">
+            <mat-form-field fxFlex appearance="outline">
+                <mat-label>executable</mat-label>
+                <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="executable">
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="selectExecType == 'direct' || selectExecType == 'remote'">
+            <mat-form-field fxFlex appearance="outline">
+                <mat-label>argline</mat-label>
+                <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="argline">
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="(selectExecType == 'direct' && selectSpawnType != 'standard') || selectExecType == 'remote'">
             <mat-form-field fxFlex class="example-full-width" appearance="fill">
                 <mat-label>Destination</mat-label>
                 <input 
@@ -30,61 +62,23 @@
               </mat-form-field>
         </ng-container>
 
-        <ng-container *ngIf="selectExecType == 'raw'">
-            <mat-container fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-                <mat-form-field fxFlex>
-                    <mat-label>Executable</mat-label>
-                    <input matInput type="text" [(ngModel)]="executable">
-                </mat-form-field>
-                <mat-form-field fxFlex>
-                    <mat-label>Parameter 1</mat-label>
-                    <input matInput type="text" [(ngModel)]="param1">
-                </mat-form-field>
-                <mat-form-field fxFlex>
-                    <mat-label>Parameter 2</mat-label>
-                    <input matInput type="text" [(ngModel)]="param2">
-                </mat-form-field>
-            </mat-container>
+        <ng-container *ngIf="selectExecType == 'direct'">
+            <mat-form-field appearance="fill" fxFlex=15>
+                <mat-label>SpawnType</mat-label>
+                <mat-select [(value)]="selectSpawnType">
+                    <mat-option value="standard">
+                        Direct 
+                    </mat-option>
+                    <mat-option value="hollow">
+                        Process hollowing
+                    </mat-option>
+                    <mat-option value="copyFirst">
+                        Copy First
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </ng-container>
 
-        <mat-form-field appearance="fill" fxFlex=15>
-            <mat-label>ShellType</mat-label>
-            <mat-select [(value)]="selectExecType">
-                <mat-option value="cmd">
-                    cmd.exe /S /C [] 
-                </mat-option>
-                <mat-option value="powershell">
-                    powershell.exe -ExecutionPolicy Bypass -C []
-                </mat-option>
-                <mat-option value="bash">
-                    bash -c []
-                </mat-option>
-                <mat-option value="zsh">
-                    zsh
-                </mat-option>
-                <mat-option value="raw">
-                    raw
-                </mat-option>
-                <mat-option value="rawCopyFirst">
-                    raw copyFirst
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" fxFlex=15>
-            <mat-label>SpawnType</mat-label>
-            <mat-select [(value)]="selectSpawnType">
-                <mat-option value="standard">
-                    Direct 
-                </mat-option>
-                <mat-option value="hollow">
-                    Process hollowing
-                </mat-option>
-                <mat-option value="copyFirst">
-                    Copy First
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
     </mat-container>
 
 </mat-container>
