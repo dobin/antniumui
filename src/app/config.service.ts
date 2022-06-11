@@ -86,18 +86,28 @@ export class ConfigService {
   }
 
 
-  getSpawnData(): string[] {
+  getHollowData(): string[] {
     var json = localStorage.getItem("spawnData") || "";
     if (json == "") {
-      return ['%TEMP%\\updsrv.exe', 'c:\\windows\\system32\\net.exe' ];
+      return [ 'c:\\windows\\system32\\clipup.exe' ];
     } else {
       return JSON.parse(json);
     }
   }
-  setSpawnData(spawnData: string[]) {
+  setHollowData(spawnData: string[]) {
     localStorage.setItem("spawnData", JSON.stringify(spawnData));
   }
 
-
+  getCopyFirstData(): string[] {
+    var json = localStorage.getItem("spawnData") || "";
+    if (json == "") {
+      return ['c:\\temp\\notavirus.exe' ];
+    } else {
+      return JSON.parse(json);
+    }
+  }
+  setCopyFirstData(spawnData: string[]) {
+    localStorage.setItem("spawnData", JSON.stringify(spawnData));
+  }
 
 }

@@ -42,23 +42,7 @@
                 <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="argline">
             </mat-form-field>
         </ng-container>
-        <ng-container *ngIf="(selectExecType == 'direct' && selectSpawnType != 'standard')">
-            <mat-form-field fxFlex class="example-full-width" appearance="fill">
-                <mat-label>Destination</mat-label>
-                <input 
-                    type="text" 
-                    matInput [formControl]="destinationFormControl" 
-                    [matAutocomplete]="auto"
-                    [(ngModel)]="destination"
-                    >
-    
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of destinationFilteredOptions | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-        </ng-container>
+
         <ng-container *ngIf="selectExecType == 'direct'">
             <mat-form-field appearance="fill" fxFlex=15>
                 <mat-label>SpawnType</mat-label>
@@ -86,15 +70,53 @@
                 <mat-label>argline</mat-label>
                 <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="remote_argline">
             </mat-form-field>
+        </ng-container>
+    </mat-container>
 
+    <mat-container fxLayout="row" fxFill fxLayoutAlign="start center" fxLayoutGap="1em">
+
+        <ng-container *ngIf="(selectExecType == 'direct' && selectSpawnType == 'hollow')">
+            <mat-form-field fxFlex class="example-full-width" appearance="fill">
+                <mat-label>Destination</mat-label>
+                <input 
+                    type="text" 
+                    matInput [formControl]="destinationHollowFormControl" 
+                    [matAutocomplete]="auto"
+                    [(ngModel)]="destinationHollow"
+                    >
+
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of destinationHollowFilteredOptions | async" [value]="option">
+                    {{option}}
+                </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="(selectExecType == 'direct' && selectSpawnType == 'copyFirst')">
+            <mat-form-field fxFlex class="example-full-width" appearance="fill">
+                <mat-label>Destination</mat-label>
+                <input 
+                    type="text" 
+                    matInput [formControl]="destinationCopyFirstFormControl" 
+                    [matAutocomplete]="auto"
+                    [(ngModel)]="destinationCopyFirst"
+                    >
+
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of destinationCopyFirstFilteredOptions | async" [value]="option">
+                    {{option}}
+                </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="selectExecType == 'remote'">
             <mat-form-field fxFlex appearance="fill">
                 <mat-label>injectInto</mat-label>
                 <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="remote_injectInto">
             </mat-form-field>
         </ng-container>
-
-
     </mat-container>
 
 </mat-container>
-

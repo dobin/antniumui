@@ -31,13 +31,14 @@ export class CmdExecComponent implements OnInit {
   
   // direct
   executable: string = "c:\\windows\\system32\\net.exe"
-  argline: string = ""
+  argline: string = "user"
   selectSpawnType: string = "standard"
-  destination: string = "C:\\temp\\server.exe"
+  destinationHollow: string = "c:\\windows\\system32\\clipup.exe"
+  destinationCopyFirst: string = "C:\\temp\\notavirus.exe"
 
   // remote
-  remote_file: string = ""
-  remote_argline: string = ""
+  remote_file: string = "Seatbelt.exe"
+  remote_argline: string = "DotNet"
   remote_injectInto: string = "c:\\windows\\notepad.exe"
 
   constructor(
@@ -46,13 +47,21 @@ export class CmdExecComponent implements OnInit {
     private configService: ConfigService,
   ) { }
 
-  destinationFormControl = new FormControl();
-  destinationOptions: string[] = [];
-  destinationFilteredOptions: Observable<string[]>;
+  destinationHollowFormControl = new FormControl();
+  destinationHollowOptions: string[] = [];
+  destinationHollowFilteredOptions: Observable<string[]>;
 
-  private _filter(value: string): string[] {
+  destinationCopyFirstFormControl = new FormControl();
+  destinationCopyFirstOptions: string[] = [];
+  destinationCopyFirstFilteredOptions: Observable<string[]>;
+
+  private _filterHollow(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.destinationOptions.filter(option => option.toLowerCase().includes(filterValue));
+    return this.destinationHollowOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  private _filterCopyFirst(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.destinationHollowOptions.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   displayFn(s: string): string {
@@ -60,10 +69,15 @@ export class CmdExecComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.destinationOptions = this.configService.getSpawnData();
-    this.destinationFilteredOptions = this.destinationFormControl.valueChanges.pipe(
+    this.destinationHollowOptions = this.configService.getHollowData();
+    this.destinationHollowFilteredOptions = this.destinationHollowFormControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value)),
+      map(value => this._filterHollow(value)),
+    );
+    this.destinationCopyFirstOptions = this.configService.getCopyFirstData();
+    this.destinationCopyFirstFilteredOptions = this.destinationCopyFirstFormControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterCopyFirst(value)),
     );
 
     // Only consume one valid, to have the truth
@@ -102,9 +116,13 @@ export class CmdExecComponent implements OnInit {
       params["executable"] = this.executable;
       params["argline"] = this.argline;
 
-      if (this.selectSpawnType != "standard") {
+      if (this.selectSpawnType == "hollow") {
         params["spawnType"] = this.selectSpawnType;
-        params["spawnData"] = this.destination;
+        params["spawnData"] = this.destinationHollow;
+      }
+      if (this.selectSpawnType == "copyFirst") {
+        params["spawnType"] = this.selectSpawnType;
+        params["spawnData"] = this.destinationCopyFirst;
       }
     } else if (this.selectExecType == "remote") {
       packetType = "execRemote";
@@ -134,10 +152,13 @@ export class CmdExecComponent implements OnInit {
       },
     );
 
-    if (! this.destinationOptions.includes(this.destination)) {
-      this.destinationOptions.push(this.destination);
+    if (! this.destinationHollowOptions.includes(this.destinationHollow)) {
+      this.destinationHollowOptions.push(this.destinationHollow);
     }
-    this.configService.setSpawnData(this.destinationOptions);
+    if (! this.destinationCopyFirstOptions.includes(this.destinationCopyFirst)) {
+      this.destinationCopyFirstOptions.push(this.destinationCopyFirst);
+    }
+    //this.configService.setSpawnData(this.destinationOptions);
   }
 
 
