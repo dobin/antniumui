@@ -38,6 +38,7 @@ export class CmdExecComponent implements OnInit {
 
   // remote
   remote_file: string = "Seatbelt.exe"
+  remote_files: DirEntry[] = [];
   remote_argline: string = "DotNet"
   remote_injectInto: string = "c:\\windows\\notepad.exe"
 
@@ -79,6 +80,12 @@ export class CmdExecComponent implements OnInit {
       startWith(''),
       map(value => this._filterCopyFirst(value)),
     );
+
+    // Remote files
+    this.remote_files = this.dataService.statics;
+    this.dataService.clientFilesUpdates.subscribe((data: string) => {
+      this.remote_files = this.dataService.statics;
+    })
 
     // Only consume one valid, to have the truth
     // Skip empty array, and take 1

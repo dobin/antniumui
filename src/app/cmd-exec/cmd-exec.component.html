@@ -61,9 +61,13 @@
         </ng-container>
 
         <ng-container *ngIf="selectExecType == 'remote'">
-            <mat-form-field fxFlex appearance="outline">
-                <mat-label>static file</mat-label>
-                <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="remote_file">
+            <mat-form-field appearance="outline">
+                <mat-label>Remote File</mat-label>
+                <mat-select [(value)]="remote_file">
+                  <mat-option *ngFor="let file of remote_files" [value]="file.name">
+                    {{file.name}}
+                  </mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field fxFlex appearance="outline">
