@@ -32,6 +32,7 @@ export class CmdExecComponent implements OnInit {
   // direct
   executable: string = "c:\\windows\\system32\\net.exe"
   argline: string = "user"
+  isDotnet: boolean = true
   selectSpawnType: string = "standard"
   destinationHollow: string = "c:\\windows\\system32\\clipup.exe"
   destinationCopyFirst: string = "C:\\temp\\notavirus.exe"
@@ -137,8 +138,7 @@ export class CmdExecComponent implements OnInit {
       params["filename"] = this.remote_file;
       params["argline"] = this.remote_argline;
       params["injectInto"] = this.remote_injectInto;
-      params["type"] = "";
-
+      params["isDotnet"] = String(this.isDotnet);
     } else {
       console.log("Unknown: " + this.selectExecType);
       return;

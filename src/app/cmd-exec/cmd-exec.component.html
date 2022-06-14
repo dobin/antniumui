@@ -116,6 +116,10 @@
         </ng-container>
 
         <ng-container *ngIf="selectExecType == 'remote'">
+            <mat-checkbox [(ngModel)]="isDotnet" [color]="'primary'">
+                remote file is DotNet
+            </mat-checkbox>
+
             <mat-form-field fxFlex appearance="fill">
                 <mat-label>injectInto</mat-label>
                 <input matInput type="text" (keyup.enter)="sendPacketExec()" [(ngModel)]="remote_injectInto">
